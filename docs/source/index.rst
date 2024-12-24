@@ -1,22 +1,17 @@
-Welcome to Lumache's documentation!
-===================================
+Welcome to Dynamic Surroundings!
+================================
+Dynamic Surroundings is a Minecraft 1.21.1 mod that alters the fabric of Minecraft experience by weaving a tapestry of sound and visual effects. It is available for Fabric and NeoForge.
 
-**Lumache** (/lu'make/) is a Python library for cooks and food lovers
-that creates recipes mixing random ingredients.
-It pulls data from the `Open Food Facts database <https://world.openfoodfacts.org/>`_
-and offers a *simple* and *intuitive* API.
-
-Check out the :doc:`usage` section for further information, including
-how to :ref:`installation` the project.
+Dynamic Surroundings is 100% client side, meaning that it can easily be added to any mod pack without requiring and update to a server. Furthermore,
+it can be used with minimal Fabric or NeoForge clients when connecting and playing on Vanilla servers.
 
 .. note::
-
-   This project is under active development.
+   This documentation is under development
 
 Contents
 --------
 
 .. toctree::
 
-   usage
-   api
+   installation
+

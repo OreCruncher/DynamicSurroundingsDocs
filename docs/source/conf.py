@@ -2,12 +2,12 @@
 
 # -- Project information
 
-project = 'Lumache'
-copyright = '2021, Graziella'
-author = 'Graziella'
+project = 'Dynamic Surroundings'
+copyright = '2024, 2025 OreCruncher'
+author = 'OreCruncher'
 
-release = '0.1'
-version = '0.1.0'
+release = '0.4.0'
+version = '0.0.1'
 
 # -- General configuration
 
@@ -29,7 +29,13 @@ templates_path = ['_templates']
 
 # -- Options for HTML output
 
-html_theme = 'sphinx_rtd_theme'
+html_theme = 'agogo'
+
+html_theme_options = {
+    'bodyfont' : 'Verdana',
+    'headerfont': 'Verdana',
+    'rightsidebar': 'false'
+}
 
 # -- Options for EPUB output
 epub_show_urls = 'footnote'
