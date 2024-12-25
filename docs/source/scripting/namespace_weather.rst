@@ -6,56 +6,65 @@ This namespace has all functions related to weather.
 .. note::
     These functions are not available for biome condition scripts.
 
-.. code-block:: javascript
+.. js:function:: Boolean weather.isRaining()
 
-    Boolean isRaining()
+    Evaluates if it is currently raining in the player's dimension.
 
-Returns ``true`` if it is current raining, ``false`` otherwise.
+    :return: Returns ``true`` if it is current raining, ``false`` otherwise.
+    :rtype: Boolean
 
-.. code-block:: javascript
+.. js:function:: Boolean weather.isThundering()
 
-    Boolean isThundering()
+    Evaluates if a thunderstorm is occurring.
 
-Returns ``true`` if the current weather is a thunderstorm, ``false`` otherwise.
+    :return: Returns ``true`` if the current weather is a thunderstorm, ``false`` otherwise.
+    :rtype: Boolean
 
-.. code-block:: javascript
+.. js:function:: Boolean weather.isNotRaining()
 
-    Boolean isNotRaining()
+    Evaluates if it is not currently raining in the player's dimension.
 
-Returns ``true`` if it is not raining, ``false`` otherwise.
+    :return: Returns ``true`` if it is not raining, ``false`` otherwise.
+    :rtype: Boolean
 
-.. code-block:: javascript
+.. js:function:: Boolean weather.isNotThundering()
 
-    Boolean isNotThundering()
+    Evaluates if it is not currently thundering in the player's dimension.
 
-Returns ``true`` if the current weather is not a thunder storm, ``false`` otherwise.
+    :return: Returns ``true`` if the current weather is not a thunder storm, ``false`` otherwise.
+    :rtype: Boolean
 
-.. code-block:: javascript
+.. js:function:: Float weather.getRainIntensity()
 
-    Float getRainIntensity()
+    Returns the intensity of the rainfall in the player's dimension.
 
-Returns the current rain intensity as a ``float``. When it is raining, this value will be 0.0. If it is raining, the value will be 0.0 - 1.0 depending on where Minecraft is with the startup of rain.
+    :return: Returns the current rain intensity as a ``float``. When it is raining, this value will be 0.0. If it is raining, the value will be 0.0 - 1.0 depending on where Minecraft is with the startup of rain.
+    :rtype: Float
 
-.. code-block:: javascript
+.. js:function:: Float weather.getThunderIntensity()
 
-    Float getThunderIntensity()
+    Returns the intensity of thunder in the player's dimension.
 
-Returns the current intensity of thunder storm as a ``float``.
+    :return: Returns the current intensity of thunder storm as a ``float``.
+    :rtype: Float
 
-.. code-block:: javascript
+.. js:function:: Float weather.getTemperature()
 
-    Float getTemperature()
+    Returns the current temperature at the players location.
 
-Returns the current temperature at the players location.
+    :return: The temperature at the player's location
+    :rtype: Float
 
-.. code-block:: javascript
+.. js:function:: Boolean weather.isFrosty()
 
-    Boolean isFrosty()
+    Evaluates if it is cold enough for frost.
 
-Returns ``true`` if the current temperature is low enough for breath effects, ``false`` otherwise.
+    :return: Returns ``true`` if the current temperature is low enough for breath effects, ``false`` otherwise.
+    :rtype: Boolean
 
-.. code-block:: javascript
+.. js:function:: Boolean weather.canWaterFreeze()
 
-    Boolean canWaterFreeze()
+    Evaluates if water can freeze at the player's location.
 
-Returns ``true`` if the temperature is low enough for water to freeze, ``false`` otherwise.
+    :return: Returns ``true`` if the temperature is low enough for water to freeze, ``false`` otherwise.
+    :rtype: Boolean

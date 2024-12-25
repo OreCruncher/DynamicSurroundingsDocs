@@ -1,3 +1,7 @@
+..	role:: underlined
+..	role:: sectiontitle
+..	role:: question
+    
 Installation
 ============
 Dynamic Surroundings can be downloaded from two different locations:
@@ -12,16 +16,16 @@ Both Fabric and NeoForge versions have a dependency on the Architectury mod. Tha
 
 To access in game menus for configuration, Cloth-Config should be installed. There is no hard requirement, however.
 
-Core Dependencies
------------------
+:sectiontitle:`Core Dependencies`
+
 * Java 21+
 * Architectury 13.0.8+
 
-Fabric
-------
+:sectiontitle:`Fabric`
+
 * Loader 0.16.9+
 * API 0.110.0+1.21.1+
 
-NeoForge
---------
+:sectiontitle:`NeoForge`
+
 * Loader 21.1.84

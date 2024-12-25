@@ -8,62 +8,78 @@ These functions apply to biomes, and can be used in two different contexts:
 
 For a list of possible biome traits refer to :doc:`biometraits`.
 
-.. code-block:: javascript
+.. js:function:: String biome.getName()
 
-    String getName()
+    Returns the localized name of the biome.
 
-Returns the localized name of the biome.
+    :return: The name of the biome
+    :rtype: String
 
-.. code-block:: javascript
+.. js:function:: String biome.getModId()
 
-    String getModId()
+    Returns the mod ID that the biome is associated with.
 
-Returns the mod ID that the biome is associated with.
+    :return: The biomes mod ID
+    :rtype: String
 
-.. code-block:: javascript
+.. js:function:: String biome.getId()
 
-    String getId()
+    Returns the resource location ID of the biome.
 
-Returns the resource location ID of the biome.
+    :return: The biome's resource location ID
+    :rtype: String
 
-.. code-block:: javascript
+.. js:function:: Float biome.getRainfall()
 
-    Float getRainfall()
+    Returns the average rainfall of the biome.
 
-Returns the average rainfall of the biome.
+    :return: Biome's average rainfall
+    :rtype: Float
 
-.. code-block:: javascript
+.. js:function:: Float biome.getTemperature()
 
-    Float getTemperature()
+    Returns the average temperature of the biome.
 
-Returns the average temperature of the biome.
+    :return: Biome's average temperature
+    :rtype: Float
 
-.. code-block:: javascript
+.. js:function:: String biome.getPrecipitationType()
 
-    String getPrecipitationType()
+    Returns the precipitation that occurs within the biome.
 
-Returns the precipitation that occurs within the biome.
+    :return: The type of precipitation the biome usually has
+    :rtype: String
 
-.. code-block:: javascript
+.. js:function:: String biome.getTraits()
 
-    String getTraits()
+    Gets the list of biome trats, as a string.
 
-Gets the list of biome trats, as a string.
+    :return: Traits of the biome in a comma separated string
+    :rtype: String
 
-.. code-block:: javascript
+.. js:function:: Boolean biome.is(String trait)
 
-    Boolean is(String trait)
+    Checks to see if the biome has the specified trait.
 
-Returns ``true`` if the biome has the specified trait, ``false`` otherwise.
+    :param trait: The trait to check for
+    :type trait: String
+    :return: Returns ``true`` if the biome has the specified trait, ``false`` otherwise.
+    :rtype: Boolean
 
-.. code-block:: javascript
+.. js:function:: Boolean biome.isAllOf(String... traits)
 
-    Boolean isAllOf(String... trait)
+    Checks to see if the biome has all the specified traits.
 
-Returns ``true`` if the biome has all the specified traits, ``false`` otherwise.
+    :param traits: Array of traits to check for
+    :type traits: String[]
+    :return: Returns ``true`` if the biome has all the specified traits, ``false`` otherwise.
+    :rtype: Boolean
 
-.. code-block:: javascript
+.. js:function:: Boolean biome.isOneOf(String... traits)
 
-    Boolean isOneOf(String... trait)
+    Checks to see if the biome has at least one of the specified traits.
 
-Returns ``true`` if the biome has one of the specified traits, ``false`` otherwise.
+    :param traits: Array of traits to check for
+    :type traits: String[]
+    :return: Returns ``true`` if the biome has one of the specified traits, ``false`` otherwise.
+    :rtype: Boolean

@@ -6,26 +6,30 @@ Namespace containing functions related to the player's current dimension.
 .. note::
     These functions are not available for biome condition scripts.
 
-.. code-block:: javascript
+.. js:function:: String dim.getId()
 
-    String getId()
+    Gets the ID of the dimension as a string.
 
-The ID of the dimension as a string.
+    :return: The resource location ID of the dimension
+    :rtype: String
 
-.. code-block:: javascript
+.. js:function:: String dim.getDimName()
 
-    String getDimName()
+    Gets the name of the dimension.
 
-The name of the dimension.
+    :return: The dimension name
+    :rtype: String
 
-.. code-block:: javascript
+.. js:function:: Boolean dim.hasSky()
 
-    Boolean hasSky()
+    Returns whether the dimension has a sky.
 
-Returns ``true`` if the dimension has a sky, ``false`` otherwise.
+    :returns: Returns ``true`` if the dimension has a sky, ``false`` otherwise.
+    :rtype: Boolean
 
-.. code-block:: javascript
+.. js:function:: Boolean dim.isSuperFlat()
 
-    Boolean isSuperFlat()
+    Returns whether the dimension is super flat.
 
-Returns ``true`` if the current dimension is super flat, ``false`` otherwise.
+    :return: Returns ``true`` if the current dimension is super flat, ``false`` otherwise.
+    :rtype: Boolean

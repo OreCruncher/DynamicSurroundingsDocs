@@ -7,23 +7,44 @@ If Serene Seasons is not installed, the season will always be Spring.
 .. note::
     These functions are not available for biome condition scripts.
 
-.. code-block:: javascript
+.. js:function:: Boolean season.isSpring()
 
-    Boolean isSpring()
-    Boolean isSummer()
-    Boolean isAutumn()
-    Boolean isWinter()
+    Evaluates whether the current season is Spring
 
-These functions will return ``true`` or ``false`` depending on the current season.
+    :return: ``true`` if it is Spring, ``false`` otherwise.
+    :rtype: Boolean
 
-.. code-block:: javascript
+.. js:function:: Boolean season.isSummer()
 
-    Boolean isWarm()
+    Evaluates whether the current season is Summer
 
-Returns ``true`` if the current season is Spring or Summer, ``false`` otherwise.
+    :return: ``true`` if it is Summer, ``false`` otherwise.
+    :rtype: Boolean
 
-.. code-block:: javascript
+.. js:function:: Boolean season.isAutumn()
 
-    Boolean isCool()
+    Evaluates whether the current season is Autumn
 
-Returns ``true`` if the current season is Autumn or Winter, ``false`` otherwise.
+    :return: ``true`` if it is Autumn, ``false`` otherwise.
+    :rtype: Boolean
+
+.. js:function:: Boolean season.isWinter()
+
+    Evaluates whether the current season is Winter
+
+    :return: ``true`` if it is Winter, ``false`` otherwise.
+    :rtype: Boolean
+
+.. js:function:: Boolean season.isWarm()
+
+    Evaluates whether the current season is considered warm.
+
+    :return: Returns ``true`` if the current season is Spring or Summer, ``false`` otherwise.
+    :rtype: Boolean
+
+.. js:function:: Boolean season.isCool()
+
+    Evaluates whether the current season is considered cool.
+
+    :return: Returns ``true`` if the current season is Autumn or Winter, ``false`` otherwise.
+    :rtype: Boolean

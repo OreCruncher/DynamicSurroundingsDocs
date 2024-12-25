@@ -11,6 +11,7 @@ build:
   jobs:
     post_install:
       - pip install sphinxcontrib-youtube
+      - pip install sphinx_rtd_theme
 
 python:
   install:

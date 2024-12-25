@@ -2,7 +2,6 @@ Videos
 ======
 
 .. youtube:: GbwaGX3JWeM
-    :align: left
 
 "Having a Wander" demonstrates several features:
 
@@ -16,7 +15,6 @@ Videos
 |
 
 .. youtube:: KGFZ1zf9R2s
-    :align: left
 
 "Sound reverb in caves" demonstrates the enhanced sound processing system. Sounds in large enclosed areas with reflective surfaces will produce a reverb effect.
 The amount of reverb produced is dependent on the volume of the enclosed space. Please note that reverb and echo are two entirely different things.
@@ -24,7 +22,6 @@ The amount of reverb produced is dependent on the volume of the enclosed space. 
 |
 
 .. youtube:: guMuLeG3lck
-    :align: left
 
 "Steam, flame jets, and waterfalls" demonstrates:
 

@@ -17,7 +17,8 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
     'sphinx.ext.intersphinx',
-    'sphinxcontrib.youtube'
+    'sphinxcontrib.youtube',
+    'sphinx_rtd_theme'
 ]
 
 intersphinx_mapping = {
@@ -30,13 +31,19 @@ templates_path = ['_templates']
 
 # -- Options for HTML output
 
-html_theme = 'agogo'
+html_theme = 'sphinx_rtd_theme'
 
-html_theme_options = {
-    'bodyfont' : 'Verdana',
-    'headerfont': 'Verdana',
-    'rightsidebar': 'false'
-}
+#html_theme_options = {
+#    'bodyfont' : 'Verdana',
+#    'headerfont': 'Verdana',
+#    'rightsidebar': 'false'
+#}
+
+# Style sheets
+html_static_path = ['_static']
+html_css_files = [
+    'css/custom.css'
+]
 
 # -- Options for EPUB output
 epub_show_urls = 'footnote'

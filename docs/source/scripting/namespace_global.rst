@@ -3,9 +3,10 @@
 
 .. note::
     These functions are not available for biome condition scripts.
-    
-.. code-block:: javascript
 
-    Boolean allowScary()
+.. js:function:: Boolean global.allowScary()
 
-Returns the current flag from the configuration file.  ``true`` if scary sounds are permitted, ``false`` otherwise.
+    Indicates whether scary effects are eligable for activation.
+
+    :return: Returns the current flag from the configuration file. ``true`` if scary sounds are permitted, ``false`` otherwise.
+    :rtype: Boolean

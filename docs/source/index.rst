@@ -17,6 +17,8 @@ it can be used with minimal Fabric or NeoForge clients when connecting and playi
       <a href="https://modrinth.com/mod/dynamicsurroundingsfabric"><img src="https://img.shields.io/badge/Mod-rinth-brightgreen" alt="Modrinth"></a>
    </div>
 
+|
+
 .. note::
    This documentation is under development
 
