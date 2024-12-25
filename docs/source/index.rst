@@ -26,3 +26,5 @@ it can be used with minimal Fabric or NeoForge clients when connecting and playi
    installation
    config/configuration
    videos
+   scripting/scripting
+   scripting/examples

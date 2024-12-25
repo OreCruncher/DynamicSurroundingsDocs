@@ -1,5 +1,5 @@
-Configuration
-=============
+Mod Configuration
+=================
 
 Configuration files for Dynamic Surroundings can be found in the modpack config folder with the name of ``dsurround``. Within this folder There
 will be two Json files:
@@ -169,7 +169,7 @@ entityEffects
 +++++++++++++
 
 .. code-block:: JSON
-    
+
     {
         "entityEffects": {
             "entityEffectRange": 24,
