@@ -9,6 +9,12 @@ will be two Json files:
 * ``soundconfig.json`` - configuration related to how sounds should be handled
 * ``dsurround.json`` - contains the runtime configuration settings for the mod
 
+It is recommended that settings be changed using the in-game menus. This will minimize the chances of typos in the config. If you need to modify directly, make sure Minecraft is not running to avoid the chance
+of the Minecraft client overwriting any changes that have been made.
+
+To be able to access the mod configuration menu, Cloth-Config needs to be installed with the modpack. This applies to Fabric as well as NeoForge. Additionally, Fabric does not provide
+a mod listing feature out of the box. The mod ModMenu can be installed to provide this functionality.
+
 soundconfig.json
 ----------------
 This document is an array of Json entities with the form of:
@@ -33,9 +39,8 @@ This document is an array of Json entities with the form of:
     ]
 
 By default a small handful of sounds can be found within the configuration file. These sounds are either marked for culling (such as animal sounds), or for volume control
-(in the case of Wither and Ender Dragon). This file can be modified manually in a text editor, or can be updated using the Individual Sound Configuration menu from within
-the game. Using the menu within the game is preferred as it reduces chance of errors. If you want to edit directly, do it when Minecraft is not running to avoid accidential
-overwrite of your changes.
+(in the case of Wither and Ender Dragon). This file can be modified manually in a text editor, or can be updated using the **Individual Sound Configuration** menu from within
+the game.
 
 Entry properties:
 
@@ -48,8 +53,7 @@ Entry properties:
 dsurround.json
 --------------
 
-This Json file is comprised of multiple sections, with related options grouped within. It is recommended that settings be changed from within the game using the configuration dialogs.
-If you want to modify directly, do it when Minecraft is not running to avoid accidential overwrite of your changes.
+This Json file is comprised of multiple sections, with related options grouped within. These settings can be changed in the mod configuration menu, assuming the appropriate mod support is available.
 
 In each section below the value of a setting is the default.
 

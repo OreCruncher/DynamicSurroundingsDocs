@@ -1,8 +1,5 @@
 Welcome to Dynamic Surroundings!
 ================================
-.. image:: images/icon.png
-   :scale: 40%
-   :align: left
 
 Dynamic Surroundings is a Minecraft 1.21.1 mod that alters the fabric of Minecraft experience by weaving a tapestry of sound and visual effects. It is available for Fabric and NeoForge.
 
@@ -26,7 +23,7 @@ it can be used with minimal Fabric or NeoForge clients when connecting and playi
    :hidden:
 
    installation
-   config/configuration
+   config/modconfiguration
    videos
    scripting/scripting
    scripting/examples

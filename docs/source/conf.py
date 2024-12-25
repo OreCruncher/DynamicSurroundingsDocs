@@ -33,17 +33,18 @@ templates_path = ['_templates']
 
 html_theme = 'sphinx_rtd_theme'
 
-#html_theme_options = {
-#    'bodyfont' : 'Verdana',
-#    'headerfont': 'Verdana',
-#    'rightsidebar': 'false'
-#}
+html_theme_options = {
+    'logo_only' : 'true',
+    'style_external_links': 'true'
+}
 
 # Style sheets
 html_static_path = ['_static']
 html_css_files = [
     'css/custom.css'
 ]
+
+html_logo = 'images/icon.png'
 
 # -- Options for EPUB output
 epub_show_urls = 'footnote'

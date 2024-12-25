@@ -37,14 +37,17 @@ Common functions that a script may use are grouped into namespaces. For example,
 are listed below:
 
 .. toctree::
+    :titlesonly:
 
-    namespace_biome
-    namespace_dim
-    namespace_diurnal
-    namespace_global
-    namespace_lib
-    namespace_player
-    namespace_state
-    namespace_season
-    namespace_weather
+    biome<namespace_biome>
+    dim<namespace_dim>
+    diurnal<namespace_diurnal>
+    global<namespace_global>
+    lib<namespace_lib>
+    player<namespace_player>
+    state<namespace_state>
+    season<namespace_season>
+    weather<namespace_weather>
     biometraits
+
+|
