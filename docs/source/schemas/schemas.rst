@@ -7,4 +7,7 @@ File Schemas
     sounds
     sound_factories
     biomes
+    blocks
+    dimensions
     acoustic
+

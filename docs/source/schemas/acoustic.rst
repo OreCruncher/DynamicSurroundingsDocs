@@ -1,8 +1,8 @@
 .. role:: underlined
 .. role:: sectiontitle
 
-Acoustic
-========
+Acoustics
+=========
 
 An acoustic combines a sound factory reference with other properties that determine when a sound is eligble for play. The acoustic
 definition has the following schema:
