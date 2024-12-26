@@ -4,6 +4,8 @@
 biomes.json
 ===========
 
+`Source reference <https://github.com/OreCruncher/DynamicSurroundingsFabric/blob/main/common/src/main/resources/assets/dsurround/dsconfigs/biomes.json>`_
+
 This ``biomes.json`` file is where all the rules for biome effects are configured. The file is a Json array of zero or more configuration rules. Any number of rules can be created
 based on what is needed.
 

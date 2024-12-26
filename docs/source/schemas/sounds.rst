@@ -1,5 +1,9 @@
+.. role:: sectiontitle
+
 sounds.json
 ===========
+
+`Source reference <https://github.com/OreCruncher/DynamicSurroundingsFabric/blob/main/common/src/main/resources/assets/dsurround/sounds.json>`_
 
 Dynamic Surroundings extends Minecraft sound definitions with additional fields. These fields are used to render atribution and license information
 in the **Individual Sound Configuration** configuration menu.
