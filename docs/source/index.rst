@@ -25,5 +25,10 @@ it can be used with minimal Fabric or NeoForge clients when connecting and playi
    installation
    config/modconfiguration
    videos
+   commands/commands
    scripting/scripting
    scripting/examples
+   schemas/schemas
+   packs/layout
+   packs/tagging
+   misc/music
