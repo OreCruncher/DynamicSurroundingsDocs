@@ -16,17 +16,42 @@ definition has the following schema:
         "type": "loop"
     }
 
-* :underlined:`factory` - The resource location ID of the sound factory that will be used to create the sound instance. This is a required property.
-* :underlined:`conditions` - Script that evaluates the conditions where the sound will be played. Default is ``true``.
-* :underlined:`weight` - Relative weight of the entry as compared to it's peers. It is used by the weight table selection process when determining a random sound. Default is ``10``.
-* :underlined:`type` - The type of acoustic the entry represents. Default is ``loop``.
+.. list-table:: Acoustic Configuration
+    :widths: auto
+    :align: center
+    :header-rows: 1
 
-The type of acoustic that can be defined are ``loop``, ``mood``, ``music``, and ``addition``. Each behaves differently within the game:
+    *   - Property
+        - Value Type
+        - Comment
+    *   - factory
+        - ResourceLocation
+        - The resource location ID of the sound factory that will be used to create the sound instance. This is a required property.
+    *   - conditions
+        - String
+        - Script that evaluates the conditions where the sound will be played. Default is ``true``. See :doc:`../scripting/scripting`.
+    *   - weight
+        - Integer
+        - Relative weight of the entry as compared to it's peers. It is used by the weight table selection process when determining a random sound. Default is ``10``.
+    *   - type
+        - String
+        - The type of acoustic the entry represents. Default is ``loop``.
 
-* :underlined:`loop` - The sound is non-attenuated and will play on a loop. It will terminate when the operating conditions are no longer met.
-* :underlined:`mood` - The sound has a chance of periodically playing at a random location around the player. This random location gives directionality where the sound can be heard someplace around the player.
-* :underlined:`music` - The sound is configured to be utilized by Minecraft music manager. Whenever Minecraft plays a music track, a selection can be made from music related acoustics.
-* :underlined:`addition` - The sound has a chance of randomly playing in a non-attenuated (non-directional) configuration.
+.. list-table:: Acoustic types
+    :widths: auto
+    :align: center
+    :header-rows: 1
+
+    *   - Type
+        - Comment
+    *   - loop
+        - The sound is non-attenuated and will play on a loop. It will terminate when the operating conditions are no longer met.
+    *   - mood
+        - The sound has a chance of periodically playing at a random location around the player. This random location gives directionality where the sound can be heard someplace around the player.
+    *   - music
+        - The sound is configured to be utilized by Minecraft music manager. Whenever Minecraft plays a music track, a selection can be made from music related acoustics.
+    *   - addition
+        - The sound has a chance of randomly playing in a non-attenuated (non-directional) configuration.
 
 It is worth noting that *any* sound factory can be used as an acoustic. Practically, though, the actual sound should be suitable for the acoustic type. For example, it would be strange to create a music acoustic
 from ``minecraft:entity.zombie.ambient`` or a mood acoustic from ``minecraft:ui.button.click``.

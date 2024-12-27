@@ -1,4 +1,5 @@
 .. role:: underlined
+.. role:: sectiontitle
 
 sound_factories.json
 ====================
@@ -22,26 +23,47 @@ The schema for a sound factory entry is as follows:
         "repeatDelay": 0,
         "global": false,
         "attenuation": "LINEAR",
-        "music": {
-            "min_delay": 6000,
-            "max_delay": 24000,
-            "replace_current_music": false
-        }
+        "music": null
     }
 
-* :underlined:`location` - The resource location ID of the sound factory. It should be unique across configurations. It is a required property. Most configuration rules refer to a factory by this ID.
-* :underlined:`soundEvent` - The sound event that the factory will produce. It is a required property.
-* :underlined:`volume` - The volume scale to apply to the sound when playing. The value can either be a float, or a range with min/max. Default is 1.0F.
-* :underlined:`pitch` - This pitch at which to play the sound. The value can either be a float, or a range with min/max. Default is 1.0F.
-* :underlined:`category` - The category to which the sound will belong when played. Default is ``AMBIENT``.
-* :underlined:`isRepeatable` - Whether the sound should be marked as repeatable (looped) when played. Default is ``false``.
-* :underlined:`repeatDelay` - The tick delay between plays for a repeatable sound. Default is 0.
-* :underlined:`global` - Whether the sound is considered global or not. Default is ``false``.
-* :underlined:`attenuation` - Attenuation of the sound. Default is ``LINEAR``.
-* :underlined:`music` - Properties to apply when the music manager plays the sound as music. This property is optional.
-* :underlined:`music.min_delay` - TBD
-* :underlined:`music.max_delay` - TBD
-* :underlined:`music.replace_current_music` - TBD
+.. list-table:: Sound Factory Configuration
+    :widths: auto
+    :align: center
+    :header-rows: 1
+
+    *   - Property
+        - Value Type
+        - Comment
+    *   - location
+        - ResourceLocation
+        - The resource location ID of the sound factory. It should be unique across configurations. It is a required property. Most configuration rules refer to a factory by this ID.
+    *   - soundEvent
+        - ResourceLocation
+        - The sound event that the factory will produce. It is a required property.
+    *   - volume
+        - FloatProvider
+        - The volume scale to apply to the sound when playing. The value can either be a float, or a range with min/max. Default is ``1.0``.
+    *   - pitch
+        - FloatProvider
+        - This pitch at which to play the sound. The value can either be a float, or a range with min/max. Default is ``1.0``.
+    *   - category
+        - String
+        - The category to which the sound will belong when played. Default is ``AMBIENT``.
+    *   - isRepeatable
+        - Boolean
+        - Whether the sound should be marked as repeatable (looped) when played. Default is ``false``.
+    *   - repeatDelay
+        - Integer
+        - The tick delay between plays for a repeatable sound. Default is ``0``.
+    *   - global
+        - Boolean
+        - Whether the sound is considered global or not. Default is ``false``.
+    *   - attenuation
+        - String
+        - Attenuation of the sound. Default is ``LINEAR``.
+    *   - music
+        - Music
+        - Properties to apply when the music manager plays the sound as music. This property is optional. See below for more details.
 
 ``category`` can be one of the following: MASTER, MUSIC, RECORDS, WEATHER, BLOCKS, HOSTILE, NEUTRAL, PLAYERS, AMBIENT, and VOICE. The ``category`` property matches a sound source in the sound options
 dialog, and will be scaled by the amount specified by the sound source.
@@ -65,3 +87,35 @@ The range is specified like the following:
     }
 
 When a sound instance is created, the volume will be between 0.8 and 1.2 inclusive.
+
+:sectiontitle:`Configuring Music`
+
+Any sound factory can be used to generate music. However, it would be expected that a sound factory would be set up specifically for music since the actual sound files would be encoded using stero and at higher sampling rates.
+
+.. code-block:: JSON
+
+    {
+        "music": {
+            "min_delay": 6000,
+            "max_delay": 24000,
+            "replace_current_music": false
+        }
+    }
+
+.. list-table:: Music Configuration
+    :widths: auto
+    :align: center
+    :header-rows: 1
+
+    *   - Property
+        - Value Type
+        - Comment
+    *   - min_delay
+        - Integer
+        - TBD
+    *   - max_delay
+        - Integer
+        - TBD
+    *   - replace_current_music
+        - Boolean
+        - TBD

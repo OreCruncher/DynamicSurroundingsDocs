@@ -9,3 +9,7 @@ these tags can be found `in this folder <https://github.com/OreCruncher/DynamicS
 
 From a scripting perspective, these traits show up as boolean value with names matching the trait. Dynamic Surroundings will set the boolean state of these
 traits every tick so that scripts will have up-to-date information.
+
+.. seealso::
+
+    `BiomeTraits enum <https://github.com/OreCruncher/DynamicSurroundingsFabric/blob/0eed352bab5312cc605c0dbdf3296713e8fc3363/common/src/main/java/org/orecruncher/dsurround/config/BiomeTrait.java#L11>`_

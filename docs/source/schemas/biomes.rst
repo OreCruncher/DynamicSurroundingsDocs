@@ -25,24 +25,41 @@ The schema for a rule entry is as follows:
         "acoustics": [ ]
     }
 
-* :underlined:`biomeSelector` - JavaScript which returns ``true`` to apply a rule to a biome, or ``false`` to not apply. Default is 'true'.
-* :underlined:`_comment` - Single line comment to describe purpose of the rule. Default is ``null``, meaning no comment.
-* :underlined:`priority` - The priority at which the rule will be applied. Default is ``0``. Lower priority rules are applied before higher priority rules, meaning higher priority rules can alter what a lower priority rule configured.
-* :underlined:`traits` - Any array of 0 or more traits that are to be added to a biome. During configuration, Dynamic Surroundings will apply traits to all biomes before applying the ``biomeSelector`` script. This option is used to configure modded biomes that did not use biome tags.
-* :underlined:`clearSounds` - Clears any sound effects that have been configured by prior rules. Default is ``false``.
-* :underlined:`fogColor` - Fog tint color, if any. Default is ``null`` meaning no setting. The format of the color string is RGB hex code (ex, "#FFD700" for gold).
-* :underlined:`additionalSoundChance` - The chance that a sound of type ADDITION will play per tick. Default is '0.004'.
-* :underlined:`moodSoundChance` - The chance that a sound of type MOOD will play per tick. Default is '0.004'.
-* :underlined:`acoustics` - A Json array of acoustic definitions for the biome. Default is ``null``.
+.. list-table:: Biome Configuration
+    :widths: auto
+    :align: center
+    :header-rows: 1
 
-Additional details can be found in other pages:
-
-.. toctree::
-    :titlesonly:
-
-    ../scripting/biometraits
-    ../scripting/namespace_biome
-    acoustic
+    *   - Property
+        - Value Type
+        - Comment
+    *   - biomeSelector
+        - String
+        - JavaScript which returns ``true`` to apply a rule to a biome, or ``false`` to not apply. Default is ``true``. See :doc:`../scripting/scripting`.
+    *   - _comment
+        - String
+        - Single line comment to describe purpose of the rule. Default is ``null``, meaning no comment.
+    *   - priority
+        - Integer
+        - The priority at which the rule will be applied. Default is ``0``. Lower priority rules are applied before higher priority rules, meaning higher priority rules can alter what a lower priority rule configured.
+    *   - traits
+        - String array
+        - Any array of 0 or more traits that are to be added to a biome. During configuration, Dynamic Surroundings will apply traits to all biomes before applying the ``biomeSelector`` script. This option is used to configure modded biomes that did not use biome tags. See :doc:`../scripting/biometraits`.
+    *   - clearSounds
+        - Boolean
+        - Clears any sound effects that have been configured by prior rules. Default is ``false``.
+    *   - fogColor
+        - String
+        - Fog tint color, if any. Default is ``null`` meaning no setting. The format of the color string is RGB hex code (ex, "#FFD700" for gold).
+    *   - additionalSoundChance
+        - Double
+        - The chance that a sound of type ADDITION will play per tick. Default is ``0.004``.
+    *   - moodSoundChance
+        - Double
+        - The chance that a sound of type MOOD will play per tick. Default is ``0.004``.
+    *   - acoustics
+        - Acoustic Array
+        - A Json array of acoustic definitions for the biome. Default is ``null``. See :doc:`acoustic`.
 
 As mentioned above, the chance related properties are actually scripts. These scripts have to evaluate to a double value in the range of 0.0 - 1.0. Each tick Dynamic Surroundings will generate a
 random double value in the range of 0.0 - 1.0. If this value is less than or equal to the chance value, the effect will be applied.
