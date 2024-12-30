@@ -4,9 +4,27 @@
 Commands
 ========
 
-:sectiontitle:`/dsmm reset`
+:sectiontitle:`/dsmm \<command>`
 
-Resets the Minecraft Music manager. Causes the current music to terminate, and changes the internal timers so that another music selection will be made in the very near future.
+Alters the behavior of the Music Manager.
+
+.. list-table:: Music Manager Subcommands
+    :widths: auto
+    :align: center
+    :header-rows: 1
+
+    *   - Command
+        - Version Added
+        - Comment
+    *   - reset
+        -
+        - Resets the Minecraft Music manager. Causes the current music to terminate, and changes the internal timers so that another music selection will be made in the very near future.
+    *   - pause
+        - 0.4.1
+        - Pauses the music manager, stopping any current music and will block further playing until it is unpaused or reset.
+    *   - unpause
+        - 0.4.1
+        - Allows the music manager to play music.
 
 :sectiontitle:`/dsreload`
 
@@ -26,13 +44,30 @@ should return ``true``.
 
 Dumps out cached information to the ``minecraftinstance/config/dsurround/dumps`` folder. Useful when creating a resource pack and the final cached result needs to be analyzed.
 
-* :underlined:`biomes` - Lists all biomes and associated configuration information.
-* :underlined:`sounds` - A list of all sound events known by Dynamic Surroundings, both registered in the sound event registry as well as defined with mods and resource packs.
-* :underlined:`dimensions` - All cached dimension information defined for Dynamic Surroundings.
-* :underlined:`blocks` - List of all blocks, tags, and blockstates. ``nostates`` can be specified to not emit blockstate information.
-* :underlined:`blocksbytag` - List all blocks, organized by tag.
-* :underlined:`blockconfigrules` - Lists cached block config rules.
-* :underlined:`blockstates` - Dumps all possible block states.
-* :underlined:`items` - A dump of the item registry and the tags associated with each item.
-* :underlined:`tags` - Lists all Dynamic Surroundings tags along with their members.
-* :underlined:`diregistrations` - Dumps all component registrations in the dependency container; only makes sense to me. :)
+.. list-table:: Dump Subcommands
+    :widths: auto
+    :align: center
+    :header-rows: 1
+
+    *   - Subcommand
+        - Comment
+    *   - biomes
+        - Lists all biomes and associated configuration information.
+    *   - sounds
+        - A list of all sound events known by Dynamic Surroundings, both registered in the sound event registry as well as defined with mods and resource packs.
+    *   - dimensions
+        - All cached dimension information defined for Dynamic Surroundings.
+    *   - blocks
+        - List of all blocks, tags, and blockstates. ``nostates`` can be specified to not emit blockstate information.
+    *   - blocksbytag
+        - List all blocks, organized by tag.
+    *   - blockconfigrules
+        - Lists cached block config rules.
+    *   - blockstates
+        - Dumps all possible block states.
+    *   - items
+        - A dump of the item registry and the tags associated with each item.
+    *   - tags
+        - Lists all Dynamic Surroundings tags along with their members.
+    *   - diregistrations
+        - Dumps all component registrations in the dependency container; only makes sense to me. :)
