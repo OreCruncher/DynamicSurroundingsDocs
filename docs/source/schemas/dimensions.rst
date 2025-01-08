@@ -16,7 +16,8 @@ Dynamic Surroundings to not make sense. Such dimensions could include mining dim
         "skyHeight": null,
         "cloudHeight": null,
         "alwaysOutside": null,
-        "playBiomeSounds": null
+        "playBiomeSounds": null,
+        "compassWobble": null
     }
 
 .. list-table:: Dimension Configuration
@@ -45,3 +46,6 @@ Dynamic Surroundings to not make sense. Such dimensions could include mining dim
     *   - playBiomeSounds
         - Boolean
         - Indicates if any biome sounds should be generated in the dimension. Default is ``true``.
+    *   - compassWobble
+        - Boolean
+        - Indicates if the compass overlay should cause wobbling for the dimension. Default is based on whether the dimension is considered natural or not. In Vanilla, compass wobbling occurs when in the Nether or End. (*Added 1.21.1-0.4.2*)

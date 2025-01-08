@@ -22,7 +22,7 @@ The layout of Dynamic Surroundings configuration files are similar between resou
 folder named ``dsconfigs``. The ``tags`` folder is for configuring Dynamic Surroundings tags, and is entirely separate from Minecraft tags. See :doc:`tagging` for more
 information.
 
-``biomes.json``, ``blocks.json``, ``dimensions.json``, and ``sound_factories.json`` are placed in the ``dsconfigs`` folder. Though it's not specifically required, mod specific
+``biomes.json``, ``blocks.json``, ``dimensions.json``, ``sound_factories.json``, and ``sound_mappings.json`` are placed in the ``dsconfigs`` folder. Though it's not specifically required, mod specific
 enhancements should be placed into a folder specific to the mod. You can see this in the Mod image where ``biomesoplenty`` is concerned.
 
 ``sounds.json`` is placed placed in the regular location required by Minecraft.

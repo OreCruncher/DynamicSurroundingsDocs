@@ -27,7 +27,7 @@ blocks.json
         - Comment
     *   - blocks
         - String Array
-        - The block states for which the configuration options apply. At least one entry is required. See `Block Specification`_ below.
+        - The block states for which the configuration options apply. At least one entry is required. See :doc:`block_spec`.
     *   - clearSounds
         - Boolean
         - Clears existing sound configuration for the blocks. Default is ``false``.
@@ -70,16 +70,6 @@ blocks.json
     *   - spawnChance
         - String
         - Script that provides the spawn chance of the effect. Default is ``0.01``. See :doc:`../scripting/scripting`.
-
-.. _Block Specification:
-
-:sectiontitle:`Block Specification`
-
-Target blocks can be specified in one of 3 different ways:
-
-* Direct - Explicit using the resource location ID of the block (ex, ``minecraft:cobblestone``).
-* Tag - Block tag (ex, ``#minecraft:wood``). The ``#`` prefix tells the config parser that it should be interpreted as a tag. The tag can be from any mod.
-* BlockState match - Block plus additional block state values (ex, ``minecraft:nether_wart[age=3]``). The specification can do partial matches, meaning a subset of block state properies need to be specified.
 
 :sectiontitle:`Examples`
 

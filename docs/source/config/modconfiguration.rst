@@ -198,6 +198,8 @@ soundOptions
         - Normally when a player is in creative mode the music that is played is for the creative session. Enabling this feature will allow the regular biome music to play as if the player was not in creative mode.
     *   - displayToastMessagesForMusic
         - Controls whether a toast popout will be displayed when playing music that required atribution.
+    *   - remapSounds
+        - Enables sound remapping when sounds are played. Enabling tells Dynamic Surroundings to replace various step sounds with replacement versions. (*Added 1.21.1-0.4.2*)
 
 blockEffects
 ++++++++++++
@@ -311,7 +313,7 @@ footstepAccents
     *   - enableFloorSqueaks
         - Enables playing floor squeeks when walking on wooden floors.
     *   - enableLeafAccents
-        - Enables playing sound effects when walking on leaf blocks.
+        - Enables playing sound effects when walking on leaf blocks.  (*Removed 1.21.1-0.4.2*)
 
 particleTweaks
 ++++++++++++++
@@ -367,7 +369,7 @@ compassAndClockOptions
 fogOptions
 ++++++++++
 
-.. versionadded:: 0.4.1
+*Added 1.21.1-0.4.1*
 
 .. code-block:: JSON
 

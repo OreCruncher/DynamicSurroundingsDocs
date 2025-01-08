@@ -9,4 +9,6 @@ File Schemas
     biomes
     blocks
     dimensions
+    block_spec
     acoustic
+    sound_mapping

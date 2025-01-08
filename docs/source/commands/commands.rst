@@ -14,17 +14,15 @@ Alters the behavior of the Music Manager.
     :header-rows: 1
 
     *   - Command
-        - Version Added
         - Comment
     *   - reset
-        -
         - Resets the Minecraft Music manager. Causes the current music to terminate, and changes the internal timers so that another music selection will be made in the very near future.
     *   - pause
-        - 0.4.1
-        - Pauses the music manager, stopping any current music and will block further playing until it is unpaused or reset.
+        - Pauses the music manager, stopping any current music and will block further playing until it is unpaused or reset. (*Added 1.21.1-0.4.1*)
     *   - unpause
-        - 0.4.1
-        - Allows the music manager to play music.
+        - Allows the music manager to play music. (*Added 1.21.1-0.4.1*)
+    *   - whatsplaying
+        - Reports which sound is being played by the Music Manager. (*Added 1.21.1-0.4.2*)
 
 :sectiontitle:`/dsreload`
 
