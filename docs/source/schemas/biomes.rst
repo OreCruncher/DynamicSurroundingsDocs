@@ -50,7 +50,7 @@ The schema for a rule entry is as follows:
         - Clears any sound effects that have been configured by prior rules. Default is ``false``.
     *   - fogColor
         - String
-        - Fog tint color, if any. Default is ``null`` meaning no setting. The format of the color string is RGB hex code (ex, "#FFD700" for gold).
+        - Fog tint color, if any. Default is ``null`` meaning no setting. The format of the color string is RGB hex code (ex, "#FFD700" for gold). Please note the Minecraft default fog color is ``#C0D8FF`` which matches the blue sky color.
     *   - additionalSoundChance
         - Double
         - The chance that a sound of type ADDITION will play per tick. Default is ``0.004``.

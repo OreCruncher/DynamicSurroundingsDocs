@@ -1,7 +1,7 @@
 .. role:: sectiontitle
 
-Sound Mapping
-=============
+sound_mappings.json
+===================
 
 *Added 1.21.1-0.4.2*
 

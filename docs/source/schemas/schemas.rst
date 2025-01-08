@@ -6,9 +6,15 @@ File Schemas
 
     sounds
     sound_factories
+    sound_mappings
     biomes
     blocks
     dimensions
-    block_spec
-    acoustic
-    sound_mapping
+
+.. seealso::
+
+    .. toctree::
+        :titlesonly:
+
+        block_spec
+        acoustic
