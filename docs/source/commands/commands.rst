@@ -31,11 +31,11 @@ need to be hot loaded without exiting the Minecraft client. Can also be used if 
 
 :sectiontitle:`/dsscript \<script>`
 
-Executes an arbitrary JavaScript entry and displays the result. For example, ``/dsscript Math.sqrt(9) * 6`` should respond with ``18``. Useful for performing calculations on the side as well as testing.
+Executes an arbitrary script and displays the result. For example, ``/dsscript Math.sqrt(9) * 6`` should respond with ``18.0``. Useful for performing calculations on the side as well as testing.
 
 :sectiontitle:`/dsbiome \<biome ID> \<script>`
 
-Executes an arbitrary JavaScript entry using the specified biome configured in the JavaScript execution environment. Useful for testing biome selector script fragments. For example, ``/dsbiome minecraft:plains OVERWORLD && PLAINS``
+Executes an arbitrary script entry using the specified biome configured in the execution environment. Useful for testing biome selector script fragments. For example, ``/dsbiome minecraft:plains OVERWORLD && PLAINS``
 should return ``true``.
 
 :sectiontitle:`/dsdump \<subcommand>`

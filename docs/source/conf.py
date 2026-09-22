@@ -3,10 +3,10 @@
 # -- Project information
 
 project = 'Dynamic Surroundings'
-copyright = '2024, 2025 OreCruncher'
+copyright = '2024-2026 OreCruncher'
 author = 'OreCruncher'
 
-release = '0.4.0'
+release = '0.4.4'
 version = '0.0.1'
 
 # -- General configuration

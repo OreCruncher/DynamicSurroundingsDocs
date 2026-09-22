@@ -53,9 +53,4 @@ The functions in this namespace provide support for common things that a script 
 
 .. js:function:: Boolean lib.isModLoaded(String modId)
 
-    Indicates whether the specified mod is loaded.
-
-    :param modId: The ID of the mod to test for
-    :type modId: String
-    :return: ``true`` if the mod is present, ``false`` otherwise
-    :rtype: Boolean
+    Indicates whether the specified mod is loaded. (*Migrated to the platform namespace in 1.21.1-0.4.3*)

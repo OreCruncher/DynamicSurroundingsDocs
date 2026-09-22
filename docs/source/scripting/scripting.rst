@@ -49,6 +49,8 @@ are listed below:
     diurnal<namespace_diurnal>
     global<namespace_global>
     lib<namespace_lib>
+    math<namespace_math>
+    platform<namespace_platform>
     player<namespace_player>
     state<namespace_state>
     season<namespace_season>
