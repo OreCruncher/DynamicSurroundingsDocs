@@ -17,8 +17,10 @@ The schema for a rule entry is as follows:
         "biomeSelector": "true",
         "_comment": null,
         "priority": 0,
+        "clearTraits": false,
         "traits": [ "array", "of", "biome", "traits" ],
         "clearSounds": false,
+        "resetFogColor": false,
         "fogColor": null,
         "additionalSoundChance": null,
         "moodSoundChance": null,
@@ -42,12 +44,18 @@ The schema for a rule entry is as follows:
     *   - priority
         - Integer
         - The priority at which the rule will be applied. Default is ``0``. Lower priority rules are applied before higher priority rules, meaning higher priority rules can alter what a lower priority rule configured.
+    *   - clearTraits
+        - Boolean
+        - Clears any existing traits before applying new traits. Default is ``false``. (*Added 1.21.1-0.4.3*)
     *   - traits
         - String array
         - Any array of 0 or more traits that are to be added to a biome. During configuration, Dynamic Surroundings will apply traits to all biomes before applying the ``biomeSelector`` script. This option is used to configure modded biomes that did not use biome tags. See :doc:`../scripting/biometraits`.
     *   - clearSounds
         - Boolean
         - Clears any sound effects that have been configured by prior rules. Default is ``false``.
+    *   - resetFogColor
+        - Boolean
+        - Resets the Dynamic Surroundings fog coloration. Fog color will be the value defined by Minecraft or any other data pack that supplied fog color. Default is ``false``. (*Added 1.21.1-0.4.3*)
     *   - fogColor
         - String
         - Fog tint color, if any. Default is ``null`` meaning no setting. The format of the color string is RGB hex code (ex, "#FFD700" for gold). Please note the Minecraft default fog color is ``#C0D8FF`` which matches the blue sky color.
@@ -140,3 +148,13 @@ This rule sets the fog color for biomes that have the trait SWAMP and are not FO
     }
 
 This rule clears any sounds that may have been assigned to The End biome or The Void. Since it is priority 100, it should be applied last.
+
+.. code-block:: JSON
+
+    {
+        "biomeSelector": "TRUE",
+        "resetFogColor": true
+    }
+
+This rule will clear any Dynamic Surroundings configured fog color for all biomes. The new value will be the color defined by Minecraft or any other data pack that defines the biome.
+This setting is only available for versions 1.21.1-0.4.3+.

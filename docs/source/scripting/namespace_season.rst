@@ -35,16 +35,23 @@ If Serene Seasons is not installed, the season will always be Spring.
     :return: ``true`` if it is Winter, ``false`` otherwise.
     :rtype: Boolean
 
-.. js:function:: Boolean season.isWarm()
+.. js:function:: String season.isEarly()
 
-    Evaluates whether the current season is considered warm.
+    Evaluates whether the current period within a season is early. If a season mod is not installed it will always return ``true``. (*Added 1.21.1-0.4.4*)
 
-    :return: Returns ``true`` if the current season is Spring or Summer, ``false`` otherwise.
+    :return: ``true`` if it is early in the season, ``false`` otherwise.
     :rtype: Boolean
 
-.. js:function:: Boolean season.isCool()
+.. js:function:: String season.isMiddle()
 
-    Evaluates whether the current season is considered cool.
+    Evaluates whether the current period within a season is the middle. If a season mod is not installed it will always return ``true``. (*Added 1.21.1-0.4.4*)
 
-    :return: Returns ``true`` if the current season is Autumn or Winter, ``false`` otherwise.
+    :return: ``true`` if it is middle of the season, ``false`` otherwise.
+    :rtype: Boolean
+
+.. js:function:: String season.isLate()
+
+    Evaluates whether the current period within a season is late. If a season mod is not installed it will always return ``true``. (*Added 1.21.1-0.4.4*)
+
+    :return: ``true`` if it is late in the season, ``false`` otherwise.
     :rtype: Boolean

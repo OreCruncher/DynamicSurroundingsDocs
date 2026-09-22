@@ -1,9 +1,14 @@
 Scripting
 =========
 
-Dynamic Surroundings uses JavaScript as part of its configuration. Small snippits of JavaScript are used when determining when
+Dynamic Surroundings uses scripting as part of its configuration. Small snippits of script code are used when determining when
 a biome rule applies to a given biome, whether a special effect is eligbile for activation, or calculating the chance something
-may occur. The Nashorn JavaScript engine is used to execute these small scripts.
+may occur. The scripts are compiled by an engine specific to Dynamic Surroundings.
+
+.. note::
+    The Nashorn JavaScript engine was replaced with a simplified scripting engine starting with Dynamic Surroundings 0.4.3. The script
+    syntax is very similar to JavaScript and should not require any changes to existing scripts.
+
 
 As an example, here is the biome configuration rule for lush desert biomes. Don't worry too much about the details; they will be
 explained in specific sections that detail the implementation.
@@ -27,7 +32,7 @@ explained in specific sections that detail the implementation.
         }
     }
 
-The ``biomeSelector`` value is a small JavaScript. Dynamic Surroundings will update the JavaScript execution environment with boolean values named for the various traits a biome can have.
+The ``biomeSelector`` value is a small script. Dynamic Surroundings will update the script execution environment with boolean values named for the various traits a biome can have.
 In this particular case, this piece of script will evaluate to ``true`` or ``false`` based on the values of ``DESERT`` and ``LUSH``.
 
 This rule also has two acoustics, each with their own seperate conditions. The ``biome.wind.desert`` will be active if it is raining. The ``biome.crickets`` acoustic will play if it is not

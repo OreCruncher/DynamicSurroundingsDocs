@@ -173,11 +173,14 @@ soundOptions
 
     {
         "soundOptions": {
+            "discardNonClientSoundPlays": true,
+            "logStacktraceWhenDiscarding": false,
             "ambientVolumeScaling": 100,
             "replaceThunderSounds": true,
             "allowScarySounds": true,
             "playBiomeMusicWhileCreative": false,
-            "displayToastMessagesForMusic": true
+            "displayToastMessagesForMusic": true,
+            "remapSounds": true
         }
     }
 
@@ -188,6 +191,10 @@ soundOptions
 
     *   - Property
         - Description
+    *   - discardNonClientSoundPlays
+        - Flag indicating whether to discard sound plays by non-client threads. Sounds played by non-client threads run the risk of triggering comodiciation exceptions which will crash the client. (*Added 1.21.1-0.4.4*)
+    *   - logStacktraceWhenDiscarding
+        - Flag indicating whether to log a stack trace when discarding a sound play. This is useful for debugging issues with other mods that are not playing sounds correctly. (*Added 1.21.1-0.4.4*)
     *   - ambientVolumeScaling
         - Scaling factor to apply to all ambient sounds that are played. This factor is on top of the sound slider scaling of Minecraft. This value can be 0 - 400.
     *   - replaceThunderSound
@@ -397,6 +404,32 @@ fogOptions
         - Enable/disable biome fog effect. Some biomes will be configured as foggy, and when the player is in those biomes the density of fog will increase.
     *   - enableWeatherFog
         - Enable/disable generation of fog when raining/snowing.
+
+musicManagerOptions
++++++++++++++++++++
+
+*Added 1.21.1-0.4.3*
+
+.. code-block:: JSON
+
+    {
+        "musicManagerOptions": {
+            "replaceMusicManager": true,
+            "reduceWaitTime": 0
+        }
+    }
+
+.. list-table::
+    :widths: auto
+    :align: center
+    :header-rows: 1
+
+    *   - Property
+        - Description
+    *   - replaceMusicManager
+        - Replace Minecraft's music manager with modded version. This will enable the use of music manager commands (/dsmm).
+    *   - reduceWaitTime
+        - Reduces the amount of time to wait between music plays. This value is a percentage, and is independent of the modded music manager. By default play interval will not be reduced.
 
 otherOptions
 ++++++++++++
