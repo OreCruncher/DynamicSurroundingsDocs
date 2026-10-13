@@ -50,7 +50,7 @@ the game.
     *   - Property
         - Description
     *   - soundEventId
-        - The resource location of the sound in question. For example, the sheep bleating sound effect has the ID of ``minecraft:entity.sheep.ambient``. This is a *required* field.
+        - The :term:`resource location <Resource Location>` of the sound in question. For example, the sheep bleating sound effect has the ID of ``minecraft:entity.sheep.ambient``. This is a *required* field.
     *   - startup
         - Flag indicating whether the sound should be included in the startup sound selection list. Default is ``false``, and is not required.
     *   - volumeScale
@@ -65,40 +65,14 @@ dsurround.json
 
 This Json file is comprised of multiple sections, with related options grouped within. These settings can be changed in the mod configuration menu, assuming the appropriate mod support is available.
 
-In each section below the value of a setting is the default.
+In each section below the value of a setting is the default. The examples show the section as Dynamic Surroundings writes it: above each setting is a comment describing it, followed
+by its range or possible values, and its default. The comments are rewritten each time the file is saved, so any comments added by hand will not be kept. Comments are allowed when
+editing the file by hand. (*Comments added 1.21.1-0.4.6*)
 
-logging
-+++++++
+Some settings have moved to a different section, or been renamed, between releases. When an older ``dsurround.json`` is loaded, the values of moved settings are carried over to their new
+location automatically.
 
-.. code-block:: JSON
-
-    {
-        "logging": {
-            "enableDebugLogging": false,
-            "traceMask": 0,
-            "enableModUpdateChatMessage": true,
-            "filteredTagView": false,
-            "registerCommands": true
-        }
-    }
-
-.. list-table::
-    :widths: auto
-    :align: center
-    :header-rows: 1
-
-    *   - Property
-        - Description
-    *   - enableDebugLogging
-        - Turns on detailed diagnostic trace from the mod.
-    *   - traceMask
-        - Set of bits that control which detail is desired.
-    *   - enableModUpdateChatMessage
-        - Enables display of version check results in the chat window when the player joins a world.
-    *   - filteredTagView
-        - Controls the amount of tag information to display within the mods diagnostics overlay.
-    *   - registerCommands
-        - Enables/disables registration of client side commands.
+Settings for experimental features are colored orchid in the configuration menu. Experimental features are subject to change and may be removed in a future release. (*Added 1.21.1-0.4.7*)
 
 soundSystem
 +++++++++++
@@ -106,26 +80,40 @@ soundSystem
 .. code-block:: JSON
 
     {
-        "soundSystem": {
-            "streamingChannels": 12,
-            "cullInterval": 20,
-            "enableSoundPruning": true
-        }
+      // Configuration options for modifying Minecraft's Sound System behavior
+      "soundSystem": {
+        // The number of sound channels to reserve for streaming sounds (music, biome sounds, records, etc.)
+        // Range: 8 - 16, default: 12
+        "streamingChannels": 12,
+        // Ticks between culled sound events (0 to disable culling)
+        // Range: 0 - 200, default: 20
+        "cullInterval": 20,
+        // Enables/disables cancellation of sound that a player will not hear
+        // Default: true
+        "enableSoundPruning": true
+      }
     }
 
-.. list-table::
-    :widths: auto
-    :align: center
-    :header-rows: 1
+.. confval:: soundSystem.streamingChannels
+    :type: ``integer``
+    :default: ``12``
+    :no-contents-entry:
 
-    *   - Property
-        - Description
-    *   - streamingChannels
-        - The number of sound channels to reserve for streaming. Sounds that are typically streamed are music and background sound tracks for biomes. Streaming means that sound information is read from disk throughout the sound play, whereas non-streaming the sound information is read all at once before sending to the engine. Recommendation is not touch this setting unless there is a real need.
-    *   - cullInterval
-        - The number of ticks over which sounds are culled. The default of ``20`` means that a sound will be culled over a 1 second interval. Setting to 0 disables sound culling.
-    *   - enableSoundPruning
-        - Determines if Dynamic Surroundings will automatically prevent sounds from playing that are too far away for the player to hear. Intent is to reduce needless load in the Minecraft sound engine.
+    The number of sound channels to reserve for streaming. Sounds that are typically streamed are music and background sound tracks for biomes. Streaming means that sound information is read from disk throughout the sound play, whereas non-streaming the sound information is read all at once before sending to the engine. This value can be 8 - 16. Requires a restart. Recommendation is not touch this setting unless there is a real need.
+
+.. confval:: soundSystem.cullInterval
+    :type: ``integer``
+    :default: ``20``
+    :no-contents-entry:
+
+    The number of ticks over which sounds are culled. The default of ``20`` means that a sound will be culled over a 1 second interval. This value can be 0 - 200. Setting to 0 disables sound culling.
+
+.. confval:: soundSystem.enableSoundPruning
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Determines if Dynamic Surroundings will automatically prevent sounds from playing that are too far away for the player to hear. Intent is to reduce needless load in the Minecraft sound engine. Does not apply to global, non-attenuated, or weather sounds.
 
 enhancedSounds
 ++++++++++++++
@@ -133,38 +121,80 @@ enhancedSounds
 .. code-block:: JSON
 
     {
-        "enhancedSounds": {
-            "enableEnhancedSounds": true,
-            "backgroundThreadWorkers": 0,
-            "enableMonoConversion": true,
-            "enableOcclusionProcessing": false,
-            "reverbRays": 32,
-            "reverbBounces": 4,
-            "reverbRayTraceDistance": 256
-        }    
+      // Configuration options for enhanced sound processing
+      "enhancedSounds": {
+        // Enable/disable enhanced sound processing (reverb, occlusion, etc)
+        // Default: true
+        "enableEnhancedSounds": true,
+        // Number of background threads to use for enhanced sound processing (0 means use internal default)
+        // Range: 0 - 8, default: 0
+        "backgroundThreadWorkers": 0,
+        // Enable/disable sound occlusion processing (sound muffling behind blocks)
+        // Default: false
+        "enableOcclusionProcessing": false,
+        // Check whether reflections reach the player only from each reverb ray's last reflection, instead of from every reflection. Cheaper; may sound different
+        // Default: false
+        "simplifiedSharedAirspace": false,
+        // The number of rays to project around a sound location to calculate reverb effect
+        // Range: 16 - 64, default: 32
+        "reverbRays": 32,
+        // The number of reflections the ray calculation will perform before ending a ray calculation
+        // Range: 2 - 8, default: 4
+        "reverbBounces": 4,
+        // Total distance a reverb ray will traverse before ending calculation
+        // Range: 64 - 256, default: 128
+        "reverbRayTraceDistance": 128
+      }
     }
 
-.. list-table::
-    :widths: auto
-    :align: center
-    :header-rows: 1
+.. confval:: enhancedSounds.enableEnhancedSounds
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
 
-    *   - Property
-        - Description
-    *   - enableEnhancedSounds
-        - Enables/disables enhanced sound processing by Dynamic Surroundings. Enhanced sound processing is what provides reverb in caves.
-    *   - backgroundThreadWorkers
-        - This is the number of compute threads that run in the background to perform calculations for enhanced sounds. Recommendation is to not change this setting.
-    *   - enableMonoConversion
-        - For 3D spacial sounds to work they have to be encoded using mono format. Dynamic Surroundings will convert stereo sounds to mono on the fly to allow this to happen.
-    *   - enableOcclusionProcessing
-        - Occlusion processing is an advanced feature of the sound processing system. If enabled, Dynamic Surroundings will perform calculations to "muffle" a sound that is behind blocks from the perspective of the player. This processing will require additional horsepower so it is disabled by default.
-    *   - reverbRays
-        - As part of the calculation process of the enhanced sound engine, logic will cast a number of "rays" away from the player to get a sense of the space the player is located within. Increasing this value will improve fidelity at the expense of processing power. Recommendation is to leave at the default.
-    *   - reverbBounces
-        - When casting out a ray, if the ray intesects with the block surface it will be reflected at an angle, or bounced. This setting controls the number of bounces that are permitted before a given ray path trace is terminated. Increasing this value will improve fidelity at the expense of processing power. Recommendation is to leave at the default.
-    *   - reverbRayTraceDistance
-        - The maximum number of blocks a ray will be traced before termination. Note that this is not actual distance from the player, its the total distance travelled which includes bounces. Recommendation is to leave at the default.
+    Enables/disables enhanced sound processing by Dynamic Surroundings. Enhanced sound processing is what provides reverb in caves. Requires a restart.
+
+.. confval:: enhancedSounds.backgroundThreadWorkers
+    :type: ``integer``
+    :default: ``0``
+    :no-contents-entry:
+
+    This is the number of compute threads that run in the background to perform calculations for enhanced sounds. This value can be 0 - 8, where 0 means use the internal default. Requires a restart. Recommendation is to not change this setting.
+
+.. confval:: enhancedSounds.enableOcclusionProcessing
+    :type: ``boolean``
+    :default: ``false``
+    :no-contents-entry:
+
+    Occlusion processing is an advanced feature of the sound processing system. If enabled, Dynamic Surroundings will perform calculations to "muffle" a sound that is behind blocks from the perspective of the player. This processing will require additional horsepower so it is disabled by default.
+
+.. confval:: enhancedSounds.simplifiedSharedAirspace
+    :type: ``boolean``
+    :default: ``false``
+    :no-contents-entry:
+
+    Reverb is brighter when reflections can reach the player directly (the player shares the space with the sound). Normally this is checked from every reflection of every reverb ray; simplified checks only each ray's last reflection, which casts up to a quarter as many rays. Cheaper, but may sound different. Takes effect immediately. (*Added 1.21.1-0.4.6*)
+
+.. confval:: enhancedSounds.reverbRays
+    :type: ``integer``
+    :default: ``32``
+    :no-contents-entry:
+
+    As part of the calculation process of the enhanced sound engine, logic will cast a number of "rays" away from the player to get a sense of the space the player is located within. Increasing this value will improve fidelity at the expense of processing power. This value can be 16 - 64. Requires a restart. Recommendation is to leave at the default.
+
+.. confval:: enhancedSounds.reverbBounces
+    :type: ``integer``
+    :default: ``4``
+    :no-contents-entry:
+
+    When casting out a ray, if the ray intersects with the block surface it will be reflected at an angle, or bounced. This setting controls the number of bounces that are permitted before a given ray path trace is terminated. Increasing this value will improve fidelity at the expense of processing power. This value can be 2 - 8. Requires a restart. Recommendation is to leave at the default.
+
+.. confval:: enhancedSounds.reverbRayTraceDistance
+    :type: ``integer``
+    :default: ``128``
+    :no-contents-entry:
+
+    The maximum number of blocks a ray will be traced before termination. Note that this is not actual distance from the player, its the total distance travelled which includes bounces. This value can be 64 - 256. Requires a restart. Recommendation is to leave at the default. (*Default changed from 256 to 128 in 1.21.1-0.4.6*)
 
 soundOptions
 ++++++++++++
@@ -172,41 +202,90 @@ soundOptions
 .. code-block:: JSON
 
     {
-        "soundOptions": {
-            "discardNonClientSoundPlays": true,
-            "logStacktraceWhenDiscarding": false,
-            "ambientVolumeScaling": 100,
-            "replaceThunderSounds": true,
-            "allowScarySounds": true,
-            "playBiomeMusicWhileCreative": false,
-            "displayToastMessagesForMusic": true,
-            "remapSounds": true
-        }
+      // Configuration options for sounds in general
+      "soundOptions": {
+        // Discard sounds that are played from a non-client thread
+        // Default: true
+        "discardNonClientSoundPlays": true,
+        // Emit stack trace when discarding sounds
+        // Default: false
+        "logStacktraceWhenDiscarding": false,
+        // Ambient sounds played by the mod will be multiplied by this factor
+        // Range: 0 - 400, default: 100
+        "ambientVolumeScaling": 100,
+        // Enables replacement of thunder sounds with Dynamic Surroundings' version
+        // Default: true
+        "replaceThunderSounds": true,
+        // Enables playing sounds that are considered scary
+        // Default: true
+        "allowScarySounds": true,
+        // Enables playing biome background music while in creative
+        // Default: false
+        "playBiomeMusicWhileCreative": false,
+        // Enables display of toast messages for credited music
+        // Default: true
+        "displayToastMessagesForMusic": true,
+        // Enables sound remapping when sounds are played
+        // Default: true
+        "remapSounds": true
+      }
     }
 
-.. list-table::
-    :widths: auto
-    :align: center
-    :header-rows: 1
+.. confval:: soundOptions.discardNonClientSoundPlays
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
 
-    *   - Property
-        - Description
-    *   - discardNonClientSoundPlays
-        - Flag indicating whether to discard sound plays by non-client threads. Sounds played by non-client threads run the risk of triggering comodiciation exceptions which will crash the client. (*Added 1.21.1-0.4.4*)
-    *   - logStacktraceWhenDiscarding
-        - Flag indicating whether to log a stack trace when discarding a sound play. This is useful for debugging issues with other mods that are not playing sounds correctly. (*Added 1.21.1-0.4.4*)
-    *   - ambientVolumeScaling
-        - Scaling factor to apply to all ambient sounds that are played. This factor is on top of the sound slider scaling of Minecraft. This value can be 0 - 400.
-    *   - replaceThunderSound
-        - Flag indicating whether to replace Minecraft's thunder sounds with the ones from Dynamic Surroundings.
-    *   - allowScarySounds
-        - Flag indicating whether scary sounds should be enabled within the mod. Some of the sounds I have added to the mod are considered scary to younger audiences. This will allow a parent to control which sounds can be played.
-    *   - playBiomeMusicWhileCreative
-        - Normally when a player is in creative mode the music that is played is for the creative session. Enabling this feature will allow the regular biome music to play as if the player was not in creative mode.
-    *   - displayToastMessagesForMusic
-        - Controls whether a toast popout will be displayed when playing music that required atribution.
-    *   - remapSounds
-        - Enables sound remapping when sounds are played. Enabling tells Dynamic Surroundings to replace various step sounds with replacement versions. (*Added 1.21.1-0.4.2*)
+    Flag indicating whether to discard sound plays by non-client threads. Sounds played by non-client threads run the risk of triggering comodiciation exceptions which will crash the client. (*Added 1.21.1-0.4.4*)
+
+.. confval:: soundOptions.logStacktraceWhenDiscarding
+    :type: ``boolean``
+    :default: ``false``
+    :no-contents-entry:
+
+    Flag indicating whether to log a stack trace when discarding a sound play. This is useful for debugging issues with other mods that are not playing sounds correctly. (*Added 1.21.1-0.4.4*)
+
+.. confval:: soundOptions.ambientVolumeScaling
+    :type: ``integer``
+    :default: ``100``
+    :no-contents-entry:
+
+    Scaling factor to apply to all ambient sounds that are played. This factor is on top of the sound slider scaling of Minecraft. This value can be 0 - 400.
+
+.. confval:: soundOptions.replaceThunderSounds
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Flag indicating whether to replace Minecraft's thunder sounds with the ones from Dynamic Surroundings.
+
+.. confval:: soundOptions.allowScarySounds
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Flag indicating whether scary sounds should be enabled within the mod. Some of the sounds I have added to the mod are considered scary to younger audiences. This will allow a parent to control which sounds can be played.
+
+.. confval:: soundOptions.playBiomeMusicWhileCreative
+    :type: ``boolean``
+    :default: ``false``
+    :no-contents-entry:
+
+    Normally when a player is in creative mode the music that is played is for the creative session. Enabling this feature will allow the regular biome music to play as if the player was not in creative mode.
+
+.. confval:: soundOptions.displayToastMessagesForMusic
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Controls whether a toast popout will be displayed when playing music that required atribution.
+
+.. confval:: soundOptions.remapSounds
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Enables sound remapping when sounds are played. Enabling tells Dynamic Surroundings to replace various step sounds with replacement versions. (*Added 1.21.1-0.4.2*)
 
 blockEffects
 ++++++++++++
@@ -214,44 +293,189 @@ blockEffects
 .. code-block:: JSON
 
     {
-        "blockEffects": {
-            "blockEffectRange": 32,
-            "steamColumnEnabled": true,
-            "flameJetEnabled": true,
-            "bubbleColumnEnabled": true,
-            "firefliesEnabled": true,
-            "waterfallsEnabled": true,
-            "enableWaterfallSounds": true,
-            "enableWaterfallParticles": true,
-            "waterRippleStyle": "PIXELATED_CIRCLE"
-        }
+      // Configuration options for block effects
+      "blockEffects": {
+        // Distance that will be scanned when generating block effects
+        // Range: 16 - 64, default: 32
+        "blockEffectRange": 32,
+        // Enable/disable steam column effect when liquids are adjacent to hot sources, like lava and magma
+        // Default: true
+        "steamColumnEnabled": true,
+        // Enable/disable bubble columns generated underwater
+        // Default: true
+        "bubbleColumnEnabled": true,
+        // The style of water ripple to render when a drop hits a fluid
+        // Values: NONE, PIXELATED_CIRCLE, default: "PIXELATED_CIRCLE"
+        "waterRippleStyle": "PIXELATED_CIRCLE"
+      }
     }
 
-.. list-table::
-    :widths: auto
-    :align: center
-    :header-rows: 1
+.. confval:: blockEffects.blockEffectRange
+    :type: ``integer``
+    :default: ``32``
+    :no-contents-entry:
 
-    *   - Property
-        - Description
-    *   - blockEffectRange
-        - The range for which block effects will be determined. This range is a square around the player. This value can be 16 - 64 blocks. Increasing the distance will increase the load within the client tick. It is recommended that this value be left at the default.
-    *   - steamColumnEnabled
-        - Enables the steam effect for when water is close to a hot block (ie, something like lava or magma).
-    *   - flameJetEnabled
-        - Enables the flame jet effect from lava sources as well as lava cauldrons and max age nether wart.
-    *   - bubbleColumnEnabled
-        - Enables the bubble effect when under water.
-    *   - firefliesEnabled
-        - Enables the firefly effect around flowers at night.
-    *   - waterfallsEnabled
-        - Enables the waterfall effect feature. Sounds and particles can be individually controlled by the following settings.
-    *   - enableWaterfallSounds
-        - Enables generation of sounds for a water fall.
-    *   - enableWaterfallParticles
-        - Enables generation of waterfall splash particles.
-    *   - waterRippleStyle
-        - The style of water ripple for when rain hits a liquid surface. Currently ``PIXELATED_CIRCLE`` is the only option.
+    The range for which block effects will be determined. This range is a square around the player. This value can be 16 - 64 blocks. Increasing the distance will increase the load within the client tick. It is recommended that this value be left at the default.
+
+.. confval:: blockEffects.steamColumnEnabled
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Enables the steam effect for when water is close to a hot block (ie, something like lava or magma).
+
+.. confval:: blockEffects.bubbleColumnEnabled
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Enables the bubble effect when under water.
+
+.. confval:: blockEffects.waterRippleStyle
+    :type: ``string``
+    :default: ``"PIXELATED_CIRCLE"``
+    :no-contents-entry:
+
+    The style of water ripple for when rain hits a liquid surface. Currently ``PIXELATED_CIRCLE`` is the only option.
+
+waterfallOptions
+++++++++++++++++
+
+*Added 1.21.1-0.4.6*
+
+.. code-block:: JSON
+
+    {
+      // Configuration options for waterfalls
+      "waterfallOptions": {
+        // Enable/disable waterfall effects where flowing water lands
+        // Default: true
+        "enableWaterfalls": true,
+        // Enable/disable sounds from waterfalls, and from water stepping down a block
+        // Default: true
+        "enableSounds": true,
+        // Enable/disable particles from waterfalls: their splashes, and the mist and foam where they land
+        // Default: true
+        "enableParticles": true,
+        // Enable/disable waterfall mist: many small puffs of mist thrown up where a waterfall lands
+        // Default: true
+        "enableMist": true,
+        // Enable/disable water froth: foam where flowing water drops one block (with a gentle sound) and around where waterfalls land
+        // Default: true
+        "enableFroth": true
+      }
+    }
+
+.. confval:: waterfallOptions.enableWaterfalls
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Enables waterfall effects, their sounds and particles, where flowing water lands. Turning this off disables waterfalls entirely. (*Formerly* ``blockEffects.waterfallsEnabled``)
+
+.. confval:: waterfallOptions.enableSounds
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Enables waterfall sounds, and the gentle sound of water stepping down a block. Particles still show if enabled. (*Formerly* ``blockEffects.enableWaterfallSounds``)
+
+.. confval:: waterfallOptions.enableParticles
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Enables particles from waterfalls: their splashes, and the mist and foam where they land. Sounds still play if enabled. (*Formerly* ``blockEffects.enableWaterfallParticles``)
+
+.. confval:: waterfallOptions.enableMist
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Enables waterfall mist: many small puffs of mist thrown up and drifting out from where a waterfall lands.
+
+.. confval:: waterfallOptions.enableFroth
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Enables water froth: foam on the water, carried along by the current. Forms where flowing water drops one block (on every step down a slope, with a gentle sound) and around where waterfalls land.
+
+flameJetOptions
++++++++++++++++
+
+*Added 1.21.1-0.4.7*
+
+.. code-block:: JSON
+
+    {
+      // Configuration options for flame jets
+      "flameJetOptions": {
+        // Enable/disable flame jets over lava and nether wart
+        // Default: true
+        "enableFlameJets": true,
+        // Enable/disable the flicker of flame jets' light on their surroundings
+        // Default: true
+        "enableLight": true
+      }
+    }
+
+.. confval:: flameJetOptions.enableFlameJets
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Enables flame jets produced over lava sources as well as lava cauldrons and max age nether wart. (*Formerly* ``blockEffects.flameJetEnabled``)
+
+.. confval:: flameJetOptions.enableLight
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Enables the flickering light flame jets cast on the ground and walls around them. Not shown while a shader pack is in use.
+
+fireflyOptions
+++++++++++++++
+
+*Added 1.21.1-0.4.6*
+
+.. code-block:: JSON
+
+    {
+      // Configuration options for fireflies
+      "fireflyOptions": {
+        // Enable/disable fireflies
+        // Default: true
+        "enableFireflies": true,
+        // Enable/disable a soft glow around fireflies
+        // Default: true
+        "enableGlow": true,
+        // Enable/disable fireflies lighting the grass, leaves and ground close to them. Not shown while a shader pack is in use
+        // Default: true
+        "enableLight": true
+      }
+    }
+
+.. confval:: fireflyOptions.enableFireflies
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Enables the firefly effect around flowers at night. (*Formerly* ``blockEffects.firefliesEnabled``)
+
+.. confval:: fireflyOptions.enableGlow
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Enables a soft glow around fireflies.
+
+.. confval:: fireflyOptions.enableLight
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Enables fireflies lighting the grass, leaves and ground close to them. Not shown while a shader pack is in use.
 
 entityEffects
 +++++++++++++
@@ -259,35 +483,82 @@ entityEffects
 .. code-block:: JSON
 
     {
-        "entityEffects": {
-            "entityEffectRange": 24,
-            "enableBowPull": true,
-            "enableBreathEffect": true,
-            "enablePlayerToolbarEffect": true,
-            "enableSwingEffect": true,
-            "enableBrushStepEffect": true
-        }
+      // Configuration options for entity effects
+      "entityEffects": {
+        // The maximum range at which entity special effects are applied
+        // Range: 16 - 64, default: 24
+        "entityEffectRange": 24,
+        // Enable/disable bow pull sound effect
+        // Default: true
+        "enableBowPull": true,
+        // Enable/disable breath effect in cold biomes and underwater
+        // Default: true
+        "enableBreathEffect": true,
+        // Enable/disable player toolbar sound effects
+        // Default: true
+        "enablePlayerToolbarEffect": true,
+        // Enable/disable sound effects for blocks on the toolbar
+        // Default: false
+        "enableToolbarBlockSounds": false,
+        // Enable/disable item swing sound effects from players and mobs
+        // Default: true
+        "enableSwingEffect": true,
+        // Enable/disable sound effect when walking through dense brush
+        // Default: true
+        "enableBrushStepEffect": true
+      }
     }
 
-.. list-table::
-    :widths: auto
-    :align: center
-    :header-rows: 1
+.. confval:: entityEffects.entityEffectRange
+    :type: ``integer``
+    :default: ``24``
+    :no-contents-entry:
 
-    *   - Property
-        - Description
-    *   - entityEffectRange
-        - The maximum distance from the player that entity effects will be applied. This value can be 16 - 64. Recomendation is to leave at the default setting.
-    *   - enableBowPull
-        - Enables the sound effects related to pulling back on a bow.
-    *   - enableBreathEffect
-        - Enables frost breath particle generation when in a cold biome.
-    *   - enablePlayerToolbarEffect
-        - Enables sound play when selecting between different items on the hotbar.
-    *   - enableSwingEffect
-        - Enables sound effects when swinging an item, such as swords and axes.
-    *   - enableBrushStepEffect
-        - Enables sound effect when moving through blocks that are considered brush, such as tall flowers and grass.
+    The maximum distance from the player that entity effects will be applied. This value can be 16 - 64. Recomendation is to leave at the default setting.
+
+.. confval:: entityEffects.enableBowPull
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Enables the sound effects related to pulling back on a bow.
+
+.. confval:: entityEffects.enableBreathEffect
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Enables frost breath particle generation when in a cold biome, and bubbles when underwater.
+
+.. confval:: entityEffects.enablePlayerToolbarEffect
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Enables sound play when selecting between different items on the hotbar.
+
+.. confval:: entityEffects.enableToolbarBlockSounds
+    :type: ``boolean``
+    :default: ``false``
+    :no-contents-entry:
+
+    Enables sound play when selecting blocks on the hotbar.
+
+.. confval:: entityEffects.enableSwingEffect
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Enables sound effects when players and mobs swing an item, such as swords and axes.
+
+.. confval:: entityEffects.enableBrushStepEffect
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Enables sound effect when moving through blocks that are considered brush, such as tall flowers and grass.
+
+Changes to the settings in this section take effect after rejoining a world.
 
 footstepAccents
 +++++++++++++++
@@ -295,32 +566,50 @@ footstepAccents
 .. code-block:: JSON
 
     {
-        "footstepAccents": {
-            "enableAccents": true,
-            "enableArmorAccents": true,
-            "enableWetSurfaceAccents": true,
-            "enableFloorSqueaks": true,
-            "enableLeafAccents": true
-        }
+      // Configuration options for footstep accent effects
+      "footstepAccents": {
+        // Enable/disable foot step accents globally
+        // Default: true
+        "enableAccents": true,
+        // Enable/disable accents for armor that is worn
+        // Default: true
+        "enableArmorAccents": true,
+        // Enable/disable accents when it is raining or blocks are waterlogged
+        // Default: true
+        "enableWetSurfaceAccents": true,
+        // Enable/disable accents when the player is walking on squeaky blocks
+        // Default: true
+        "enableFloorSqueaks": true
+      }
     }
 
-.. list-table::
-    :widths: auto
-    :align: center
-    :header-rows: 1
+.. confval:: footstepAccents.enableAccents
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
 
-    *   - Property
-        - Description
-    *   - enableAccents
-        - Enables the footstep aound effects when moving.
-    *   - enableArmorAccents
-        - Enables armor sounds when moving. The sounds that are played are based on what the player is wearing.
-    *   - enableWetSurfaceAccents
-        - Enables water splash sounds when walking on blocks such as lily pads. Also, a splash sound will play when walking out in the open during a rain storm.
-    *   - enableFloorSqueaks
-        - Enables playing floor squeeks when walking on wooden floors.
-    *   - enableLeafAccents
-        - Enables playing sound effects when walking on leaf blocks.  (*Removed 1.21.1-0.4.2*)
+    Enables the footstep sound effects when moving.
+
+.. confval:: footstepAccents.enableArmorAccents
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Enables armor sounds when moving. The sounds that are played are based on what the player is wearing.
+
+.. confval:: footstepAccents.enableWetSurfaceAccents
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Enables water splash sounds when walking on blocks such as lily pads. Also, a splash sound will play when walking out in the open during a rain storm.
+
+.. confval:: footstepAccents.enableFloorSqueaks
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Enables playing floor squeaks when walking on wooden floors.
 
 particleTweaks
 ++++++++++++++
@@ -328,20 +617,20 @@ particleTweaks
 .. code-block:: JSON
 
     {
-        "particleTweaks": {
-            "suppressProjectileParticleTrails": false
-        }
+      // Configuration options for tweaking particle behavior
+      "particleTweaks": {
+        // Enable/disable showing of projectile particle trails
+        // Default: false
+        "suppressProjectileParticleTrails": false
+      }
     }
 
-.. list-table::
-    :widths: auto
-    :align: center
-    :header-rows: 1
+.. confval:: particleTweaks.suppressProjectileParticleTrails
+    :type: ``boolean``
+    :default: ``false``
+    :no-contents-entry:
 
-    *   - Property
-        - Description
-    *   - suppressProjectileParticleTrails
-        - Enables suppression of the particle trail generated by shooting an arrow.
+    Enables suppression of the particle trail generated by shooting an arrow.
 
 compassAndClockOptions
 ++++++++++++++++++++++
@@ -349,29 +638,187 @@ compassAndClockOptions
 .. code-block:: JSON
 
     {
-        "compassAndClockOptions": {
-            "enableClock": true,
-            "enableCompass": true,
-            "compassStyle": "TRANSPARENT_WITH_INDICATOR",
-            "scale": 1.0
-        }
+      // Configuration options for the compass and clock overlay
+      "compassAndClockOptions": {
+        // Enable/disable display of the clock display when holding a clock item
+        // Default: true
+        "enableClock": true,
+        // Enable/disable display of the compass display when holding a compass item
+        // Default: true
+        "enableCompass": true,
+        // Style of compass rendering
+        // Values: OPAQUE, TRANSPARENT, OPAQUE_WITH_INDICATOR, TRANSPARENT_WITH_INDICATOR, default: "TRANSPARENT_WITH_INDICATOR"
+        "compassStyle": "TRANSPARENT_WITH_INDICATOR",
+        // Scales the display by the specified amount
+        // Range: 0.5 - 4, step: 0.1, default: 1.0
+        "scale": 1.0
+      }
     }
 
-.. list-table::
-    :widths: auto
-    :align: center
-    :header-rows: 1
+.. confval:: compassAndClockOptions.enableClock
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
 
-    *   - Property
-        - Description
-    *   - enableClock
-        - Enables the display of World Time and season information when holding a clock. Additionally, if an item frame is placed with clock as the framed item, looking at the framed clock will also display time and season information.
-    *   - enableCompass
-        - Enables the display of a compass HUD when holding a compass.
-    *   - compassStyle
-        - The style of compass to display. Possible selections are ``OPAQUE``, ``TRANSPARENT``, ``OPAQUE_WITH_INDICATOR``, and ``TRANSPARENT_WITH_INDICATOR``.
-    *   - scale
-        - The scaling factor to apply when rendering the compass HUD.
+    Enables the display of World Time and season information when holding a clock. Additionally, if an item frame is placed with clock as the framed item, looking at the framed clock will also display time and season information.
+
+.. confval:: compassAndClockOptions.enableCompass
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Enables the display of a compass HUD when holding a compass.
+
+.. confval:: compassAndClockOptions.compassStyle
+    :type: ``string``
+    :default: ``"TRANSPARENT_WITH_INDICATOR"``
+    :no-contents-entry:
+
+    The style of compass to display. Possible selections are ``OPAQUE``, ``TRANSPARENT``, ``OPAQUE_WITH_INDICATOR``, and ``TRANSPARENT_WITH_INDICATOR``.
+
+.. confval:: compassAndClockOptions.scale
+    :type: ``number``
+    :default: ``1.0``
+    :no-contents-entry:
+
+    The scaling factor to apply when rendering the compass HUD. This value can be 0.5 - 4.0.
+
+weatherOptions
+++++++++++++++
+
+*Added 1.21.1-0.4.7*
+
+Dynamic Surroundings simulates storms on the client. When it starts to rain, each storm is given its own strength, from a drizzle to a downpour, rather than always building to full strength. Storms are
+seeded by the Minecraft day so every player in a world sees the same storm on the same day. Storm simulation only works in dimensions where other mods do not hook weather rendering, and the particle
+weather effects turn themselves off if the Particle Rain or Simple Weather mod is installed. The ``/dsweather`` command can be used to see how storms of a given strength look.
+
+.. code-block:: JSON
+
+    {
+      // Configuration options for weather
+      "weatherOptions": {
+        // Enable/disable simulated storms, each storm has its own strength, from a drizzle to a downpour
+        // Default: true
+        "enableStormSimulation": true,
+        // The weakest a storm can be, as a percent of full strength
+        // Range: 1 - 100, default: 10
+        "minStormIntensity": 10,
+        // The strongest a storm can be, as a percent of full strength
+        // Range: 1 - 100, default: 100
+        "maxStormIntensity": 100,
+        // How far a storm eases off between its surges, as a percent of its peak
+        // Range: 0 - 100, default: 40
+        "stormVariation": 40,
+        // Draw rain and snow as individual drops instead of vanilla's sheets
+        // Default: true
+        "enableParticlePrecipitation": true,
+        // How many drops of particle rain and snow there are, as a percent of the most
+        // Range: 25 - 100, default: 100
+        "precipitationDensity": 100,
+        // How far from the player, in blocks, particle rain, snow and dust are drawn
+        // Range: 8 - 32, default: 12
+        "precipitationRange": 12,
+        // How big particle rain drops are drawn, as a percent of their usual size
+        // Range: 50 - 250, default: 100
+        "rainDropScale": 100,
+        // How big particle snowflakes are drawn, as a percent of their usual size
+        // Range: 50 - 200, default: 100
+        "snowflakeScale": 100,
+        // With particle rain and snow on, storms in deserts and badlands blow dust and thicken the fog
+        // Default: true
+        "enableDustStorms": true,
+        // Rain sounds that follow the storm's strength, from a patter to a roar, and the sound of blowing dust
+        // Default: true
+        "enableStormSounds": true,
+        // Mist lying low over the ground in swamps and eerie biomes: off, or how finely it is drawn. Fast costs least; Fabulous costs several times Fancy
+        // Values: NONE, FAST, FANCY, FABULOUS, default: "FANCY"
+        "groundFogQuality": "FANCY"
+      }
+    }
+
+.. confval:: weatherOptions.enableStormSimulation
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Enables simulated storms. Each storm has its own strength, from a drizzle to a downpour, rather than always building to full strength.
+
+.. confval:: weatherOptions.minStormIntensity
+    :type: ``integer``
+    :default: ``10``
+    :no-contents-entry:
+
+    The weakest a storm can be, as a percent of full strength. This value can be 1 - 100.
+
+.. confval:: weatherOptions.maxStormIntensity
+    :type: ``integer``
+    :default: ``100``
+    :no-contents-entry:
+
+    The strongest a storm can be, as a percent of full strength. This value can be 1 - 100.
+
+.. confval:: weatherOptions.stormVariation
+    :type: ``integer``
+    :default: ``40``
+    :no-contents-entry:
+
+    How far a storm eases off between its surges, as a percent of its peak. A storm's strength rises and falls every half minute or so; at 0 it holds steady. This value can be 0 - 100.
+
+.. confval:: weatherOptions.enableParticlePrecipitation
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Draws rain and snow as individual drops near the player, as many as the storm's strength calls for, in place of vanilla's sheets of falling rain. Rain and snow drift with the wind. Not used while a shader pack is in use.
+
+.. confval:: weatherOptions.precipitationDensity
+    :type: ``integer``
+    :default: ``100``
+    :no-contents-entry:
+
+    How many drops of particle rain and snow there are, and puffs of dust, as a percent of the most. Lower it if heavy rain or snow slows the game. The Particles video setting lowers it further: Decreased halves it, Minimal quarters it. This value can be 25 - 100.
+
+.. confval:: weatherOptions.precipitationRange
+    :type: ``integer``
+    :default: ``12``
+    :no-contents-entry:
+
+    How far from the player, in blocks, particle rain, snow and dust are drawn. The drops are as dense at any range, so twice as far is four times as many drops to draw. Beyond the range the weather's fog stands in. This value can be 8 - 32.
+
+.. confval:: weatherOptions.rainDropScale
+    :type: ``integer``
+    :default: ``100``
+    :no-contents-entry:
+
+    How big particle rain drops are drawn, as a percent of their usual size. It changes only how the rain looks: drops fall and splash as before. This value can be 50 - 250.
+
+.. confval:: weatherOptions.snowflakeScale
+    :type: ``integer``
+    :default: ``100``
+    :no-contents-entry:
+
+    How big particle snowflakes are drawn, as a percent of their usual size. Larger flakes cost more to draw: twice the size is about four times the work. This value can be 50 - 200.
+
+.. confval:: weatherOptions.enableDustStorms
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    With particle rain and snow on, a storm in a desert or badlands blows dust along the ground and thickens the fog, in place of the rain other biomes get.
+
+.. confval:: weatherOptions.enableStormSounds
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Rain that sounds as strong as the storm: a soft patter in a drizzle, building to a roar in a downpour. Dust storms make the sound of blowing dust.
+
+.. confval:: weatherOptions.groundFogQuality
+    :type: ``string``
+    :default: ``"FANCY"``
+    :no-contents-entry:
+
+    *Experimental*. Mist lying low over the ground in swamps and eerie biomes, drifting with the wind. Possible selections are ``NONE``, ``FAST``, ``FANCY``, and ``FABULOUS``. ``NONE`` turns ground fog off; ``FAST`` draws it more coarsely and costs the least; ``FABULOUS`` draws it most finely and costs several times as much as ``FANCY``. Not used while a shader pack is in use.
 
 fogOptions
 ++++++++++
@@ -381,29 +828,93 @@ fogOptions
 .. code-block:: JSON
 
     {
-        "fogOptions": {
-            "enableFogEffects": true,
-            "enableMorningFog": true,
-            "enableBiomeFog": true,
-            "enableWeatherFog": true
-        }
+      // Configuration options for fog effects
+      "fogOptions": {
+        // Enable/disable fog effects
+        // Default: true
+        "enableFogEffects": true,
+        // Enable/disable morning fog effect
+        // Default: true
+        "enableMorningFog": true,
+        // Enable/disable biome fog effect
+        // Default: true
+        "enableBiomeFog": true,
+        // Enable/disable weather fog effect
+        // Default: true
+        "enableWeatherFog": true
+      }
     }
 
-.. list-table::
-    :widths: auto
-    :align: center
-    :header-rows: 1
+.. confval:: fogOptions.enableFogEffects
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
 
-    *   - Property
-        - Description
-    *   - enableFogEffects
-        - Enable/disable fog effect processing
-    *   - enableMorningFog
-        - Enable/disable morning fog effect. Fog will start rolling in early in the AM, and eventually burn off later in the morning.
-    *   - enableBiomeFog
-        - Enable/disable biome fog effect. Some biomes will be configured as foggy, and when the player is in those biomes the density of fog will increase.
-    *   - enableWeatherFog
-        - Enable/disable generation of fog when raining/snowing.
+    Enable/disable fog effect processing
+
+.. confval:: fogOptions.enableMorningFog
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Enable/disable morning fog effect. Fog will start rolling in early in the AM, and eventually burn off later in the morning.
+
+.. confval:: fogOptions.enableBiomeFog
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Enable/disable biome fog effect. Some biomes will be configured as foggy, and when the player is in those biomes the density of fog will increase.
+
+.. confval:: fogOptions.enableWeatherFog
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Enable/disable generation of fog when raining/snowing.
+
+auroraOptions
++++++++++++++
+
+*Added 1.21.1-0.4.6*
+
+.. code-block:: JSON
+
+    {
+      // Configuration options for auroras
+      "auroraOptions": {
+        // Enable/disable auroras: curtains of light in the night sky, on some nights, over cold biomes
+        // Default: true
+        "enableAuroras": true,
+        // Percent of nights with an aurora
+        // Range: 0 - 100, default: 33
+        "chance": 33,
+        // The most curtains of light an aurora can have
+        // Range: 1 - 3, default: 3
+        "maxBands": 3
+      }
+    }
+
+.. confval:: auroraOptions.enableAuroras
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Enables auroras: curtains of light in the night sky over cold biomes. Not every night has one, and they are not shown while a shader pack is in use.
+
+.. confval:: auroraOptions.chance
+    :type: ``integer``
+    :default: ``33``
+    :no-contents-entry:
+
+    Percent of nights with an aurora. Every player in a world sees the same aurora on the same night. This value can be 0 - 100.
+
+.. confval:: auroraOptions.maxBands
+    :type: ``integer``
+    :default: ``3``
+    :no-contents-entry:
+
+    The most curtains of light, side by side, that an aurora can have. This value can be 1 - 3.
 
 musicManagerOptions
 +++++++++++++++++++
@@ -413,23 +924,91 @@ musicManagerOptions
 .. code-block:: JSON
 
     {
-        "musicManagerOptions": {
-            "replaceMusicManager": true,
-            "reduceWaitTime": 0
-        }
+      // Configuration options for modded Music Manager
+      "musicManagerOptions": {
+        // Replace Minecraft's music manager with modded version
+        // Default: true
+        "replaceMusicManager": true,
+        // Reduce the wait time between music plays by a percentage
+        // Range: 0 - 100, default: 0
+        "reduceWaitTime": 0
+      }
     }
 
-.. list-table::
-    :widths: auto
-    :align: center
-    :header-rows: 1
+.. confval:: musicManagerOptions.replaceMusicManager
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
 
-    *   - Property
-        - Description
-    *   - replaceMusicManager
-        - Replace Minecraft's music manager with modded version. This will enable the use of music manager commands (/dsmm).
-    *   - reduceWaitTime
-        - Reduces the amount of time to wait between music plays. This value is a percentage, and is independent of the modded music manager. By default play interval will not be reduced.
+    Replace Minecraft's music manager with modded version. This will enable the use of music manager commands (/dsmm). Requires a restart.
+
+.. confval:: musicManagerOptions.reduceWaitTime
+    :type: ``integer``
+    :default: ``0``
+    :no-contents-entry:
+
+    Reduces the amount of time to wait between music plays. This value is a percentage, and is independent of the modded music manager. By default play interval will not be reduced.
+
+logging
++++++++
+
+.. code-block:: JSON
+
+    {
+      // Configuration options for modifying diagnostic behavior
+      "logging": {
+        // Enables/disables debug logging of the mod
+        // Default: false
+        "enableDebugLogging": false,
+        // Bitmask for toggling various debug traces
+        // Default: 0
+        "traceMask": 0,
+        // Enable/disable chat window notification of newer updates available
+        // Default: true
+        "enableModUpdateChatMessage": true,
+        // Enable/disable filtering display of tags in the diagnostics overlay
+        // Default: true
+        "filteredTagView": true,
+        // Enable/disable registration of client side commands
+        // Default: true
+        "registerCommands": true
+      }
+    }
+
+.. confval:: logging.enableDebugLogging
+    :type: ``boolean``
+    :default: ``false``
+    :no-contents-entry:
+
+    Turns on detailed diagnostic trace from the mod.
+
+.. confval:: logging.traceMask
+    :type: ``integer``
+    :default: ``0``
+    :no-contents-entry:
+
+    Set of bits that control which detail is desired.
+
+.. confval:: logging.enableModUpdateChatMessage
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Enables display of version check results in the chat window when the player joins a world.
+
+.. confval:: logging.filteredTagView
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Controls the amount of tag information to display within the mods diagnostics overlay.
+
+.. confval:: logging.registerCommands
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Enables/disables registration of client side commands. Requires a restart.
 
 otherOptions
 ++++++++++++
@@ -437,17 +1016,45 @@ otherOptions
 .. code-block:: JSON
 
     {
-        "otherOptions": {
-            "playRandomSoundOnStartup": true
-        }
+      // Configuration options for other things
+      "otherOptions": {
+        // Enable/disable playing random sound at the Minecraft finish loading to main screen
+        // Default: true
+        "playRandomSoundOnStartup": true
+      }
     }
+
+.. confval:: otherOptions.playRandomSoundOnStartup
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Enables the play of a random sound when the Minecraft client starts.
+
+Moved and Removed Settings
+++++++++++++++++++++++++++
+
+Settings from earlier versions that have moved or no longer exist. Values of moved settings are carried over automatically when an older
+``dsurround.json`` is loaded.
 
 .. list-table::
     :widths: auto
     :align: center
     :header-rows: 1
 
-    *   - Property
-        - Description
-    *   - playRandomSoundOnStartup
-        - Enables the play of a random sound when the Minecraft client starts.
+    *   - Setting
+        - Status
+    *   - ``enhancedSounds.enableMonoConversion``
+        - Removed in 1.21.1-0.4.6
+    *   - ``blockEffects.flameJetEnabled``
+        - Moved to :confval:`flameJetOptions.enableFlameJets` in 1.21.1-0.4.7
+    *   - ``blockEffects.firefliesEnabled``
+        - Moved to :confval:`fireflyOptions.enableFireflies` in 1.21.1-0.4.6
+    *   - ``blockEffects.waterfallsEnabled``
+        - Moved to :confval:`waterfallOptions.enableWaterfalls` in 1.21.1-0.4.6
+    *   - ``blockEffects.enableWaterfallSounds``
+        - Moved to :confval:`waterfallOptions.enableSounds` in 1.21.1-0.4.6
+    *   - ``blockEffects.enableWaterfallParticles``
+        - Moved to :confval:`waterfallOptions.enableParticles` in 1.21.1-0.4.6
+    *   - ``footstepAccents.enableLeafAccents``
+        - Removed in 1.21.1-0.4.2

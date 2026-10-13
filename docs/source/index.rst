@@ -29,17 +29,32 @@ it can be used with minimal Fabric or NeoForge clients when connecting and playi
 .. note::
    This documentation is under development
 
+Where to Start
+--------------
+
+* **Players**: start with :doc:`installation` and :doc:`features`, then see :doc:`config/modconfiguration` to adjust the mod to your liking, and :doc:`config/individual_sound_config` to
+  change how individual sounds are handled.
+* **Resource pack and mod authors**: start with :doc:`packs/layout` to see where configuration files go, then :doc:`packs/tagging` to make Dynamic Surroundings effects work with
+  your content. :doc:`concepts/concepts` explains the ideas the configuration files are built on, and :doc:`schemas/schemas` describes each file.
+
 .. toctree::
    :hidden:
+   :caption: Using the Mod
 
    installation
-   config/individual_sound_config
-   config/modconfiguration
+   features
    videos
+   config/modconfiguration
+   config/individual_sound_config
+   misc/music
    commands/commands
-   scripting/scripting
-   scripting/examples
-   schemas/schemas
+
+.. toctree::
+   :hidden:
+   :caption: Creating Packs and Mod Support
+
    packs/layout
    packs/tagging
-   misc/music
+   concepts/concepts
+   schemas/schemas
+   scripting/scripting

@@ -1,9 +1,7 @@
-.. role:: sectiontitle
-
 blocks.json
 ===========
 
-`Source reference <https://github.com/OreCruncher/DynamicSurroundingsFabric/blob/main/common/src/main/resources/assets/dsurround/dsconfigs/blocks.json>`_
+:asset:`Source reference <dsconfigs/blocks.json>`
 
 .. code-block:: JSON
 
@@ -27,7 +25,7 @@ blocks.json
         - Comment
     *   - blocks
         - String Array
-        - The block states for which the configuration options apply. At least one entry is required. See :doc:`block_spec`.
+        - The block states for which the configuration options apply. At least one entry is required. See :doc:`../concepts/block_spec`.
     *   - clearSounds
         - Boolean
         - Clears existing sound configuration for the blocks. Default is ``false``.
@@ -36,7 +34,7 @@ blocks.json
         - Script that provides the chance that a sound will be emitted. Default is ``0.01``.  See :doc:`../scripting/scripting`.
     *   - acoustics
         - Acoustic Array
-        - An array of acoustics that can play. Default is ``null``. See :doc:`acoustic`.
+        - An array of acoustics that can play. Default is ``null``. See :doc:`../concepts/acoustic`.
     *   - effects
         - Effect Array
         - An array of effects that can generate. Default is ``null``. See `Effect Configuration`_ below.
@@ -51,7 +49,8 @@ blocks.json
 
 .. _Effect Configuration:
 
-:sectiontitle:`Effect Configuration`
+Effect Configuration
+--------------------
 
 .. list-table:: Effect Configuration
     :widths: auto
@@ -71,7 +70,8 @@ blocks.json
         - String
         - Script that provides the spawn chance of the effect. Default is ``0.01``. See :doc:`../scripting/scripting`.
 
-:sectiontitle:`Examples`
+Examples
+--------
 
 .. code-block:: JSON
 

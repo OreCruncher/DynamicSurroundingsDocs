@@ -88,7 +88,10 @@ instance/
 .scrapy
 
 # Sphinx documentation
-docs/_build/
+docs/build/
+
+# IntelliJ (shared run configurations live in .run/)
+.idea/
 
 # PyBuilder
 .pybuilder/

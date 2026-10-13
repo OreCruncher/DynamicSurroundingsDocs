@@ -26,7 +26,7 @@ This biome configuration rule sets the fog color of a biome if the average rainf
 .. code-block:: JSON
 
     {
-        "biomeSelector": "lib.oneof(biome.id, 'minecraft:frozen_ocean', 'minecraft:deep_frozen_ocean')",
+        "biomeSelector": "lib.oneof(biome.getId(), 'minecraft:frozen_ocean', 'minecraft:deep_frozen_ocean')",
         "_comment": "Frozen Ocean/Deep Frozen Ocean explicit set",
         "fogColor": "#DCDBDF"
     }
@@ -41,4 +41,4 @@ This is similar to the previous example, but sets the fog color if the biome is 
         "type": "mood"
     }
 
-This rule is for an acoustic applied to a biome. In this case, "wolf" is considered a scary sound. The sound can play if it is not raining, and is nighttime, and scary sounds are not disabled.
+This rule is for an :term:`acoustic <Acoustic>` applied to any biome. In this case, "wolf" is considered a scary sound. The sound can play if it is not raining, and is nighttime, and scary sounds are not disabled.

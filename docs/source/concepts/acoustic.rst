@@ -1,10 +1,9 @@
 .. role:: underlined
-.. role:: sectiontitle
 
 Acoustics
 =========
 
-An acoustic combines a sound factory reference with other properties that determine when a sound is eligble for play. The acoustic
+An acoustic combines a :term:`sound factory <Sound Factory>` reference with other properties that determine when a sound is eligible for play. The acoustic
 definition has the following schema:
 
 .. code-block:: JSON
@@ -26,16 +25,17 @@ definition has the following schema:
         - Comment
     *   - factory
         - ResourceLocation
-        - The resource location ID of the sound factory that will be used to create the sound instance. This is a required property.
+        - The :term:`resource location <Resource Location>` ID of the sound factory that will be used to create the sound instance. If there is no sound factory with the ID, it is treated as a :term:`sound event <Sound Event>` ID and
+          played with default settings. An ID without a namespace is in the ``dsurround`` namespace (ex, ``rockfall`` is ``dsurround:rockfall``). See :doc:`sounds`. This is a required property.
     *   - conditions
         - String
         - Script that evaluates the conditions where the sound will be played. Default is ``true``. See :doc:`../scripting/scripting`.
     *   - weight
         - Integer
-        - Relative weight of the entry as compared to it's peers. It is used by the weight table selection process when determining a random sound. Default is ``10``.
+        - Relative weight of the entry as compared to its peers. It is used by the weight table selection process when determining a random sound. Default is ``10``.
     *   - type
         - String
-        - The type of acoustic the entry represents. Default is ``loop``.
+        - The type of acoustic the entry represents. Possible values are ``loop``, ``mood``, ``music``, and ``addition``. Default is ``loop``.
 
 .. list-table:: Acoustic types
     :widths: auto
@@ -48,10 +48,13 @@ definition has the following schema:
         - The sound is non-attenuated and will play on a loop. It will terminate when the operating conditions are no longer met.
     *   - mood
         - The sound has a chance of periodically playing at a random location around the player. This random location gives directionality where the sound can be heard someplace around the player.
+          The chance is set by the biome's ``moodSoundChance``.
     *   - music
         - The sound is configured to be utilized by Minecraft music manager. Whenever Minecraft plays a music track, a selection can be made from music related acoustics.
     *   - addition
-        - The sound has a chance of randomly playing in a non-attenuated (non-directional) configuration.
+        - The sound has a chance of randomly playing in a non-attenuated (non-directional) configuration. The chance is set by the biome's ``additionalSoundChance``.
+
+The ``moodSoundChance`` and ``additionalSoundChance`` properties are described in :doc:`../schemas/biomes`.
 
 It is worth noting that *any* sound factory can be used as an acoustic. Practically, though, the actual sound should be suitable for the acoustic type. For example, it would be strange to create a music acoustic
 from ``minecraft:entity.zombie.ambient`` or a mood acoustic from ``minecraft:ui.button.click``.
@@ -84,9 +87,9 @@ Here is an example from the Dynamic Surroundings configuration:
     ]
 
 This configuration defines 4 acoustics for the underground biome effect. The first is of type ``loop`` since it uses the default. The other three are ``mood`` effects with different weights.  The conditions
-of ``monstergrowl`` is different from the other two loop sounds.
+of ``monstergrowl`` are different from the other two mood sounds.
 
-During play, the first acoustic is played if the player is considered inside and of sufficient depth beneath the surface. Since it is of type ``loop`` it will continually play while the player is insided and
+During play, the first acoustic is played if the player is considered inside and of sufficient depth beneath the surface. Since it is of type ``loop`` it will continually play while the player is inside and
 below the surface.
 
 The other three are ``mood``, meaning they will randomly play somewhere around the player. Per tick, Dynamic Surroundings will determine if a ``mood`` acoustic should play.  If it does, it will make a selection

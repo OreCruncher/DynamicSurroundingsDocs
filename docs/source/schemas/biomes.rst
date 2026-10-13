@@ -1,10 +1,9 @@
 .. role:: underlined
-.. role:: sectiontitle
 
 biomes.json
 ===========
 
-`Source reference <https://github.com/OreCruncher/DynamicSurroundingsFabric/blob/main/common/src/main/resources/assets/dsurround/dsconfigs/biomes.json>`_
+:asset:`Source reference <dsconfigs/biomes.json>`
 
 This ``biomes.json`` file is where all the rules for biome effects are configured. The file is a Json array of zero or more configuration rules. Any number of rules can be created
 based on what is needed.
@@ -22,6 +21,8 @@ The schema for a rule entry is as follows:
         "clearSounds": false,
         "resetFogColor": false,
         "fogColor": null,
+        "fogDensity": null,
+        "groundFog": null,
         "additionalSoundChance": null,
         "moodSoundChance": null,
         "acoustics": [ ]
@@ -59,6 +60,12 @@ The schema for a rule entry is as follows:
     *   - fogColor
         - String
         - Fog tint color, if any. Default is ``null`` meaning no setting. The format of the color string is RGB hex code (ex, "#FFD700" for gold). Please note the Minecraft default fog color is ``#C0D8FF`` which matches the blue sky color.
+    *   - fogDensity
+        - String
+        - How thick the biome's fog is. Possible values are ``none``, ``light``, ``normal``, ``medium``, and ``heavy``. Default is ``null`` meaning no setting, which results in ``none``. Requires the *Biome fog* setting in :doc:`../config/modconfiguration` (:confval:`fogOptions.enableBiomeFog`).
+    *   - groundFog
+        - String
+        - How thick the mist lying low over the ground is in the biome. Possible values are the same as ``fogDensity``. Default is ``null`` meaning no setting, which results in ``none`` (no ground fog). Ground fog also depends on the time of day, wind, and rain, and only forms in dimensions where it is enabled (see :doc:`dimensions`). Controlled by the *Ground fog* setting in :doc:`../config/modconfiguration` (:confval:`weatherOptions.groundFogQuality`). (*Added 1.21.1-0.4.7*)
     *   - additionalSoundChance
         - Double
         - The chance that a sound of type ADDITION will play per tick. Default is ``0.004``.
@@ -67,7 +74,7 @@ The schema for a rule entry is as follows:
         - The chance that a sound of type MOOD will play per tick. Default is ``0.004``.
     *   - acoustics
         - Acoustic Array
-        - A Json array of acoustic definitions for the biome. Default is ``null``. See :doc:`acoustic`.
+        - A Json array of acoustic definitions for the biome. Default is ``null``. See :doc:`../concepts/acoustic`.
 
 As mentioned above, the chance related properties are actually scripts. These scripts have to evaluate to a double value in the range of 0.0 - 1.0. Each tick Dynamic Surroundings will generate a
 random double value in the range of 0.0 - 1.0. If this value is less than or equal to the chance value, the effect will be applied.
@@ -77,7 +84,7 @@ chance if a certain mod is loaded it could look something like:
 
 .. code-block:: JSON
 
-    "moodSoundChance": "lib.iif(lib.isModLoaded('theModId'), 0.01, 0.004)"
+    "moodSoundChance": "lib.iif(platform.isModLoaded('theModId'), 0.01, 0.004)"
 
 This script increases the chance that a mood sound will play if the mod ``theModId`` is loaded. You can also create more complicated chance calculations based on game state, such as the phase of the
 moon or player health.
@@ -86,19 +93,21 @@ During configuration, Dynamic Surroundings will combine all the biome configurat
 specific best practice on how to approach the creation of rules. However, having rules that combine a lot of configuration changes may become unweildy, especially dealing with
 exception cases.
 
-:sectiontitle:`Example Biome Selectors`
+Example Biome Selectors
+-----------------------
 
 .. code-block:: JSON
 
     "biomeSelector": "!MOUNTAIN && (WASTELAND && !SWAMP && !COLD)",
-    "biomeSelector": "FOREST && !(DEAD || WASTELAND || SWAMP || SPOOKY) && lib.isBetween(biome.temperature, 0.2, 1.0)",
-    "biomeSelector": "lib.oneof(biome.id, 'minecraft:frozen_ocean', 'minecraft:deep_frozen_ocean')",
-    "biomeSelector": "biome.id == 'minecraft:deep_frozen_ocean'"
+    "biomeSelector": "FOREST && !(DEAD || WASTELAND || SWAMP || SPOOKY) && lib.isBetween(biome.getTemperature(), 0.2, 1.0)",
+    "biomeSelector": "lib.oneof(biome.getId(), 'minecraft:frozen_ocean', 'minecraft:deep_frozen_ocean')",
+    "biomeSelector": "biome.getId() == 'minecraft:deep_frozen_ocean'"
 
-Because these selectors are applied during configuration, the only function namespace available is ``biome``. Note that this only applies to biome selectors - chance
+Because these selectors are applied during configuration, the only function namespaces available are ``biome``, ``lib``, ``math``, and ``platform``. Note that this only applies to biome selectors - chance
 calculations and acoustic filtering can utilize in-game state function namespaces.
 
-:sectiontitle:`Example Biome Rules`
+Example Biome Rules
+-------------------
 
 .. code-block:: JSON
 
@@ -117,7 +126,7 @@ This is a fairly simple rule. It applies a wind background sound to any biome th
 .. code-block:: JSON
 
     {
-        "biomeSelector": "biome.id == 'natures_spirit:chaparral'",
+        "biomeSelector": "biome.getId() == 'natures_spirit:chaparral'",
         "_comment": "Missing traits for Chaparral",
         "traits": [
             "OVERWORLD",
@@ -133,15 +142,18 @@ This rule adds traits to the ``natures_spirit:chaparral`` biome since this biome
     {
         "biomeSelector": "SWAMP && !FOREST",
         "_comment": "Basic Swamp Fog",
-        "fogColor": "#406040"
+        "fogColor": "#406040",
+        "fogDensity": "medium",
+        "groundFog": "medium"
     }
 
-This rule sets the fog color for biomes that have the trait SWAMP and are not FORESTs. When entering into such a biome the color will tint towards green.
+This rule sets the fog color for biomes that have the trait SWAMP and are not FORESTs. When entering into such a biome the color will tint towards green, the fog will thicken, and mist
+will lie over the ground.
 
 .. code-block:: JSON
 
     {
-        "biomeSelector": "THE_END || biome.name == 'The Void'",
+        "biomeSelector": "END || biome.getName() == 'The Void'",
         "_comment": "It's The End!",
         "priority": 100,
         "clearSounds": true

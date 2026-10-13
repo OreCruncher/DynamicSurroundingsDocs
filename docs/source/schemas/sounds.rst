@@ -1,9 +1,7 @@
-.. role:: sectiontitle
-
 sounds.json
 ===========
 
-`Source reference <https://github.com/OreCruncher/DynamicSurroundingsFabric/blob/main/common/src/main/resources/assets/dsurround/sounds.json>`_
+:asset:`Source reference <sounds.json>`
 
 Dynamic Surroundings extends Minecraft sound definitions with additional fields. These fields are used to render atribution and license information
 in the **Individual Sound Configuration** configuration menu.
@@ -31,7 +29,7 @@ This is an example from Dynamic Surroundings ``sounds.json`` file:
 	}
 
 The extended information can be found in the ``ds_credits`` property. The property is an array of entries where each entry could correspond to an individual ogg file
-that make up the sound event. This is what it looks like when rendered in the Minecraft client:
+that make up the :term:`sound event <Sound Event>`. This is what it looks like when rendered in the Minecraft client:
 
 .. image:: images/soundconfig.png
 

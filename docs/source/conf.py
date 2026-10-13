@@ -6,26 +6,31 @@ project = 'Dynamic Surroundings'
 copyright = '2024-2026 OreCruncher'
 author = 'OreCruncher'
 
-release = '0.4.4'
-version = '0.0.1'
+release = '0.4.7'
+version = '0.4'
 
 # -- General configuration
 
 extensions = [
     'sphinx.ext.duration',
-    'sphinx.ext.doctest',
-    'sphinx.ext.autodoc',
-    'sphinx.ext.autosummary',
-    'sphinx.ext.intersphinx',
+    'sphinx.ext.extlinks',
     'sphinxcontrib.youtube',
     'sphinx_rtd_theme'
 ]
 
-intersphinx_mapping = {
-    'python': ('https://docs.python.org/3/', None),
-    'sphinx': ('https://www.sphinx-doc.org/en/master/', None),
+# -- Links to the mod's source on GitHub
+
+# The branch or tag that source links point at
+source_branch = 'main'
+_source_repo = 'https://github.com/OreCruncher/DynamicSurroundingsFabric'
+
+# :source:`path` links to a file, :source-dir:`path` to a folder, both relative to the repository root;
+# :asset:`path` links to a file in the mod's assets folder. Use :source:`text <path>` for custom link text.
+extlinks = {
+    'source': (f'{_source_repo}/blob/{source_branch}/%s', '%s'),
+    'source-dir': (f'{_source_repo}/tree/{source_branch}/%s', '%s'),
+    'asset': (f'{_source_repo}/blob/{source_branch}/common/src/main/resources/assets/dsurround/%s', '%s'),
 }
-intersphinx_disabled_domains = ['std']
 
 templates_path = ['_templates']
 
@@ -34,8 +39,8 @@ templates_path = ['_templates']
 html_theme = 'sphinx_rtd_theme'
 
 html_theme_options = {
-    'logo_only' : 'true',
-    'style_external_links': 'true'
+    'logo_only': True,
+    'style_external_links': True
 }
 
 # Style sheets
@@ -45,6 +50,16 @@ html_css_files = [
 ]
 
 html_logo = 'images/icon.png'
+
+# -- Options for link checking (make linkcheck)
+
+# CurseForge rejects automated requests with 403, so its links can't be checked
+linkcheck_ignore = [
+    r'https://www\.curseforge\.com/.*'
+]
+
+# GitHub rate limits bursts of requests (429); retry rather than report the link as broken
+linkcheck_retries = 3
 
 # -- Options for EPUB output
 epub_show_urls = 'footnote'

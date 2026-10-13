@@ -8,7 +8,7 @@ This repository contains the documentation for the Minecraft mod Dynamic Surroun
  
  Source repository for Dynamic Surroundings can be found `here <https://github.com/OreCruncher/DynamicSurroundingsFabric>`_.
 
-.. |rdt-build-status| image:: https://readthedocs.org/projects/dynamic-surroundings/badge/?version=latest&style=flat
+.. |rtd-build-status| image:: https://readthedocs.org/projects/dynamic-surroundings/badge/?version=latest&style=flat
    :alt: Build Status
 
 .. |cf-versions| image:: http://cf.way2muchnoise.eu/versions/238891.svg
