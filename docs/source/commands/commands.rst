@@ -44,7 +44,7 @@ should return ``true``.
 /dsweather <subcommand>
 -----------------------
 
-Shows and overrides the simulated storm strength, wind, and ground fog. Intended for testing and for seeing how weather of a given strength looks; it only changes
+Shows and overrides the simulated storm strength, wind, ground fog, and window frost. Intended for testing and for seeing how weather of a given strength looks; it only changes
 what the client sees and hears, and does not affect game mechanics. Overrides stay in place until cleared or the player disconnects. Running ``/dsweather`` with no
 subcommand reports the current storm: its strength band, its strength as a percent of full strength, and the game's own rain level. (*Added 1.21.1-0.4.7*)
 
@@ -73,6 +73,43 @@ subcommand reports the current storm: its strength band, its strength as a perce
         - Sets ground fog to the given thickness everywhere, as a percent of the thickest.
     *   - groundfog clear
         - Removes the ground fog override so each biome's own ground fog is used again.
+    *   - frost
+        - Reports whether window frost is overridden or follows the weather.
+    *   - frost \<0-100>
+        - Gives every window the given amount of frost, as a percent of the most, at once and whatever the weather or temperature.
+    *   - frost clear
+        - Removes the frost override so window frost follows the weather again; it then grows or melts toward what the weather calls for.
+
+/dsconflicts
+------------
+
+Lists in chat the Dynamic Surroundings features that are turned off in this session because another mod is installed, and which mod each one stands aside for;
+for example, particle rain and snow when Particle Rain is installed. If nothing is turned off, it says so. The same list is written to the log at startup and shown
+in the diagnostic overlay. See :ref:`mods-that-replace-a-feature` for the mods involved. (*Added 1.21.1-0.4.7*)
+
+/dsprofile [scene] [seconds]
+----------------------------
+
+Records a performance profile of the game with Java Flight Recorder, to attach to an issue when something seems slow. With no scene, it records two minutes of the
+game as it is; a scene shows one effect at its heaviest while it records, and the number of seconds (10 to 600) sets the length. The recording is saved zipped in
+``config/dsurround/profiles``, without personal information. See :doc:`../troubleshooting/jfr` for how to use it, the scenes, and what is in a recording.
+(*Added 1.21.1-0.4.7*)
+
+.. list-table:: Profile Scenes
+    :widths: auto
+    :align: center
+    :header-rows: 1
+
+    *   - Scene
+        - Comment
+    *   - general
+        - The game as it is; nothing is changed. The default.
+    *   - ground_fog
+        - Ground fog at its thickest, everywhere. In single player it also clears the weather.
+    *   - weather
+        - A thunderstorm at full strength. In single player it also starts the thunderstorm.
+    *   - frost
+        - The most frost on every window.
 
 /dsdump <subcommand>
 --------------------
@@ -87,7 +124,8 @@ Dumps out cached information to the ``minecraftinstance/config/dsurround/dumps``
     *   - Subcommand
         - Comment
     *   - biomes
-        - Lists all biomes and associated configuration information.
+        - Lists all biomes and associated configuration information, with where each biome trait came from, and ends with the biomes whose traits were guessed, to
+          check (*added 1.21.1-0.4.7*). See :doc:`../scripting/biometraits`.
     *   - sounds
         - A list of all :term:`sound events <Sound Event>` known by Dynamic Surroundings, both registered in the sound event registry as well as defined with mods and resource packs.
     *   - dimensions

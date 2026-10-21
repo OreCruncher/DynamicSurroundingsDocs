@@ -70,11 +70,17 @@ Works With
     *   - `Presence Footsteps <https://modrinth.com/mod/presence-footsteps>`_
         - Presence Footsteps provides detailed footstep sounds of its own, so Dynamic Surroundings' footstep accents and rustling when walking through plants are turned
           off to avoid playing twice.
+    *   - `Simple Voice Chat <https://modrinth.com/plugin/simple-voice-chat>`_ (2.6.24+)
+        - The voices of nearby players get the same reverb, occlusion, and air absorption as other sounds. See :confval:`enhancedSounds.enableVoiceChatProcessing`.
+          (*Added 1.21.1-0.4.7, experimental*)
+
+.. _mods-that-replace-a-feature:
 
 Mods That Replace a Feature
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 These mods provide their own version of something Dynamic Surroundings does. When one is installed, Dynamic Surroundings turns its own version off, whatever its settings.
+The ``/dsconflicts`` command lists what is turned off in the current session.
 
 .. list-table::
     :widths: auto
@@ -88,9 +94,12 @@ These mods provide their own version of something Dynamic Surroundings does. Whe
     *   - `Simple Weather (NeoForge) <https://www.curseforge.com/minecraft/mc-mods/simple-weather>`_
         - Particle rain and snow, and dust storms. Water ripples are kept.
     *   - `Sound Physics Remastered <https://modrinth.com/mod/sound-physics-remastered>`_
-        - Enhanced sound processing (reverb and occlusion).
+        - Enhanced sound processing (reverb and occlusion), including for Simple Voice Chat voices.
     *   - `Raise Sound Limit Simplified <https://www.curseforge.com/minecraft/mc-mods/rsls>`_
-        - Discarding sounds to stay under Minecraft's sound limit, since the limit is raised.
+        - Discarding sounds played off the client thread (:confval:`soundOptions.discardNonClientSoundPlays`).
+    *   - `Presence Footsteps <https://modrinth.com/mod/presence-footsteps>`_
+        - Wet surface accents (:confval:`footstepAccents.enableWetSurfaceAccents`) and the brush step effect
+          (:confval:`entityEffects.enableBrushStepEffect`), as its own footstep sounds take their place.
 
 Shader Packs
 ~~~~~~~~~~~~

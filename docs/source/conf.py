@@ -15,8 +15,14 @@ extensions = [
     'sphinx.ext.duration',
     'sphinx.ext.extlinks',
     'sphinxcontrib.youtube',
-    'sphinx_rtd_theme'
+    'sphinx_rtd_theme',
+    'sphinx_copybutton'
 ]
+
+# -- Copy buttons on code blocks
+
+# Only blocks marked with ":class: copybutton" (such as commands for players to paste) get a copy button
+copybutton_selector = 'div.copybutton > div.highlight > pre'
 
 # -- Links to the mod's source on GitHub
 

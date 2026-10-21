@@ -3,7 +3,7 @@ Tagging
 
 Many Dynamic Surroundings effects are driven by tags: which blocks squeak when walked on, which fluids form waterfalls, which items make a sword sound when
 swung, and so on. Out of the box Dynamic Surroundings tags vanilla content, and content from some popular mods. A mod or resource pack author can add their own
-blocks, fluids, entities, and items to these tags so the effects work with their content as well.
+blocks, fluids, entities, items, and particles to these tags so the effects work with their content as well.
 
 Dynamic Surroundings tags are *client side* tags. They use the same Json format as Minecraft tags, but they are read by the client from mods and resource packs
 rather than sent by the server, so they work when playing on a vanilla server. They are entirely separate from Minecraft tags, though they can refer to Minecraft
@@ -13,7 +13,7 @@ Where Tag Files Go
 ------------------
 
 Every Dynamic Surroundings tag has an ID in the ``dsurround`` namespace, such as ``dsurround:effects/floor_squeaks``. The file for a tag is found by the type of thing
-being tagged (``block``, ``fluid``, ``entity_type``, ``item``, or ``worldgen/biome``) and the path of the tag ID. For example, the block tag ``dsurround:effects/floor_squeaks``
+being tagged (``block``, ``fluid``, ``entity_type``, ``item``, ``particle_type``, or ``worldgen/biome``) and the path of the tag ID. For example, the block tag ``dsurround:effects/floor_squeaks``
 is in the file ``tags/block/effects/floor_squeaks.json``.
 
 That file can be placed in any of these locations, and all of them are used:
@@ -57,7 +57,7 @@ A tag file has the same format as a Minecraft tag:
         ]
     }
 
-* An entry is a block, fluid, entity type, or item ID.
+* An entry is a block, fluid, entity type, item, or particle type ID.
 * An entry starting with ``#`` includes every member of another tag. This can be a Minecraft tag, a conventional ``c:`` tag, another mod's tag, or another Dynamic Surroundings tag.
 * ``{ "id": ..., "required": false }`` can be used for an entry that may not exist, such as a tag from another mod.
 * Entries from all files for a tag are merged. ``"replace": true`` does not remove entries from other files.
@@ -119,6 +119,11 @@ Block Tags
         - Blocks that show damp spots where particle rain lands, such as dirt, sand, wool, and hay. (*Added 1.21.1-0.4.7*)
     *   - ``dsurround:effects/dust_sources``
         - Blocks that dust storms pick up dust from. The dust takes the color of the block. (*Added 1.21.1-0.4.7*)
+    *   - ``dsurround:effects/windows``
+        - Windows: blocks that particle rain runs down the sides of in streaks, such as glass blocks and panes. (*Added 1.21.1-0.4.7*)
+    *   - ``dsurround:effects/frosted_windows``
+        - Windows that frost on the outside in the cold: clear glass blocks and panes. Frost is drawn where the block's shape is, so a pane frosts in the
+          middle of its block. Tinted and stained glass are left out for now. (*Added 1.21.1-0.4.7*)
 
 Sound Occlusion and Reflectance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -148,6 +153,23 @@ Fluid Tags
         - Fluids whose waterfalls make sound.
     *   - ``dsurround:effects/water_ripples``
         - Fluids that show ripples when rain lands on a source block.
+
+Particle Type Tags
+------------------
+
+*Added 1.21.1-0.4.7*
+
+.. list-table::
+    :widths: auto
+    :align: center
+    :header-rows: 1
+
+    *   - Tag
+        - Effect
+    *   - ``dsurround:effects/wind_blown``
+        - Particles that drift with the simulated wind when made out in the open, such as smoke, ash, falling leaves, and spores. Includes several Minecraft
+          particles and the leaves from Biomes O' Plenty trees. Particles that fly toward a target, such as those from portals and enchanting tables, should
+          not be tagged: they set their own position and are not moved. Dynamic Surroundings' own particles handle the wind themselves and are never tagged.
 
 Entity Type Tags
 ----------------
@@ -225,6 +247,8 @@ These item tags control the compass and clock overlays (see :doc:`../config/modc
         - The compass overlay spins in dimensions where compasses do not work, such as the Nether and End. See ``compassWobble`` in :doc:`../schemas/dimensions`.
     *   - ``dsurround:effects/is_clock``
         - Holding the item displays the clock overlay.
+    *   - ``dsurround:effects/clock_wobble``
+        - The clock overlay spins, and its text leaves out the time, in dimensions where compasses do not work, such as the Nether and End. See ``compassWobble`` in :doc:`../schemas/dimensions`.
 
 These item tags select the sound played when a bucket is selected on the hotbar:
 
@@ -250,8 +274,26 @@ Biome Tags
 ----------
 
 Biome tags give biomes the traits used by :term:`biome selector <Biome Selector>` scripts. The tags have the form ``dsurround:is_<trait>`` (ex, ``dsurround:is_forest``), in the files
-``tags/worldgen/biome/is_<trait>.json``. Most modded biomes get their traits from conventional biome tags, so these only need to be added to for biomes that are missing them.
+``tags/worldgen/biome/is_<trait>.json``. Most modded biomes get their traits from conventional biome tags, and Dynamic Surroundings works out what is missing from the biome's
+definition, music, climate, and name, so these only need to be added to for biomes it gets wrong. ``/dsdump biomes`` lists the biomes whose traits were guessed.
 See :doc:`../scripting/biometraits`.
+
+Put a mod's biomes in that mod's folder, as Dynamic Surroundings does for the biome mods it supports: for example ``assets/regions_unexplored/dsconfigs/tags/worldgen/biome/is_swamp.json``.
+The folder is only read when the mod is installed, and its entries are added to those of the same tag in every other folder. The file name must be exactly the tag's
+(``is_swamp.json``, not ``swamp.json``), or the file is never read.
+
+.. code-block:: JSON
+
+    {
+        "replace": false,
+        "values": [
+            { "id": "regions_unexplored:bayou", "required": false },
+            { "id": "regions_unexplored:fen", "required": false }
+        ]
+    }
+
+A trait from a tag settles its group: a biome tagged ``is_swamp`` gets no other kind from a guess. Tags are the way to correct a wrong guess. Traits added by a
+``biomes.json`` rule cannot, and are deprecated (see :doc:`../schemas/biomes`).
 
 Checking Your Tags
 ------------------

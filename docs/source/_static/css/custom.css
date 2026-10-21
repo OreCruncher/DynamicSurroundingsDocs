@@ -27,3 +27,25 @@ div.toctree-wrapper {
 .wy-table-responsive table td, .wy-table-responsive table th {
     white-space: normal;
 }
+
+/* Copy buttons on code blocks: always shown, in the theme's blue, at full strength on hover */
+button.copybtn {
+    opacity: 0.3;
+    border-color: #2980b9;
+    background-color: #2980b9;
+    color: #ffffff;
+}
+
+.highlight button.copybtn:hover {
+    background-color: #2e8ece;
+}
+
+.highlight button.copybtn:active {
+    background-color: #1f6391;
+}
+
+button.copybtn.success {
+    border-color: #27ae60;
+    background-color: #27ae60;
+    color: #ffffff;
+}

@@ -34,6 +34,7 @@ Where to Start
 
 * **Players**: start with :doc:`installation` and :doc:`features`, then see :doc:`config/modconfiguration` to adjust the mod to your liking, and :doc:`config/individual_sound_config` to
   change how individual sounds are handled.
+* **Having a problem**: see :doc:`troubleshooting/troubleshooting` for what to include in a report, and how to collect logs and recordings.
 * **Resource pack and mod authors**: start with :doc:`packs/layout` to see where configuration files go, then :doc:`packs/tagging` to make Dynamic Surroundings effects work with
   your content. :doc:`concepts/concepts` explains the ideas the configuration files are built on, and :doc:`schemas/schemas` describes each file.
 
@@ -51,10 +52,19 @@ Where to Start
 
 .. toctree::
    :hidden:
+   :caption: Troubleshooting
+
+   troubleshooting/troubleshooting
+   troubleshooting/logs
+   troubleshooting/jfr
+
+.. toctree::
+   :hidden:
    :caption: Creating Packs and Mod Support
 
    packs/layout
    packs/tagging
+   packs/overlay_textures
    concepts/concepts
    schemas/schemas
    scripting/scripting

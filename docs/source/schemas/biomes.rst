@@ -47,10 +47,10 @@ The schema for a rule entry is as follows:
         - The priority at which the rule will be applied. Default is ``0``. Lower priority rules are applied before higher priority rules, meaning higher priority rules can alter what a lower priority rule configured.
     *   - clearTraits
         - Boolean
-        - Clears any existing traits before applying new traits. Default is ``false``. (*Added 1.21.1-0.4.3*)
+        - Clears any existing traits before applying new traits. Default is ``false``. (*Added 1.21.1-0.4.3*; *deprecated 1.21.1-0.4.7*, see ``traits``)
     *   - traits
         - String array
-        - Any array of 0 or more traits that are to be added to a biome. During configuration, Dynamic Surroundings will apply traits to all biomes before applying the ``biomeSelector`` script. This option is used to configure modded biomes that did not use biome tags. See :doc:`../scripting/biometraits`.
+        - Any array of 0 or more traits that are to be added to a biome. During configuration, Dynamic Surroundings will apply traits to all biomes before applying the ``biomeSelector`` script. See :doc:`../scripting/biometraits`. (*Deprecated 1.21.1-0.4.7*: use biome tag files instead, see :doc:`../packs/tagging`. Traits from a rule are only added after Dynamic Surroundings has guessed a biome's missing traits, so they can't replace a wrong guess, and a warning is logged for each file that uses them.)
     *   - clearSounds
         - Boolean
         - Clears any sound effects that have been configured by prior rules. Default is ``false``.
@@ -122,20 +122,6 @@ Example Biome Rules
     }
 
 This is a fairly simple rule. It applies a wind background sound to any biome that has the trait ``MOUNTAIN``.
-
-.. code-block:: JSON
-
-    {
-        "biomeSelector": "biome.getId() == 'natures_spirit:chaparral'",
-        "_comment": "Missing traits for Chaparral",
-        "traits": [
-            "OVERWORLD",
-            "FOREST",
-            "HOT"
-        ]
-    }
-
-This rule adds traits to the ``natures_spirit:chaparral`` biome since this biome did not have any biome tags.
 
 .. code-block:: JSON
 

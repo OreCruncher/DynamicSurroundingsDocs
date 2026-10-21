@@ -51,7 +51,7 @@ Dynamic Surroundings to not make sense. Such dimensions could include mining dim
         - Indicates if any biome sounds should be generated in the dimension. Default is ``true``.
     *   - compassWobble
         - Boolean
-        - Indicates if the compass overlay should cause wobbling for the dimension. Default is based on whether the dimension is considered natural or not. In Vanilla, compass wobbling occurs when in the Nether or End. (*Added 1.21.1-0.4.2*)
+        - Indicates if the compass and clock overlays should cause wobbling for the dimension. Default is based on whether the dimension is considered natural or not. In Vanilla, compass wobbling occurs when in the Nether or End. (*Added 1.21.1-0.4.2*)
     *   - particleWeather
         - Boolean
         - Indicates if Dynamic Surroundings' particle rain, snow, and dust storms should replace the dimension's weather rendering. Default is ``true`` for dimensions that use Minecraft's own Overworld, Nether, or End rendering, and ``false`` for dimensions that provide their own (including modded dimensions that customize vanilla rendering), so that modded weather is not hidden. (*Added 1.21.1-0.4.7*)

@@ -66,7 +66,7 @@ dsurround.json
 This Json file is comprised of multiple sections, with related options grouped within. These settings can be changed in the mod configuration menu, assuming the appropriate mod support is available.
 
 In each section below the value of a setting is the default. The examples show the section as Dynamic Surroundings writes it: above each setting is a comment describing it, followed
-by its range or possible values, and its default. The comments are rewritten each time the file is saved, so any comments added by hand will not be kept. Comments are allowed when
+by its range or possible values, its default, and, for a setting that only takes effect after restarting Minecraft or rejoining the world, a note saying so (*added 1.21.1-0.4.7*). The comments are rewritten each time the file is saved, so any comments added by hand will not be kept. Comments are allowed when
 editing the file by hand. (*Comments added 1.21.1-0.4.6*)
 
 Some settings have moved to a different section, or been renamed, between releases. When an older ``dsurround.json`` is loaded, the values of moved settings are carried over to their new
@@ -84,6 +84,7 @@ soundSystem
       "soundSystem": {
         // The number of sound channels to reserve for streaming sounds (music, biome sounds, records, etc.)
         // Range: 8 - 16, default: 12
+        // Changes take effect after restarting Minecraft
         "streamingChannels": 12,
         // Ticks between culled sound events (0 to disable culling)
         // Range: 0 - 200, default: 20
@@ -125,24 +126,32 @@ enhancedSounds
       "enhancedSounds": {
         // Enable/disable enhanced sound processing (reverb, occlusion, etc)
         // Default: true
+        // Changes take effect after restarting Minecraft
         "enableEnhancedSounds": true,
         // Number of background threads to use for enhanced sound processing (0 means use internal default)
         // Range: 0 - 8, default: 0
+        // Changes take effect after restarting Minecraft
         "backgroundThreadWorkers": 0,
         // Enable/disable sound occlusion processing (sound muffling behind blocks)
         // Default: false
         "enableOcclusionProcessing": false,
+        // Apply enhanced sound processing to players' voices from Simple Voice Chat
+        // Default: true
+        "enableVoiceChatProcessing": true,
         // Check whether reflections reach the player only from each reverb ray's last reflection, instead of from every reflection. Cheaper; may sound different
         // Default: false
         "simplifiedSharedAirspace": false,
         // The number of rays to project around a sound location to calculate reverb effect
         // Range: 16 - 64, default: 32
+        // Changes take effect after restarting Minecraft
         "reverbRays": 32,
         // The number of reflections the ray calculation will perform before ending a ray calculation
         // Range: 2 - 8, default: 4
+        // Changes take effect after restarting Minecraft
         "reverbBounces": 4,
         // Total distance a reverb ray will traverse before ending calculation
         // Range: 64 - 256, default: 128
+        // Changes take effect after restarting Minecraft
         "reverbRayTraceDistance": 128
       }
     }
@@ -167,6 +176,13 @@ enhancedSounds
     :no-contents-entry:
 
     Occlusion processing is an advanced feature of the sound processing system. If enabled, Dynamic Surroundings will perform calculations to "muffle" a sound that is behind blocks from the perspective of the player. This processing will require additional horsepower so it is disabled by default.
+
+.. confval:: enhancedSounds.enableVoiceChatProcessing
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    *Experimental*. With `Simple Voice Chat <https://modrinth.com/plugin/simple-voice-chat>`_ installed, the voices of nearby players get the same reverb, occlusion, and air absorption as other sounds, so a player talking in a cave echoes. Group chat, which is not positional, plays as it is. Has no effect unless :confval:`enhancedSounds.enableEnhancedSounds` is on. Takes effect immediately. (*Added 1.21.1-0.4.7*)
 
 .. confval:: enhancedSounds.simplifiedSharedAirspace
     :type: ``boolean``
@@ -236,7 +252,7 @@ soundOptions
     :default: ``true``
     :no-contents-entry:
 
-    Flag indicating whether to discard sound plays by non-client threads. Sounds played by non-client threads run the risk of triggering comodiciation exceptions which will crash the client. (*Added 1.21.1-0.4.4*)
+    Flag indicating whether to discard sound plays by non-client threads. Sounds played by non-client threads run the risk of triggering comodiciation exceptions which will crash the client. Ignored when Raise Sound Limit Simplified is installed. (*Added 1.21.1-0.4.4*)
 
 .. confval:: soundOptions.logStacktraceWhenDiscarding
     :type: ``boolean``
@@ -558,8 +574,6 @@ entityEffects
 
     Enables sound effect when moving through blocks that are considered brush, such as tall flowers and grass.
 
-Changes to the settings in this section take effect after rejoining a world.
-
 footstepAccents
 +++++++++++++++
 
@@ -621,7 +635,10 @@ particleTweaks
       "particleTweaks": {
         // Enable/disable showing of projectile particle trails
         // Default: false
-        "suppressProjectileParticleTrails": false
+        "suppressProjectileParticleTrails": false,
+        // Smoke, ash, leaves and spores, from the game and other mods, drift with the wind out in the open
+        // Default: true
+        "windBlowsParticles": true
       }
     }
 
@@ -632,6 +649,15 @@ particleTweaks
 
     Enables suppression of the particle trail generated by shooting an arrow.
 
+.. confval:: particleTweaks.windBlowsParticles
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    *Added 1.21.1-0.4.7*. Particles from Minecraft and other mods, such as smoke, ash, falling leaves, and spores, drift with the simulated wind when they are
+    made out in the open. Particles made indoors or in a cave are left as they are. Which particles drift is set by the ``dsurround:effects/wind_blown``
+    particle type tag; see :doc:`../packs/tagging`.
+
 compassAndClockOptions
 ++++++++++++++++++++++
 
@@ -640,48 +666,148 @@ compassAndClockOptions
     {
       // Configuration options for the compass and clock overlay
       "compassAndClockOptions": {
-        // Enable/disable display of the clock display when holding a clock item
-        // Default: true
-        "enableClock": true,
-        // Enable/disable display of the compass display when holding a compass item
-        // Default: true
-        "enableCompass": true,
-        // Style of compass rendering
-        // Values: OPAQUE, TRANSPARENT, OPAQUE_WITH_INDICATOR, TRANSPARENT_WITH_INDICATOR, default: "TRANSPARENT_WITH_INDICATOR"
+        // Style of compass rendering, or NONE for no compass display
+        // Values: NONE, OPAQUE, TRANSPARENT, OPAQUE_WITH_INDICATOR, TRANSPARENT_WITH_INDICATOR, ROSE_1, ROSE_2, ROSE_3, default: "TRANSPARENT_WITH_INDICATOR"
         "compassStyle": "TRANSPARENT_WITH_INDICATOR",
+        // Style of clock rendering, or NONE for no clock display
+        // Values: NONE, TEXT, POCKET_WATCH, POCKET_WATCH_WITH_TEXT, default: "POCKET_WATCH"
+        "clockStyle": "POCKET_WATCH",
+        // Shows the compass and pocket watch in a side or corner of the screen while one is in the hot bar or off hand, rather than above the crosshair while held
+        // Default: false
+        "showInMargin": false,
+        // The side or corner of the screen for the compass and pocket watch when shown there
+        // Values: TOP_LEFT, TOP, TOP_RIGHT, LEFT, RIGHT, BOTTOM_LEFT, BOTTOM, BOTTOM_RIGHT, default: "LEFT"
+        "marginPosition": "LEFT",
         // Scales the display by the specified amount
         // Range: 0.5 - 4, step: 0.1, default: 1.0
         "scale": 1.0
       }
     }
 
-.. confval:: compassAndClockOptions.enableClock
-    :type: ``boolean``
-    :default: ``true``
-    :no-contents-entry:
-
-    Enables the display of World Time and season information when holding a clock. Additionally, if an item frame is placed with clock as the framed item, looking at the framed clock will also display time and season information.
-
-.. confval:: compassAndClockOptions.enableCompass
-    :type: ``boolean``
-    :default: ``true``
-    :no-contents-entry:
-
-    Enables the display of a compass HUD when holding a compass.
-
 .. confval:: compassAndClockOptions.compassStyle
     :type: ``string``
     :default: ``"TRANSPARENT_WITH_INDICATOR"``
     :no-contents-entry:
 
-    The style of compass to display. Possible selections are ``OPAQUE``, ``TRANSPARENT``, ``OPAQUE_WITH_INDICATOR``, and ``TRANSPARENT_WITH_INDICATOR``.
+    The style of compass to display when holding a compass. ``OPAQUE``, ``TRANSPARENT``, ``OPAQUE_WITH_INDICATOR``, and ``TRANSPARENT_WITH_INDICATOR`` show a band
+    above the crosshair that slides with the player's heading. ``ROSE_1``, ``ROSE_2``, and ``ROSE_3`` (*added 1.21.1-0.4.7*) show a compass rose laid flat in front of
+    the player that turns with the heading. ``NONE`` (*added 1.21.1-0.4.7*) turns the compass display off; it replaces the earlier ``enableCompass`` setting, and a
+    configuration with ``enableCompass`` off is changed to ``NONE`` when loaded.
+
+.. confval:: compassAndClockOptions.clockStyle
+    :type: ``string``
+    :default: ``"POCKET_WATCH"``
+    :no-contents-entry:
+
+    *Added 1.21.1-0.4.7*. The style of clock to display when holding a clock, or looking at a clock in an item frame:
+
+    * ``NONE`` turns the clock display off. It replaces the earlier ``enableClock`` setting, and a configuration with ``enableClock`` off is changed to ``NONE``
+      when loaded.
+    * ``TEXT`` shows the day, the time and the season as text above the hot bar.
+    * ``POCKET_WATCH`` shows a pocket watch above the crosshair. Its hands tick from minute to minute; a window under XII shows day or night, as Minecraft's
+      clock does, to tell noon from midnight; and a window above VI shows the season when Serene Seasons is installed, or the moon's phase without it. When the
+      compass is shown as well, the watch sits beside it, on the side of the hand holding the clock.
+    * ``POCKET_WATCH_WITH_TEXT`` shows both.
+
+    The pocket watch's textures can be replaced by a resource pack; see :doc:`../packs/overlay_textures`.
+
+.. confval:: compassAndClockOptions.showInMargin
+    :type: ``boolean``
+    :default: ``false``
+    :no-contents-entry:
+
+    *Added 1.21.1-0.4.7*. Shows the compass and the pocket watch in a side or corner of the screen, picked by :confval:`compassAndClockOptions.marginPosition`,
+    while a compass or clock is anywhere in the hot bar or in the off hand, rather than above the crosshair only while one is held. There they are drawn smaller:
+    the compass rose and the pocket watch are 64 GUI pixels across, and the compass band is half its usual size. The compass rose stands upright rather than lying
+    flat, and turns with the player's heading. The clock's text, from the ``TEXT`` and ``POCKET_WATCH_WITH_TEXT`` styles, is still shown above the hot bar, and only
+    while a clock is held.
+
+.. confval:: compassAndClockOptions.marginPosition
+    :type: ``string``
+    :default: ``"LEFT"``
+    :no-contents-entry:
+
+    *Added 1.21.1-0.4.7*. The side or corner of the screen for the compass and pocket watch when :confval:`compassAndClockOptions.showInMargin` is on: ``TOP_LEFT``,
+    ``TOP``, ``TOP_RIGHT``, ``LEFT``, ``RIGHT``, ``BOTTOM_LEFT``, ``BOTTOM``, or ``BOTTOM_RIGHT``. When both are shown, they sit one above the other, compass first,
+    on the sides and in the corners, and side by side, compass on the left, at ``TOP`` and ``BOTTOM``. ``BOTTOM`` places them above the hot bar and the health,
+    armor, and food bars.
 
 .. confval:: compassAndClockOptions.scale
     :type: ``number``
     :default: ``1.0``
     :no-contents-entry:
 
-    The scaling factor to apply when rendering the compass HUD. This value can be 0.5 - 4.0.
+    The scaling factor to apply when rendering the compass and the pocket watch, including when they are shown in the screen margin. This value can be 0.5 - 4.0.
+
+lightLevelOptions
++++++++++++++++++
+
+*Added 1.21.1-0.4.7*
+
+Options for the light level overlay, which is turned on and off with the *Light Level Overlay* key (under *Dynamic Surroundings* in the controls; it starts unbound).
+See :doc:`../features` for what the colors mean.
+
+.. code-block:: JSON
+
+    {
+      // Configuration options for the light level overlay
+      "lightLevelOptions": {
+        // The light shown on each block: BLOCK (torches and other lights), SKY (as it is now), or BLOCK_SKY (the brighter of the two)
+        // Values: BLOCK, SKY, BLOCK_SKY, default: "BLOCK"
+        "mode": "BLOCK",
+        // The colors for the numbers: BRIGHT or DARK
+        // Values: BRIGHT, DARK, default: "BRIGHT"
+        "colors": "BRIGHT",
+        // How many blocks out from the player light levels are shown
+        // Range: 8 - 32, default: 16
+        "range": 16,
+        // Shows numbers only where monsters can spawn
+        // Default: false
+        "hideSafe": false,
+        // Shows what the colors mean in the bottom right corner of the screen while light levels are shown
+        // Default: true
+        "showLegend": true
+      }
+    }
+
+.. confval:: lightLevelOptions.mode
+    :type: ``string``
+    :default: ``"BLOCK"``
+    :no-contents-entry:
+
+    The light shown as the number on each block: ``BLOCK`` for light from torches, lava, and other light giving blocks; ``SKY`` for light from the sky as it is now,
+    darker at night and in storms; ``BLOCK_SKY`` for the brighter of the two, the light a mob sees. Whichever is shown, the color always tells whether monsters can
+    spawn there.
+
+.. confval:: lightLevelOptions.colors
+    :type: ``string``
+    :default: ``"BRIGHT"``
+    :no-contents-entry:
+
+    The colors for the numbers. ``BRIGHT`` uses red where monsters can spawn now, yellow where they can once the sky darkens, green where it is too bright, and aqua
+    where they can never spawn. ``DARK`` uses darker shades of the same: dark red, gold, dark green, and dark aqua.
+
+.. confval:: lightLevelOptions.range
+    :type: ``integer``
+    :default: ``16``
+    :no-contents-entry:
+
+    How many blocks out from the player, east to west and north to south, light levels are shown, from 8 to 32. Below the player they are shown as far down as this,
+    and above only a few blocks up.
+
+.. confval:: lightLevelOptions.hideSafe
+    :type: ``boolean``
+    :default: ``false``
+    :no-contents-entry:
+
+    Shows numbers only where monsters can spawn, now or once the sky darkens: the red and yellow ones. The legend then lists only those two.
+
+.. confval:: lightLevelOptions.showLegend
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Shows what the colors mean, in the bottom right corner of the screen, while light levels are shown. It is hidden while Minecraft's F3 screen is open.
 
 weatherOptions
 ++++++++++++++
@@ -721,6 +847,9 @@ weather effects turn themselves off if the Particle Rain or Simple Weather mod i
         // How big particle rain drops are drawn, as a percent of their usual size
         // Range: 50 - 250, default: 100
         "rainDropScale": 100,
+        // How blue particle rain is: 0 is a nearly colourless pale grey, 100 a deep blue
+        // Range: 0 - 100, default: 15
+        "rainTint": 15,
         // How big particle snowflakes are drawn, as a percent of their usual size
         // Range: 50 - 200, default: 100
         "snowflakeScale": 100,
@@ -730,6 +859,18 @@ weather effects turn themselves off if the Particle Rain or Simple Weather mod i
         // Rain sounds that follow the storm's strength, from a patter to a roar, and the sound of blowing dust
         // Default: true
         "enableStormSounds": true,
+        // Water drips from leaves and overhanging edges for a while after the rain stops
+        // Default: true
+        "enableAfterRainDrips": true,
+        // With particle snow on, snowflakes blown by the wind against a wall or tree trunk stick to it for a moment
+        // Default: true
+        "enableSnowOnSides": true,
+        // With particle rain on, rain drops run down the outside of windows in stick-and-slide streaks
+        // Default: true
+        "enableWindowStreaks": true,
+        // Frost forms on the outside of clear glass windows when it is cold
+        // Default: true
+        "enableWindowFrost": true,
         // Mist lying low over the ground in swamps and eerie biomes: off, or how finely it is drawn. Fast costs least; Fabulous costs several times Fancy
         // Values: NONE, FAST, FANCY, FABULOUS, default: "FANCY"
         "groundFogQuality": "FANCY"
@@ -792,6 +933,14 @@ weather effects turn themselves off if the Particle Rain or Simple Weather mod i
 
     How big particle rain drops are drawn, as a percent of their usual size. It changes only how the rain looks: drops fall and splash as before. This value can be 50 - 250.
 
+.. confval:: weatherOptions.rainTint
+    :type: ``integer``
+    :default: ``15``
+    :no-contents-entry:
+
+    How blue particle rain is, falling and running down windows: 0 is a nearly colourless pale grey, 100 a deep blue. The rain is lit as the world is, so it
+    is darker at night and in shade whatever its tint. This value can be 0 - 100. (*Added 1.21.1-0.4.7*)
+
 .. confval:: weatherOptions.snowflakeScale
     :type: ``integer``
     :default: ``100``
@@ -812,6 +961,45 @@ weather effects turn themselves off if the Particle Rain or Simple Weather mod i
     :no-contents-entry:
 
     Rain that sounds as strong as the storm: a soft patter in a drizzle, building to a roar in a downpour. Dust storms make the sound of blowing dust.
+
+.. confval:: weatherOptions.enableAfterRainDrips
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Water drips from the lowest leaves of trees, and from overhanging edges such as eaves, for a while after the rain stops, fewer and fewer as things dry.
+    Edges drip while it rains too. Works whether or not particle rain is on. (*Added 1.21.1-0.4.7*)
+
+.. confval:: weatherOptions.enableSnowOnSides
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    With particle snow on, snowflakes blown by the wind against the side of a wall, leaves or a tree trunk stick there for a moment before melting, as they
+    do on the ground. Off, they only settle on top of things. (*Added 1.21.1-0.4.7*)
+
+.. confval:: weatherOptions.enableWindowStreaks
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    With particle rain on, rain drops on the outside of glass blocks and panes cling, then run down in short rushes, leaving a wet trail, as real drops do.
+    Where the glass ends over open air they drip off the edge; onto a sill or the wall below, they run off.
+    Windows facing the wind and open to the sky get the most; windows indoors or under eaves stay dry. Which blocks count as windows is the
+    ``dsurround:effects/windows`` block tag (glass blocks and panes), which a resource pack can add to. (*Added 1.21.1-0.4.7*)
+
+.. confval:: weatherOptions.enableWindowFrost
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    When it is cold, frost grows on the outside of clear glass blocks and panes, in from the edges of the window and thickest along its bottom. It follows the
+    temperature where the window is, Serene Seasons' included, and the time of day: it is thickest just before sunrise, and in a cool biome gone by the afternoon,
+    while in the bitter cold some of it lasts all day. The sun melts it from the windows it shines on, east facing ones in the morning and west facing ones in the
+    evening; north and south facing windows keep theirs. Glass under cover frosts less, and windows indoors stay clear. Frost creeps in over a couple of minutes,
+    and melts a little faster. Works whether or not particle rain is on, and is not drawn while a shader pack is in use. Which blocks frost is the
+    ``dsurround:effects/frosted_windows`` block tag, which a resource pack can add to; ``/dsweather frost`` sets the frost for testing (see
+    :doc:`../commands/commands`). (*Added 1.21.1-0.4.7*)
 
 .. confval:: weatherOptions.groundFogQuality
     :type: ``string``
@@ -928,6 +1116,7 @@ musicManagerOptions
       "musicManagerOptions": {
         // Replace Minecraft's music manager with modded version
         // Default: true
+        // Changes take effect after restarting Minecraft
         "replaceMusicManager": true,
         // Reduce the wait time between music plays by a percentage
         // Range: 0 - 100, default: 0
@@ -971,7 +1160,11 @@ logging
         "filteredTagView": true,
         // Enable/disable registration of client side commands
         // Default: true
-        "registerCommands": true
+        // Changes take effect after restarting Minecraft
+        "registerCommands": true,
+        // Play your own Simple Voice Chat voice back to you, with enhanced sound processing, for testing
+        // Default: false
+        "voiceChatHearSelf": false
       }
     }
 
@@ -987,7 +1180,8 @@ logging
     :default: ``0``
     :no-contents-entry:
 
-    Set of bits that control which detail is desired.
+    Set of bits that control which detail is desired. Only takes effect while :confval:`logging.enableDebugLogging` is on. See :doc:`../troubleshooting/logs`
+    for the values.
 
 .. confval:: logging.enableModUpdateChatMessage
     :type: ``boolean``
@@ -1009,6 +1203,13 @@ logging
     :no-contents-entry:
 
     Enables/disables registration of client side commands. Requires a restart.
+
+.. confval:: logging.voiceChatHearSelf
+    :type: ``boolean``
+    :default: ``false``
+    :no-contents-entry:
+
+    *Experimental*. For testing :confval:`enhancedSounds.enableVoiceChatProcessing` without a second player: plays the player's own Simple Voice Chat voice back to them, from their head, with reverb and the other effects. Only while the player is transmitting, and only while enhanced sound processing is on. Use headphones, or the speakers will feed back into the microphone. The playback is slightly delayed, which can sound like a short echo. Takes effect immediately. (*Added 1.21.1-0.4.7*)
 
 otherOptions
 ++++++++++++
@@ -1046,6 +1247,10 @@ Settings from earlier versions that have moved or no longer exist. Values of mov
         - Status
     *   - ``enhancedSounds.enableMonoConversion``
         - Removed in 1.21.1-0.4.6
+    *   - ``compassAndClockOptions.enableCompass``
+        - Replaced by ``NONE`` in :confval:`compassAndClockOptions.compassStyle` in 1.21.1-0.4.7
+    *   - ``compassAndClockOptions.enableClock``
+        - Replaced by ``NONE`` in :confval:`compassAndClockOptions.clockStyle` in 1.21.1-0.4.7
     *   - ``blockEffects.flameJetEnabled``
         - Moved to :confval:`flameJetOptions.enableFlameJets` in 1.21.1-0.4.7
     *   - ``blockEffects.firefliesEnabled``

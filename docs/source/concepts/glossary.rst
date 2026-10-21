@@ -13,8 +13,8 @@ Glossary
         :doc:`../schemas/biomes`.
 
     Biome Trait
-        A characteristic of a biome, such as ``FOREST`` or ``COLD``, that biome selector scripts can test. Traits come from Dynamic Surroundings biome tags. See
-        :doc:`../scripting/biometraits`.
+        A characteristic of a biome, such as ``FOREST`` or ``COLD``, that biome selector scripts can test. Traits come from Dynamic Surroundings biome tags; those a
+        biome is missing are worked out from its definition, music, climate, and name. See :doc:`../scripting/biometraits`.
 
     Block Specification
         A string that matches blocks: a block ID (``minecraft:stone``), a block tag (``#minecraft:logs``), or a block with specific properties
