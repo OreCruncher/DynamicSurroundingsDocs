@@ -53,8 +53,8 @@ Debug Logging
 
 Dynamic Surroundings can write more detail to the log. Only turn this on when asked, or when making a resource pack, since some of it adds a lot of lines.
 
-* :confval:`logging.enableDebugLogging` turns on debug messages. They are written to ``latest.log`` with ``[DEBUG]`` at the start of the line.
-* :confval:`logging.traceMask` turns on extra traces, each with a number. Add the numbers of the traces wanted, so ``5`` turns on the first and third.
+* :confval:`diagnostics.enableDebugLogging` turns on debug messages. They are written to ``latest.log`` with ``[DEBUG]`` at the start of the line.
+* :confval:`diagnostics.traceMask` turns on extra traces, each with a number. Add the numbers of the traces wanted, so ``5`` turns on the first and third.
 
 .. list-table:: Trace Mask Values
     :widths: auto
@@ -72,7 +72,7 @@ Dynamic Surroundings can write more detail to the log. Only turn this on when as
         - The configuration and tag files found and loaded, from mods, resource packs, and the ``config`` folder. Useful when a resource pack's
           configuration does not seem to be applied. See :doc:`../packs/layout`.
 
-Traces only take effect while :confval:`logging.enableDebugLogging` is on. Changes made in the configuration menu take effect immediately. Turn debug logging
+Traces only take effect while :confval:`diagnostics.enableDebugLogging` is on. Changes made in the configuration menu take effect immediately. Turn debug logging
 off again when done.
 
 Sharing Logs

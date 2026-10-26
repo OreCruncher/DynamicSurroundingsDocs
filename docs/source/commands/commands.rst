@@ -44,7 +44,7 @@ should return ``true``.
 /dsweather <subcommand>
 -----------------------
 
-Shows and overrides the simulated storm strength, wind, ground fog, and window frost. Intended for testing and for seeing how weather of a given strength looks; it only changes
+Shows and overrides the simulated storm strength, wind, ground fog, window frost, and clouds, and strikes lightning. Intended for testing and for seeing how weather of a given strength looks; it only changes
 what the client sees and hears, and does not affect game mechanics. Overrides stay in place until cleared or the player disconnects. Running ``/dsweather`` with no
 subcommand reports the current storm: its strength band, its strength as a percent of full strength, and the game's own rain level. (*Added 1.21.1-0.4.7*)
 
@@ -79,6 +79,17 @@ subcommand reports the current storm: its strength band, its strength as a perce
         - Gives every window the given amount of frost, as a percent of the most, at once and whatever the weather or temperature.
     *   - frost clear
         - Removes the frost override so window frost follows the weather again; it then grows or melts toward what the weather calls for.
+    *   - clouds
+        - Reports what the dynamic clouds are like now: how much of the sky they cover, how thick the thinnest and thickest are, how far their base has lowered,
+          and whether that is the weather's or held by this command. Says so instead if the dynamic clouds are not drawn. (*Added 1.21.1-0.4.8*)
+    *   - clouds \<0-100> \[thickness]
+        - Holds how much of the sky the dynamic clouds cover, as a percent, and optionally how thick the thickest are, in blocks (1 to 120), at once. The rest
+          still follows the weather: the storm still lowers and darkens them. (*Added 1.21.1-0.4.8*)
+    *   - clouds clear
+        - Removes the clouds override so the clouds follow the weather again, easing back over a minute or so. (*Added 1.21.1-0.4.8*)
+    *   - lightning \[ground | spider | sheet]
+        - Strikes lightning ahead of the player, whatever the weather: a bolt to the ground (the default), spider lightning crawling under the cloud base, or a
+          flash hidden in the cloud. Says so instead if the lightning is turned off (see :confval:`scaryContent.enableLightning`). (*Added 1.21.1-0.4.8*)
 
 /dsconflicts
 ------------
@@ -110,6 +121,9 @@ game as it is; a scene shows one effect at its heaviest while it records, and th
         - A thunderstorm at full strength. In single player it also starts the thunderstorm.
     *   - frost
         - The most frost on every window.
+    *   - clouds
+        - The dynamic clouds in a thunderstorm at full strength, half the sky covered with tall clouds. In single player it also starts the thunderstorm.
+          (*Added 1.21.1-0.4.8*)
 
 /dsdump <subcommand>
 --------------------
@@ -152,4 +166,4 @@ Dumps out cached information to the ``minecraftinstance/config/dsurround/dumps``
 
 Checks whether a newer version of Dynamic Surroundings is available and reports the result in chat, with links to the download and other information. The
 check runs in the background, so the result arrives a moment after the command. This works even if the version check when joining a world has been turned off with
-:confval:`logging.enableModUpdateChatMessage`. (*Added 1.21.1-0.4.6*)
+:confval:`generalOptions.enableModUpdateChatMessage`. (*Added 1.21.1-0.4.6*)

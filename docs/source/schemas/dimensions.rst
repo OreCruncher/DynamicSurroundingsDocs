@@ -20,7 +20,8 @@ Dynamic Surroundings to not make sense. Such dimensions could include mining dim
         "compassWobble": null,
         "particleWeather": null,
         "simulateWind": null,
-        "groundFog": null
+        "groundFog": null,
+        "dynamicClouds": null
     }
 
 .. list-table:: Dimension Configuration
@@ -61,6 +62,9 @@ Dynamic Surroundings to not make sense. Such dimensions could include mining dim
     *   - groundFog
         - Boolean
         - Indicates if ground fog can form in the dimension, in the biomes that are configured for it. Default is ``true`` for dimensions that have sky light, ``false`` otherwise. (*Added 1.21.1-0.4.7*)
+    *   - dynamicClouds
+        - Boolean
+        - Indicates if Dynamic Surroundings' clouds should be drawn in place of the dimension's own. Default is ``true`` for dimensions where Minecraft draws clouds with its own rendering (such as the Overworld), and ``false`` for dimensions without clouds (the Nether and End) or that draw their own, so that modded clouds are not hidden. (*Added 1.21.1-0.4.8*)
 
 Multiple rules can be defined for the same dimension, such as from different mods or resource packs. A rule only changes the properties it specifies, so a property that is left out
 does not undo a value set by another rule. If more than one rule sets the same property, the last one loaded is used.

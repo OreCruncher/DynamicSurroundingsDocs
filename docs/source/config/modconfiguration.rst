@@ -24,17 +24,11 @@ This document is an array of Json entities with the form of:
     [
         {
             "soundEventId": "namespace:path1",
-            "startup": false,
-            "volumeScale": 100,
-            "block": false,
-            "cull": false,
+            "action": "cull"
         },
         {
             "soundEventId": "namespace:path2",
-            "startup": false,
-            "volumeScale": 100,
-            "block": false,
-            "cull": false,
+            "volumeScale": 50
         }
     ]
 
@@ -51,14 +45,17 @@ the game.
         - Description
     *   - soundEventId
         - The :term:`resource location <Resource Location>` of the sound in question. For example, the sheep bleating sound effect has the ID of ``minecraft:entity.sheep.ambient``. This is a *required* field.
-    *   - startup
-        - Flag indicating whether the sound should be included in the startup sound selection list. Default is ``false``, and is not required.
     *   - volumeScale
-        - Scaling factor to apply when playing a sound instance with that resource ID. Default is ``100``, and is not rquired. The value can be 0 - 400 where 0 mutes the sound entirely.
-    *   - block
-        - Flag indicating that the sound should be blocked from playing. Usually this is applied to sounds and effects that are considered annoying. Default is ``false`` and is not required.
-    *   - cull
-        - Flag indicating that the sound should be culled. Culling limits the number of sound plays for a given resource ID over a short period of time. For example, if you have a farm with a lot of animals, culling sounds will reduce the overall sound load on the Minecraft sound engine as well as your ears.  Default is ``false`` and is not required.
+        - Scaling factor to apply when playing a sound instance with that resource ID. Default is ``100``, and is not required. The value can be 0 - 400 where 0 mutes the sound entirely.
+    *   - action
+        - What happens when the sound plays: ``default`` (it plays normally), ``cull`` or ``block``. Culling limits the number of sound plays for a given resource ID over a short
+          period of time. For example, if you have a farm with a lot of animals, culling sounds will reduce the overall sound load on the Minecraft sound engine as well as your ears.
+          Blocking stops the sound from playing at all; usually this is applied to sounds and effects that are considered annoying. Default is ``default``, which is left out of the
+          file, and is not required. (*Added 1.21.1-0.4.8*)
+
+Before 1.21.1-0.4.8 the file had separate ``block`` and ``cull`` flags, and a ``startup`` flag for the random sound played when the game finished loading. An older file is still
+read: ``"cull": true`` becomes ``cull``, ``"block": true`` becomes ``block`` (a sound with both is culled), and ``startup`` is ignored. The file is written in the new form the next
+time it is saved.
 
 dsurround.json
 --------------
@@ -73,6 +70,41 @@ Some settings have moved to a different section, or been renamed, between releas
 location automatically.
 
 Settings for experimental features are colored orchid in the configuration menu. Experimental features are subject to change and may be removed in a future release. (*Added 1.21.1-0.4.7*)
+
+generalOptions
+++++++++++++++
+
+*General Options* in the configuration menu. (*Added 1.21.1-0.4.8*)
+
+.. code-block:: JSON
+
+    {
+      // General configuration options for the mod
+      "generalOptions": {
+        // Enable/disable chat window notification of newer updates available
+        // Default: true
+        "enableModUpdateChatMessage": true,
+        // Enable/disable registration of client side commands
+        // Default: true
+        // Changes take effect after restarting Minecraft
+        "registerCommands": true
+      }
+    }
+
+.. confval:: generalOptions.enableModUpdateChatMessage
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Enables display of version check results in the chat window when the player joins a world. (*Moved from* ``logging.enableModUpdateChatMessage``
+    *in 1.21.1-0.4.8*)
+
+.. confval:: generalOptions.registerCommands
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Enables/disables registration of client side commands. Requires a restart. (*Moved from* ``logging.registerCommands`` *in 1.21.1-0.4.8*)
 
 soundSystem
 +++++++++++
@@ -210,7 +242,7 @@ enhancedSounds
     :default: ``128``
     :no-contents-entry:
 
-    The maximum number of blocks a ray will be traced before termination. Note that this is not actual distance from the player, its the total distance travelled which includes bounces. This value can be 64 - 256. Requires a restart. Recommendation is to leave at the default. (*Default changed from 256 to 128 in 1.21.1-0.4.6*)
+    The maximum number of blocks a ray will be traced before termination. Note that this is not actual distance from the player, its the total distance traveled which includes bounces. This value can be 64 - 256. Requires a restart. Recommendation is to leave at the default. (*Default changed from 256 to 128 in 1.21.1-0.4.6*)
 
 soundOptions
 ++++++++++++
@@ -232,9 +264,6 @@ soundOptions
         // Enables replacement of thunder sounds with Dynamic Surroundings' version
         // Default: true
         "replaceThunderSounds": true,
-        // Enables playing sounds that are considered scary
-        // Default: true
-        "allowScarySounds": true,
         // Enables playing biome background music while in creative
         // Default: false
         "playBiomeMusicWhileCreative": false,
@@ -275,13 +304,6 @@ soundOptions
 
     Flag indicating whether to replace Minecraft's thunder sounds with the ones from Dynamic Surroundings.
 
-.. confval:: soundOptions.allowScarySounds
-    :type: ``boolean``
-    :default: ``true``
-    :no-contents-entry:
-
-    Flag indicating whether scary sounds should be enabled within the mod. Some of the sounds I have added to the mod are considered scary to younger audiences. This will allow a parent to control which sounds can be played.
-
 .. confval:: soundOptions.playBiomeMusicWhileCreative
     :type: ``boolean``
     :default: ``false``
@@ -303,6 +325,47 @@ soundOptions
 
     Enables sound remapping when sounds are played. Enabling tells Dynamic Surroundings to replace various step sounds with replacement versions. (*Added 1.21.1-0.4.2*)
 
+scaryContent
+++++++++++++
+
+*Added 1.21.1-0.4.8*
+
+Options for content some players find frightening. A parent can use these to control what younger players see and hear.
+
+.. code-block:: JSON
+
+    {
+      // Configuration options for content some players find frightening
+      "scaryContent": {
+        // Enables content that is considered scary: sounds marked as scary, and lightning
+        // Default: true
+        "allowScaryContent": true,
+        // Enable/disable lightning: branching bolts in place of vanilla's, flashes in the sky during thunderstorms, and their thunder. Off while scary content is off
+        // Default: true
+        "enableLightning": true
+      }
+    }
+
+.. confval:: scaryContent.allowScaryContent
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Flag indicating whether scary content is enabled within the mod: sounds that are considered scary, such as wolves and monster growls at night and the
+    heartbeat at low health, and the mod's lightning. Turning it off also turns off the lightning, whatever :confval:`scaryContent.enableLightning` is set to. Scripts read it with
+    ``global.allowScary()``; which sounds are scary is up to the configuration (see :doc:`../concepts/acoustic`). (*Moved from*
+    ``soundOptions.allowScarySounds`` *in 1.21.1-0.4.8*)
+
+.. confval:: scaryContent.enableLightning
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Flag indicating whether the mod's lightning is shown: lightning that branches and forks in place of Minecraft's bolts, and through a thunderstorm
+    lightning in the sky with its thunder (see :doc:`../features`). Off while :confval:`scaryContent.allowScaryContent` is off, and not drawn while a shader
+    pack is in use; Minecraft's own bolts are drawn then. With Minecraft's *Hide Lightning Flashes* accessibility option on, there is no lightning in the sky,
+    and bolts strike once without flickering. Scripts read whether lightning is shown with ``global.allowLightning()``. (*Added 1.21.1-0.4.8*)
+
 blockEffects
 ++++++++++++
 
@@ -311,9 +374,9 @@ blockEffects
     {
       // Configuration options for block effects
       "blockEffects": {
-        // Distance that will be scanned when generating block effects
-        // Range: 16 - 64, default: 32
-        "blockEffectRange": 32,
+        // Radius around the player, in blocks, where block effects (waterfalls, steam, random block effects) are found and shown. Past 32, effects show farther than vanilla particles, at more cost.
+        // Range: 16 - 64, default: 40
+        "blockEffectRange": 40,
         // Enable/disable steam column effect when liquids are adjacent to hot sources, like lava and magma
         // Default: true
         "steamColumnEnabled": true,
@@ -328,10 +391,10 @@ blockEffects
 
 .. confval:: blockEffects.blockEffectRange
     :type: ``integer``
-    :default: ``32``
+    :default: ``40``
     :no-contents-entry:
 
-    The range for which block effects will be determined. This range is a square around the player. This value can be 16 - 64 blocks. Increasing the distance will increase the load within the client tick. It is recommended that this value be left at the default.
+    The radius around the player, in blocks, within which block effects such as waterfalls, steam, and flame jets are found and shown. This value can be 16 - 64 blocks. Past 32, effects show farther away than Minecraft shows particles; increasing the distance increases the load within the client tick. Changing it resets the effects and rescans the area. (*A sphere since 1.21.1-0.4.8, with the default raised from 32 to 40, which scans about as many blocks as the old 32 block cube*)
 
 .. confval:: blockEffects.steamColumnEnabled
     :type: ``boolean``
@@ -430,7 +493,7 @@ flameJetOptions
         // Enable/disable flame jets over lava and nether wart
         // Default: true
         "enableFlameJets": true,
-        // Enable/disable the flicker of flame jets' light on their surroundings
+        // Enable/disable the flicker of flame jets' and burning mobs' light on their surroundings
         // Default: true
         "enableLight": true
       }
@@ -448,7 +511,7 @@ flameJetOptions
     :default: ``true``
     :no-contents-entry:
 
-    Enables the flickering light flame jets cast on the ground and walls around them. Not shown while a shader pack is in use.
+    Enables the flickering light flame jets and burning mobs cast on the ground and walls around them. Not shown while a shader pack is in use.
 
 fireflyOptions
 ++++++++++++++
@@ -502,8 +565,8 @@ entityEffects
       // Configuration options for entity effects
       "entityEffects": {
         // The maximum range at which entity special effects are applied
-        // Range: 16 - 64, default: 24
-        "entityEffectRange": 24,
+        // Range: 16 - 64, default: 32
+        "entityEffectRange": 32,
         // Enable/disable bow pull sound effect
         // Default: true
         "enableBowPull": true,
@@ -513,24 +576,42 @@ entityEffects
         // Enable/disable player toolbar sound effects
         // Default: true
         "enablePlayerToolbarEffect": true,
-        // Enable/disable sound effects for blocks on the toolbar
-        // Default: false
-        "enableToolbarBlockSounds": false,
         // Enable/disable item swing sound effects from players and mobs
         // Default: true
         "enableSwingEffect": true,
+        // Enable/disable a breath when you jump, heard by you only
+        // Default: false
+        "enableJumpSound": false,
         // Enable/disable sound effect when walking through dense brush
         // Default: true
-        "enableBrushStepEffect": true
+        "enableBrushStepEffect": true,
+        // Enable/disable flames like a flame jet's on burning mobs, in place of vanilla's flat fire. Vanilla's fire stays past the entity effect range, with Particles on Minimal and while a shader pack is in use
+        // Default: true
+        "enableBurningEffect": true,
+        // Enable/disable dark mist where a mob's body vanishes when it dies, in place of vanilla's white puffs
+        // Default: true
+        "enableDeathPuffs": true,
+        // Enable/disable numbers popping off mobs and players when their health changes: red for damage, green for healing
+        // Default: true
+        "enableDamagePopoffs": true,
+        // Enable/disable a comic book word over a heavy blow's number
+        // Default: true
+        "showCritWords": true,
+        // Enable/disable footprints left by players and mobs walking on soft ground: dirt, sand, gravel, snow, mud
+        // Default: true
+        "enableFootprints": true,
+        // The look of players' footprints
+        // Values: SHOE, SQUARE, HORSESHOE, BIRD, PAW, SQUARE_SOLID, LOWRES_SQUARE, default: "SQUARE"
+        "footprintStyle": "SQUARE"
       }
     }
 
 .. confval:: entityEffects.entityEffectRange
     :type: ``integer``
-    :default: ``24``
+    :default: ``32``
     :no-contents-entry:
 
-    The maximum distance from the player that entity effects will be applied. This value can be 16 - 64. Recomendation is to leave at the default setting.
+    The maximum distance from the player that entity effects will be applied. This value can be 16 - 64. Recommendation is to leave at the default setting. (*Default raised from 24 to 32 in 1.21.1-0.4.8*)
 
 .. confval:: entityEffects.enableBowPull
     :type: ``boolean``
@@ -553,13 +634,6 @@ entityEffects
 
     Enables sound play when selecting between different items on the hotbar.
 
-.. confval:: entityEffects.enableToolbarBlockSounds
-    :type: ``boolean``
-    :default: ``false``
-    :no-contents-entry:
-
-    Enables sound play when selecting blocks on the hotbar.
-
 .. confval:: entityEffects.enableSwingEffect
     :type: ``boolean``
     :default: ``true``
@@ -567,12 +641,62 @@ entityEffects
 
     Enables sound effects when players and mobs swing an item, such as swords and axes.
 
+.. confval:: entityEffects.enableJumpSound
+    :type: ``boolean``
+    :default: ``false``
+    :no-contents-entry:
+
+    Plays a breath when you jump, heard by you only. Stepping up a stair or walking off an edge isn't a jump, and there is
+    none while sneaking, in water, riding, or flying. (*Back from older versions in 1.21.1-0.4.8*)
+
 .. confval:: entityEffects.enableBrushStepEffect
     :type: ``boolean``
     :default: ``true``
     :no-contents-entry:
 
     Enables sound effect when moving through blocks that are considered brush, such as tall flowers and grass.
+
+.. confval:: entityEffects.enableBurningEffect
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Enables flames like a flame jet's on burning mobs, in place of Minecraft's flat fire. Minecraft's fire stays beyond :confval:`entityEffects.entityEffectRange`, with Particles on Minimal, while a shader pack is in use, and for the player's own body in first person. (*Added 1.21.1-0.4.8*)
+
+.. confval:: entityEffects.enableDeathPuffs
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Enables dark mist where a mob's body vanishes when it dies, in place of Minecraft's white puffs. Minecraft's puffs stay with Particles on Minimal. (*Added 1.21.1-0.4.8*)
+
+.. confval:: entityEffects.enableDamagePopoffs
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Enables numbers popping off mobs and players when their health changes: red for damage, green for healing. (*Added 1.21.1-0.4.8*)
+
+.. confval:: entityEffects.showCritWords
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Enables a comic book word, such as KAPOW!, over the number of a heavy blow: 40% or more of the mob's health. (*Added 1.21.1-0.4.8*)
+
+.. confval:: entityEffects.enableFootprints
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Enables footprints left by players and mobs walking on soft ground: dirt, grass, sand, gravel, snow, and mud. Prints fade after a while, last longer in snow, and wash away faster in the rain. None while sneaking, with Particles on Minimal, or while a shader pack is in use. (*Added 1.21.1-0.4.8*)
+
+.. confval:: entityEffects.footprintStyle
+    :type: ``string``
+    :default: ``SQUARE``
+    :no-contents-entry:
+
+    The look of players' footprints: ``SHOE``, ``SQUARE``, ``HORSESHOE``, ``BIRD``, ``PAW``, ``SQUARE_SOLID``, or ``LOWRES_SQUARE``. Mobs' prints depend on their feet, set by tags (see :doc:`../packs/tagging`). (*Added 1.21.1-0.4.8*)
 
 footstepAccents
 +++++++++++++++
@@ -842,12 +966,12 @@ weather effects turn themselves off if the Particle Rain or Simple Weather mod i
         // Range: 25 - 100, default: 100
         "precipitationDensity": 100,
         // How far from the player, in blocks, particle rain, snow and dust are drawn
-        // Range: 8 - 32, default: 12
-        "precipitationRange": 12,
+        // Range: 8 - 32, default: 14
+        "precipitationRange": 14,
         // How big particle rain drops are drawn, as a percent of their usual size
         // Range: 50 - 250, default: 100
         "rainDropScale": 100,
-        // How blue particle rain is: 0 is a nearly colourless pale grey, 100 a deep blue
+        // How blue particle rain is: 0 is a nearly colorless pale gray, 100 a deep blue
         // Range: 0 - 100, default: 15
         "rainTint": 15,
         // How big particle snowflakes are drawn, as a percent of their usual size
@@ -873,7 +997,13 @@ weather effects turn themselves off if the Particle Rain or Simple Weather mod i
         "enableWindowFrost": true,
         // Mist lying low over the ground in swamps and eerie biomes: off, or how finely it is drawn. Fast costs least; Fabulous costs several times Fancy
         // Values: NONE, FAST, FANCY, FABULOUS, default: "FANCY"
-        "groundFogQuality": "FANCY"
+        "groundFogQuality": "FANCY",
+        // Clouds that change with the weather: scattered puffs that build up through fair afternoons, a low dark deck in a storm, towering in a thunderstorm. Drawn in place of vanilla's clouds
+        // Default: true
+        "enableDynamicClouds": true,
+        // How far dynamic clouds reach, in chunks, whatever the render distance
+        // Range: 8 - 32, default: 24
+        "cloudDistance": 24
       }
     }
 
@@ -921,10 +1051,10 @@ weather effects turn themselves off if the Particle Rain or Simple Weather mod i
 
 .. confval:: weatherOptions.precipitationRange
     :type: ``integer``
-    :default: ``12``
+    :default: ``14``
     :no-contents-entry:
 
-    How far from the player, in blocks, particle rain, snow and dust are drawn. The drops are as dense at any range, so twice as far is four times as many drops to draw. Beyond the range the weather's fog stands in. This value can be 8 - 32.
+    How far from the player, in blocks, particle rain, snow and dust are drawn. The drops are as dense at any range, so twice as far is four times as many drops to draw. Beyond the range the weather's fog stands in. The area is a circle around the player. This value can be 8 - 32. (*Default raised from 12 to 14, and the area made round rather than square, in 1.21.1-0.4.8*)
 
 .. confval:: weatherOptions.rainDropScale
     :type: ``integer``
@@ -938,7 +1068,7 @@ weather effects turn themselves off if the Particle Rain or Simple Weather mod i
     :default: ``15``
     :no-contents-entry:
 
-    How blue particle rain is, falling and running down windows: 0 is a nearly colourless pale grey, 100 a deep blue. The rain is lit as the world is, so it
+    How blue particle rain is, falling and running down windows: 0 is a nearly colorless pale gray, 100 a deep blue. The rain is lit as the world is, so it
     is darker at night and in shade whatever its tint. This value can be 0 - 100. (*Added 1.21.1-0.4.7*)
 
 .. confval:: weatherOptions.snowflakeScale
@@ -1007,6 +1137,25 @@ weather effects turn themselves off if the Particle Rain or Simple Weather mod i
     :no-contents-entry:
 
     *Experimental*. Mist lying low over the ground in swamps and eerie biomes, drifting with the wind. Possible selections are ``NONE``, ``FAST``, ``FANCY``, and ``FABULOUS``. ``NONE`` turns ground fog off; ``FAST`` draws it more coarsely and costs the least; ``FABULOUS`` draws it most finely and costs several times as much as ``FANCY``. Not used while a shader pack is in use.
+
+.. confval:: weatherOptions.enableDynamicClouds
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    *Experimental*. Blocky clouds that change with the weather, in place of Minecraft's. On fair days scattered clouds build up through the afternoon and
+    flatten out at night, with thin streaks high above; some days are cloudier than others, and wet biomes cloudier than dry ones. A storm closes them into a
+    low deck, darker underneath the thicker it is, that towers in a thunderstorm; lightning lights them from inside. Every player in a world sees the same
+    clouds. Not used while a shader pack is in use, when clouds are turned off in Minecraft's Video Settings, or in dimensions that draw their own clouds (see
+    ``dynamicClouds`` in :doc:`../schemas/dimensions`); Minecraft's clouds are drawn then. See :doc:`../features`. (*Added 1.21.1-0.4.8*)
+
+.. confval:: weatherOptions.cloudDistance
+    :type: ``integer``
+    :default: ``24``
+    :no-contents-entry:
+
+    How far the dynamic clouds reach, in chunks, from 8 to 32, whatever the render distance: farther shows more of the sky covered toward the horizon, and
+    costs a little more. The fog of rain and dust storms still closes in on them, as it does on the land. (*Added 1.21.1-0.4.8*)
 
 fogOptions
 ++++++++++
@@ -1138,99 +1287,82 @@ musicManagerOptions
 
     Reduces the amount of time to wait between music plays. This value is a percentage, and is independent of the modded music manager. By default play interval will not be reduced.
 
-logging
-+++++++
+diagnostics
++++++++++++
+
+*Diagnostic Options* in the configuration menu. Before 1.21.1-0.4.8 this section was ``logging``, and also held :confval:`generalOptions.enableModUpdateChatMessage`
+and :confval:`generalOptions.registerCommands`; values set there are carried over.
 
 .. code-block:: JSON
 
     {
       // Configuration options for modifying diagnostic behavior
-      "logging": {
+      "diagnostics": {
         // Enables/disables debug logging of the mod
         // Default: false
         "enableDebugLogging": false,
         // Bitmask for toggling various debug traces
         // Default: 0
         "traceMask": 0,
-        // Enable/disable chat window notification of newer updates available
-        // Default: true
-        "enableModUpdateChatMessage": true,
         // Enable/disable filtering display of tags in the diagnostics overlay
         // Default: true
         "filteredTagView": true,
-        // Enable/disable registration of client side commands
-        // Default: true
-        // Changes take effect after restarting Minecraft
-        "registerCommands": true,
         // Play your own Simple Voice Chat voice back to you, with enhanced sound processing, for testing
         // Default: false
-        "voiceChatHearSelf": false
+        "voiceChatHearSelf": false,
+        // Fixes for problems other mods cause, each of which can be turned off should it cause a problem of its own
+        "guards": {
+          // Put back the drawing state another mod's particle changes while Minecraft's particles are drawn, which draws them as squares, and draw that particle on its own. Turn off if it causes a problem
+          // Default: true
+          "repairParticleBatches": true
+        }
       }
     }
 
-.. confval:: logging.enableDebugLogging
+.. confval:: diagnostics.enableDebugLogging
     :type: ``boolean``
     :default: ``false``
     :no-contents-entry:
 
     Turns on detailed diagnostic trace from the mod.
 
-.. confval:: logging.traceMask
+.. confval:: diagnostics.traceMask
     :type: ``integer``
     :default: ``0``
     :no-contents-entry:
 
-    Set of bits that control which detail is desired. Only takes effect while :confval:`logging.enableDebugLogging` is on. See :doc:`../troubleshooting/logs`
+    Set of bits that control which detail is desired. Only takes effect while :confval:`diagnostics.enableDebugLogging` is on. See :doc:`../troubleshooting/logs`
     for the values.
 
-.. confval:: logging.enableModUpdateChatMessage
-    :type: ``boolean``
-    :default: ``true``
-    :no-contents-entry:
-
-    Enables display of version check results in the chat window when the player joins a world.
-
-.. confval:: logging.filteredTagView
+.. confval:: diagnostics.filteredTagView
     :type: ``boolean``
     :default: ``true``
     :no-contents-entry:
 
     Controls the amount of tag information to display within the mods diagnostics overlay.
 
-.. confval:: logging.registerCommands
-    :type: ``boolean``
-    :default: ``true``
-    :no-contents-entry:
-
-    Enables/disables registration of client side commands. Requires a restart.
-
-.. confval:: logging.voiceChatHearSelf
+.. confval:: diagnostics.voiceChatHearSelf
     :type: ``boolean``
     :default: ``false``
     :no-contents-entry:
 
     *Experimental*. For testing :confval:`enhancedSounds.enableVoiceChatProcessing` without a second player: plays the player's own Simple Voice Chat voice back to them, from their head, with reverb and the other effects. Only while the player is transmitting, and only while enhanced sound processing is on. Use headphones, or the speakers will feed back into the microphone. The playback is slightly delayed, which can sound like a short echo. Takes effect immediately. (*Added 1.21.1-0.4.7*)
 
-otherOptions
-++++++++++++
+Guards
+~~~~~~
 
-.. code-block:: JSON
+Fixes for problems other mods cause. Each can be turned off, should it ever cause a problem of its own. (*Added 1.21.1-0.4.8*)
 
-    {
-      // Configuration options for other things
-      "otherOptions": {
-        // Enable/disable playing random sound at the Minecraft finish loading to main screen
-        // Default: true
-        "playRandomSoundOnStartup": true
-      }
-    }
-
-.. confval:: otherOptions.playRandomSoundOnStartup
+.. confval:: diagnostics.guards.repairParticleBatches
     :type: ``boolean``
     :default: ``true``
     :no-contents-entry:
 
-    Enables the play of a random sound when the Minecraft client starts.
+    *Added 1.21.1-0.4.8*. Minecraft draws all particles of a kind together, with the texture and blending set up for them. Some mods' particles change
+    that texture or blending while they are added, so every particle drawn with them comes out wrong, often as squares (campfire smoke and waterfall foam
+    are where it shows). With this on, Dynamic Surroundings puts the state back before the particles are drawn, names the particle responsible in the log
+    once, and from then on draws that particle on its own so it looks right too. Turn it off if it ever causes a problem; the log line is still worth
+    reporting to the mod named.
 
 Moved and Removed Settings
 ++++++++++++++++++++++++++
@@ -1245,6 +1377,18 @@ Settings from earlier versions that have moved or no longer exist. Values of mov
 
     *   - Setting
         - Status
+    *   - ``logging``
+        - Renamed ``diagnostics`` in 1.21.1-0.4.8; ``logging.enableDebugLogging`` is now :confval:`diagnostics.enableDebugLogging`, and so on
+    *   - ``logging.enableModUpdateChatMessage``
+        - Moved to :confval:`generalOptions.enableModUpdateChatMessage` in 1.21.1-0.4.8
+    *   - ``logging.registerCommands``
+        - Moved to :confval:`generalOptions.registerCommands` in 1.21.1-0.4.8
+    *   - ``soundOptions.allowScarySounds``
+        - Moved to :confval:`scaryContent.allowScaryContent` in 1.21.1-0.4.8, where it also covers the lightning
+    *   - ``otherOptions.playRandomSoundOnStartup``
+        - Removed in 1.21.1-0.4.8, with the random sound played when the game finishes loading
+    *   - ``entityEffects.enableToolbarBlockSounds``
+        - Removed in 1.21.1-0.4.8
     *   - ``enhancedSounds.enableMonoConversion``
         - Removed in 1.21.1-0.4.6
     *   - ``compassAndClockOptions.enableCompass``

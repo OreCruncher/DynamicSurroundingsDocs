@@ -68,10 +68,10 @@ The schema for a rule entry is as follows:
         - How thick the mist lying low over the ground is in the biome. Possible values are the same as ``fogDensity``. Default is ``null`` meaning no setting, which results in ``none`` (no ground fog). Ground fog also depends on the time of day, wind, and rain, and only forms in dimensions where it is enabled (see :doc:`dimensions`). Controlled by the *Ground fog* setting in :doc:`../config/modconfiguration` (:confval:`weatherOptions.groundFogQuality`). (*Added 1.21.1-0.4.7*)
     *   - additionalSoundChance
         - Double
-        - The chance that a sound of type ADDITION will play per tick. Default is ``0.004``.
+        - The chance that a sound of type ADDITION will play, checked every 4 ticks (5 times a second). Default is ``0.004``.
     *   - moodSoundChance
         - Double
-        - The chance that a sound of type MOOD will play per tick. Default is ``0.004``.
+        - The chance that a sound of type MOOD will play, checked every 4 ticks (5 times a second). Default is ``0.004``.
     *   - acoustics
         - Acoustic Array
         - A Json array of acoustic definitions for the biome. Default is ``null``. See :doc:`../concepts/acoustic`.
@@ -84,7 +84,7 @@ chance if a certain mod is loaded it could look something like:
 
 .. code-block:: JSON
 
-    "moodSoundChance": "lib.iif(platform.isModLoaded('theModId'), 0.01, 0.004)"
+    "moodSoundChance": "platform.isModLoaded('theModId') ? 0.01 : 0.004"
 
 This script increases the chance that a mood sound will play if the mod ``theModId`` is loaded. You can also create more complicated chance calculations based on game state, such as the phase of the
 moon or player health.
@@ -105,6 +105,10 @@ Example Biome Selectors
 
 Because these selectors are applied during configuration, the only function namespaces available are ``biome``, ``lib``, ``math``, and ``platform``. Note that this only applies to biome selectors - chance
 calculations and acoustic filtering can utilize in-game state function namespaces.
+
+Two selectors name synthetic biomes rather than real ones: ``@player`` holds sounds that follow the player wherever they are, such as the stomach grumbling when
+hungry and the heartbeat at low health, and ``@village`` holds the sounds of a village (roosters, anvils, dogs). Their sounds play in addition to those of the
+biomes around the player, and their conditions decide when.
 
 Example Biome Rules
 -------------------

@@ -60,14 +60,14 @@ A sound can be culled or blocked, but not both. The state button shows which han
     *   - **Default**
         - The sound plays normally without being culled or blocked.
     *   - **Cull**
-        - Plays of the sound are culled. See *Sound Culling* below. Stored in ``soundconfig.json`` as ``"cull": true``.
+        - Plays of the sound are culled. See *Sound Culling* below. Stored in ``soundconfig.json`` as ``"action": "cull"``.
     *   - **Block**
-        - The sound is blocked from playing. See *Sound Blocking* below. Stored in ``soundconfig.json`` as ``"block": true``.
+        - The sound is blocked from playing. See *Sound Blocking* below. Stored in ``soundconfig.json`` as ``"action": "block"``.
 
 .. note::
 
-    Prior to 1.21.1-0.4.7 cull and block were separate toggles. If a sound in ``soundconfig.json`` has both ``cull`` and ``block`` set to ``true``, the screen shows it as **Cull**. Changing the
-    state with the button sets both ``cull`` and ``block`` to match the selected state.
+    Prior to 1.21.1-0.4.7 cull and block were separate toggles, and until 1.21.1-0.4.8 ``soundconfig.json`` kept them as separate ``cull`` and ``block`` flags. An older file
+    is still read; a sound with both set to ``true`` is culled, as the screen showed it. The file is written with ``action`` the next time it is saved.
 
 Sound Culling
 -------------

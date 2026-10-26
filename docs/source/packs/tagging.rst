@@ -116,7 +116,7 @@ Block Tags
     *   - ``dsurround:effects/steam_producers``
         - Blocks that give off steam when next to a hot block, such as water and water cauldrons. Steam only forms when the block above is air.
     *   - ``dsurround:effects/rain_absorbing``
-        - Blocks that show damp spots where particle rain lands, such as dirt, sand, wool, and hay. (*Added 1.21.1-0.4.7*)
+        - Blocks that show damp spots where particle rain lands, such as dirt, sand, snow, wool, and hay. (*Added 1.21.1-0.4.7; snow added 1.21.1-0.4.8*)
     *   - ``dsurround:effects/dust_sources``
         - Blocks that dust storms pick up dust from. The dust takes the color of the block. (*Added 1.21.1-0.4.7*)
     *   - ``dsurround:effects/windows``
@@ -124,6 +124,12 @@ Block Tags
     *   - ``dsurround:effects/frosted_windows``
         - Windows that frost on the outside in the cold: clear glass blocks and panes. Frost is drawn where the block's shape is, so a pane frosts in the
           middle of its block. Tinted and stained glass are left out for now. (*Added 1.21.1-0.4.7*)
+    *   - ``dsurround:effects/footprints``
+        - Blocks that feet leave prints in, such as dirt, grass, sand, farmland, paths, clay, and snow. Blocks that sound like sand, gravel, snow, mud, or soul sand
+          underfoot take prints without being tagged. (*Added 1.21.1-0.4.8*)
+    *   - ``dsurround:effects/frog_croaks``
+        - Blocks where frogs croak now and then, such as lily pads, including those of Biomes O' Plenty, Twilight Forest, Oh The Biomes We've Gone, and Regions
+          Unexplored. More often at night, and not while the player is inside or when it is cold enough for water to freeze. (*Added 1.21.1-0.4.8*)
 
 Sound Occlusion and Reflectance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -193,6 +199,26 @@ These tags control which entities get an effect.
         - The entity makes a sound when moving through blocks tagged ``brush_step`` or ``straw_step``.
     *   - ``dsurround:effects/toolbar``
         - A sound is played when the entity changes the item selected on the hotbar. Intended for players.
+    *   - ``dsurround:effects/vanilla_fire``
+        - The entity keeps Minecraft's fire when burning, rather than flames like a flame jet's. Every other living entity gets the flames. (*Added 1.21.1-0.4.8*)
+    *   - ``dsurround:effects/no_health_popoffs``
+        - No damage pop-offs from the entity. Every other living entity has them. Includes armor stands. (*Added 1.21.1-0.4.8*)
+    *   - ``dsurround:effects/footprints/square``
+        - The entity leaves square footprints, such as zombies, skeletons, villagers, and illagers. Players' style is set by
+          :confval:`entityEffects.footprintStyle`. (*Added 1.21.1-0.4.8*)
+    *   - ``dsurround:effects/footprints/paw``
+        - The entity leaves paw prints, such as wolves, cats, foxes, and bears. (*Added 1.21.1-0.4.8*)
+    *   - ``dsurround:effects/footprints/hoof``
+        - The entity leaves hoof prints, such as horses, cows, sheep, pigs, and goats. (*Added 1.21.1-0.4.8*)
+    *   - ``dsurround:effects/footprints/bird``
+        - The entity leaves bird tracks, such as chickens and parrots. (*Added 1.21.1-0.4.8*)
+    *   - ``dsurround:effects/footprints/large``
+        - The entity's prints are a quarter larger than its size alone gives, such as polar bears and pandas. (*Added 1.21.1-0.4.8*)
+    *   - ``dsurround:effects/footprints/small``
+        - The entity's prints are a quarter smaller than its size alone gives, such as skeletons. (*Added 1.21.1-0.4.8*)
+
+An entity that is in none of the footprint style tags leaves no footprints, unless it is a player. A print's size, and the stride between prints, follow the size
+of the entity, so a baby animal's are smaller.
 
 Item Tags
 ---------

@@ -197,9 +197,17 @@ global
 
 .. js:function:: global.allowScary()
 
-    Indicates whether scary effects are eligable for activation.
+    Indicates whether scary effects are eligible for activation.
 
-    :return: Returns the current flag from the configuration file. ``true`` if scary sounds are permitted, ``false`` otherwise.
+    :return: Returns :confval:`scaryContent.allowScaryContent` from the configuration file. ``true`` if scary content is permitted, ``false`` otherwise.
+    :rtype: Boolean
+
+.. js:function:: global.allowLightning()
+
+    Indicates whether the mod's lightning is shown: scary content is permitted and the lightning is turned on. Useful for sounds that should only go along
+    with lightning. (*Added 1.21.1-0.4.8*)
+
+    :return: ``true`` if both :confval:`scaryContent.allowScaryContent` and :confval:`scaryContent.enableLightning` are on, ``false`` otherwise.
     :rtype: Boolean
 
 .. _namespace-lib:
@@ -211,7 +219,8 @@ The functions in this namespace provide support for common things that a script 
 
 .. js:function:: lib.iif(boolean result, Object trueResult, Object falseResult)
 
-    Selects an object based on a boolean result.
+    Selects an object based on a boolean result. The same as the conditional operator: ``lib.iif(result, trueResult, falseResult)`` is
+    ``result ? trueResult : falseResult``, which reads more easily in new scripts. Only the selected object is evaluated.
 
     :param result: A boolean value that is used to make a result selection
     :type result: Boolean

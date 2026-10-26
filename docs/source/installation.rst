@@ -100,13 +100,16 @@ The ``/dsconflicts`` command lists what is turned off in the current session.
     *   - `Presence Footsteps <https://modrinth.com/mod/presence-footsteps>`_
         - Wet surface accents (:confval:`footstepAccents.enableWetSurfaceAccents`) and the brush step effect
           (:confval:`entityEffects.enableBrushStepEffect`), as its own footstep sounds take their place.
+    *   - `LambDynamicLights <https://modrinth.com/mod/lambdynamiclights>`_ or RyoamicLights
+        - The light from burning mobs' flames, as it already lights burning mobs. The flames themselves stay. (*Added 1.21.1-0.4.8*)
 
 Shader Packs
 ~~~~~~~~~~~~
 
 With `Iris <https://modrinth.com/mod/iris>`_ (or Oculus on NeoForge), Dynamic Surroundings works as usual until a shader pack is turned on. While a shader pack
 is in use, the effects that draw with Dynamic Surroundings' own shaders are not shown, because the shader pack replaces the drawing they rely on: particle rain and
-snow, dust storms, ground fog, auroras, and the light cast by fireflies and flame jets.
+snow, dust storms, ground fog, auroras, and the light cast by fireflies and flame jets. Burning mobs keep Minecraft's fire, and no footprints are left
+(*1.21.1-0.4.8*). Minecraft's own clouds and lightning bolts are drawn in place of the dynamic clouds and the branching lightning (*1.21.1-0.4.8*).
 
 Quilt
 ~~~~~

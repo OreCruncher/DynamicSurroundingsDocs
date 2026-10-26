@@ -23,6 +23,15 @@ Before Reporting
   off on purpose. ``/dsconflicts`` lists what has been turned off in the current session, and which mod it was turned off for.
 * If the problem might be caused by another mod, check whether it still happens with that mod removed. Say so in the report either way.
 
+Particles Drawn as Squares
+--------------------------
+
+Smoke from campfires, waterfall foam, and other particles that show as white or colored squares are usually drawn with the wrong texture because of
+another mod's particle: Minecraft draws all particles of a kind together, and a particle that changes the texture or blending while they are being added
+spoils the rest. *Since 1.21.1-0.4.8* Dynamic Surroundings puts the state back before they are drawn and draws the particle responsible on its own, and the log
+says which particle it was, once, in a line starting ``Particle <class> changes the``. The start of the class name tells which mod it is from; that mod is
+where the fix belongs. One known case is the Rainbows mod, whose rainbow binds its own texture this way. The repair is :confval:`diagnostics.guards.repairParticleBatches`, under *Guards* in *Diagnostic Options*, if it ever needs turning off.
+
 The Diagnostic Overlay
 ----------------------
 

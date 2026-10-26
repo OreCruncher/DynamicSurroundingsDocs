@@ -105,11 +105,14 @@ Operators are listed from highest precedence (evaluated first) to lowest. Operat
         - Logical and. The right operand is only evaluated if the left operand is ``true``.
     *   - ``||``
         - Logical or. The right operand is only evaluated if the left operand is ``false``.
+    *   - ``? :``
+        - Conditional. ``condition ? a : b`` is ``a`` if the condition is ``true`` and ``b`` otherwise; only the chosen one is evaluated (ex, ``diurnal.isNight() ? 0.04 : 0.02``).
+          Chains read right to left: ``a ? 1 : b ? 2 : 3`` is ``a ? 1 : (b ? 2 : 3)``. (*Added 1.21.1-0.4.8*)
 
-For example, ``a || b && c`` is evaluated as ``a || (b && c)``, and ``1 + 2 * 3`` is ``7``.
+For example, ``a || b && c`` is evaluated as ``a || (b && c)``, and ``1 + 2 * 3`` is ``7``. The conditional operator comes last, so everything before the ``?`` is the
+condition: inside a longer expression it needs parentheses, as in ``'Weather: ' + (weather.isRaining() ? 'rain' : 'clear')``.
 
-The following are **not** supported: the remainder operator ``%``, the conditional operator ``?:`` (use ``lib.iif`` instead), assignment, and the bitwise operators. A single ``=``, ``&``, or ``|``
-is reported as an error.
+The following are **not** supported: the remainder operator ``%``, assignment, and the bitwise operators. A single ``=``, ``&``, or ``|`` is reported as an error.
 
 Conversions
 ~~~~~~~~~~~

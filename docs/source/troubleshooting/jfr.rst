@@ -51,14 +51,18 @@ effect seems to be what is slow. Unless a scene is named, ``general`` is recorde
     *   - ``frost``
         - The most frost on every window.
         - Stand where windows fill the view and keep still.
+    *   - ``clouds``
+        - The dynamic clouds in a thunderstorm at full strength, half the sky covered with tall clouds. In single player it also starts the thunderstorm.
+          (*Added 1.21.1-0.4.8*)
+        - Look up and around at the clouds, out in the open, and keep still.
 
 A scene holds its effect the way ``/dsweather`` does (see :doc:`../commands/commands`), and puts it back as it was when the recording is done. Recording starts
 a few seconds after the command, so the effect can fade in first.
 
-The ``ground_fog`` and ``weather`` scenes also need the right weather. In single player they set it with ``/weather`` and stop the weather from changing with
+The ``ground_fog``, ``weather``, and ``clouds`` scenes also need the right weather. In single player they set it with ``/weather`` and stop the weather from changing with
 ``/gamerule doWeatherCycle false``; chat lists what was sent. These are world settings, so they are not put back afterwards: run
 ``/gamerule doWeatherCycle true`` to let the weather change again. They need cheats to be allowed in the world. On a server nothing is sent, and chat says
-what the scene would have needed; the ground fog scene still works, and the weather scene shows its storm once it rains.
+what the scene would have needed; the ground fog scene still works, and the weather and clouds scenes show their storm once it rains.
 
 Where Recordings Are Saved
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -98,6 +102,9 @@ Privacy
 
     * The processor, memory, graphics card and its driver version, operating system and its version, and Java version.
     * The Dynamic Surroundings version, the mod loader, how many mods are installed, the graphics setting, render distance, and whether a shader pack is in use.
+    * Dynamic Surroundings' settings (any that hold text are left out), which of its hooks into the game's code applied, and which of its features stand
+      aside for another mod, naming that mod. (*Added 1.21.1-0.4.8*)
+    * How long Dynamic Surroundings' effects took to draw, and how long each of its tick handlers took every tick. (*Tick handlers added 1.21.1-0.4.8*)
     * What each part of the game, and each mod, was doing and how long it took. The names of the mods' code show which mods are installed.
     * The folder paths of the game and its mods, with the home folder redacted. A game installed outside the home folder, such as in ``D:\Games``, keeps
       that path.

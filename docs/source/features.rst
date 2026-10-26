@@ -16,9 +16,27 @@ Sounds from the biomes around the player are blended by how much of the area eac
 sounds rise and fall with the simulated wind. Minecraft biomes and many modded biomes are supported.
 
 * :confval:`soundOptions.ambientVolumeScaling` adjusts the volume of these sounds.
-* :confval:`soundOptions.allowScarySounds` turns off sounds that may frighten younger players, such as wolves and monster growls.
+* :confval:`scaryContent.allowScaryContent` turns off sounds that may frighten younger players, such as wolves and monster growls and the heartbeat at low health, as well as the lightning.
 
 Resource pack authors can add or change biome sounds; see :doc:`schemas/biomes`.
+
+Block Sounds
+~~~~~~~~~~~~
+
+Some blocks make a sound now and then when the player is near: ice cracks, in the Nether soul sand laughs and nether bricks breathe, and powered redstone crackles.
+Frogs croak from lily pads, with the odd bullfrog call, twice as often at night as by day, but not while the player is inside or when it is cold enough for water to
+freeze (*back from older versions in 1.21.1-0.4.8*). Lily pads from Biomes O' Plenty, Twilight Forest, Oh The Biomes We've Gone, and Regions Unexplored croak too;
+the ``dsurround:effects/frog_croaks`` tag sets which blocks do (see :doc:`packs/tagging`). Resource pack authors can add or change block sounds; see
+:doc:`schemas/blocks` and the lily pad example in :doc:`scripting/examples`.
+
+Player Sounds
+~~~~~~~~~~~~~
+
+A hungry player's stomach grumbles now and then, when their food level is at 4 or less or they have the Hunger effect. When their health is at 30% or less
+(outside creative mode), their heart pounds until they heal (*back from older versions in 1.21.1-0.4.8*); as it can be unsettling, it is a scary sound,
+turned off with :confval:`scaryContent.allowScaryContent`. Both have subtitles. With :confval:`entityEffects.enableJumpSound` on, the player takes a
+breath when they jump, heard by them only (*back from older versions in 1.21.1-0.4.8*; off by default). Resource pack authors can change
+them in the ``@player`` biome rule (see :doc:`schemas/biomes`); see the examples in :doc:`scripting/examples`.
 
 Enhanced Sound Processing
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -33,7 +51,7 @@ does not. Optionally, sounds behind blocks can be muffled.
 the same way, so a player talking in a cave echoes and, with occlusion on, a player behind a wall sounds muffled. Group chat, which is not positional, plays as it is.
 
 * :confval:`enhancedSounds.enableVoiceChatProcessing` turns this on or off.
-* :confval:`logging.voiceChatHearSelf` plays your own voice back to you, for hearing the effect without a second player.
+* :confval:`diagnostics.voiceChatHearSelf` plays your own voice back to you, for hearing the effect without a second player.
 
 Enhanced sound processing is turned off when Sound Physics Remastered is installed, as it provides its own, for voices too.
 
@@ -61,7 +79,8 @@ Swinging a sword or axe, drawing a bow, and switching items on the hotbar each m
 Thunder
 ~~~~~~~
 
-Minecraft's thunder is replaced with Dynamic Surroundings' own. See :confval:`soundOptions.replaceThunderSounds`.
+Minecraft's thunder is replaced with Dynamic Surroundings' own. See :confval:`soundOptions.replaceThunderSounds`. Lightning in the sky has thunder of its own;
+see `Lightning`_.
 
 Individual Sound Control
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -90,6 +109,9 @@ follow the storm's strength, from a soft patter to a roar. Every player in a wor
 Where rain soaks into soft ground it leaves dark damp spots that dry. On windows facing the wind, drops cling to the glass, then run down it in short
 rushes, leaving a wet trail. Snowflakes lie where they land, or stick where the wind blows them against a wall or trunk, for a moment before melting away.
 For a while after the rain stops, water keeps dripping from the lowest leaves of trees and from overhanging edges such as eaves, less and less as things dry.
+Rain, snow, and dust blown in under an overhang drift a little way in, out of the wind, and fade, rather than stopping at the roof's edge; snowflakes that reach
+the ground beneath lie there, and rain splashes on a porch floor (*added 1.21.1-0.4.8*). Rain and snow also stop on top of blocks from other mods that
+Minecraft's own rain falls through, such as Mekanism's energy cube (*1.21.1-0.4.8*).
 In the cold, frost grows on the outside of clear glass windows, in from their edges, thickest before sunrise; the sun melts it from east facing windows in the
 morning and west facing ones in the evening.
 
@@ -103,6 +125,50 @@ morning and west facing ones in the evening.
 
 The particle rain and snow are not used while a shader pack is in use, or when the Particle Rain or Simple Weather mod is installed. The ``/dsweather`` command can
 be used to see how storms of a given strength look; see :doc:`commands/commands`.
+
+Lightning
+~~~~~~~~~
+
+*Added 1.21.1-0.4.8*
+
+Lightning branches and forks, more the stronger the thunderstorm: a weak storm's bolts have a few branches, the strongest's many, forking again and again.
+Each flash starts with a faint leader feeling its way down, then strokes that light the whole channel at once and flicker as they die away; later strokes light
+the main channel again but barely touch the branches, as real lightning does. Minecraft's lightning bolts are drawn this way, each shaped from the bolt itself,
+so every player sees the same one.
+
+Through a thunderstorm the sky has lightning of its own, mostly from upwind, where the storm is coming from: bolts to the ground, spider lightning crawling
+under the cloud base, and flashes hidden in the cloud that light it up in patches, the light moving about inside it from one stroke to the next. Each is
+followed by its thunder, later the farther away it is (about a second for every 343 blocks), and quieter and lower when far off. One close by lights up the
+sky, as Minecraft's own bolts do. With the `Clouds`_ on, a flash lights the clouds themselves from inside: their undersides where a bolt leaves them, the
+towers it hides in, and not the gaps between. Far strikes are dimmer than near ones, the more so the thicker the weather between: rain hides a distant
+storm's flashes a good deal more than clear air does.
+
+* :confval:`scaryContent.enableLightning` turns the lightning off, as does :confval:`scaryContent.allowScaryContent`; Minecraft's own bolts are drawn then.
+* With Minecraft's *Hide Lightning Flashes* accessibility option on, there is no lightning in the sky, and bolts strike once without flickering.
+
+The lightning is not drawn while a shader pack is in use. ``/dsweather lightning`` strikes ahead of the player, to see how it looks; see
+:doc:`commands/commands`.
+
+Clouds
+~~~~~~
+
+*Added 1.21.1-0.4.8, experimental*
+
+Blocky clouds that change with the weather take the place of Minecraft's. On fair days, scattered clouds build up into stepped towers through the afternoon
+and flatten out at night, with thin streaks high above; some days are cloudier than others. They are cloudier over wet biomes than dry ones, so they build
+over jungles and swamps and thin out over deserts as they drift. A storm closes them into a low deck that lowers and thickens with its strength, darker
+underneath the thicker it is, and a thunderstorm's towers rise far above it. Lightning lights them from inside (see `Lightning`_).
+
+They change a little at a time, a cloud fading in or out rather than appearing or vanishing. Every player in a world sees the same clouds, carried by the
+wind up high, which follows the day's wind. Far off they fade out into the fog: in rain the deck overhead stays dark while the distance turns to haze, and a
+dust storm hides all but what is right overhead.
+
+* :confval:`weatherOptions.enableDynamicClouds` turns them on or off; Minecraft's own clouds are drawn when they are off.
+* :confval:`weatherOptions.cloudDistance` sets how far they reach, whatever the render distance.
+
+They are not drawn while a shader pack is in use, when clouds are turned off in Minecraft's Video Settings, or in dimensions that draw their own clouds
+(see ``dynamicClouds`` in :doc:`schemas/dimensions`). ``/dsweather clouds`` holds how much of the sky they cover, to see how they look; see
+:doc:`commands/commands`.
 
 Wind
 ~~~~
@@ -138,6 +204,10 @@ pack is in use.
 Block Effects
 -------------
 
+Block effects such as waterfalls, steam, and flame jets are found within :confval:`blockEffects.blockEffectRange` of the player. *Since 1.21.1-0.4.8* that range
+is a sphere, and the nearest blocks are found first, so the effects close by appear first after arriving somewhere new. Past 32 blocks, effects show farther away than
+Minecraft shows particles, at more cost.
+
 Waterfalls
 ~~~~~~~~~~
 
@@ -167,6 +237,52 @@ Frost Breath
 ~~~~~~~~~~~~
 
 Players, villagers, and raiders breathe visible puffs in cold biomes, and give off bubbles underwater. See :confval:`entityEffects.enableBreathEffect`.
+
+Burning Mobs
+~~~~~~~~~~~~
+
+*Added 1.21.1-0.4.8*
+
+A burning mob is wreathed in flames like a flame jet's, with sparks and smoke, in place of Minecraft's two flat sheets of fire. The fire fits the mob: more flames
+for a bigger body and larger ones for a broader body. The flames keep up with a running mob, burn on through its death until the body is gone, and in lava only
+rise from the part above the surface. Each casts one flickering light on the area around it (:confval:`flameJetOptions.enableLight`), unless LambDynamicLights or RyoamicLights is
+installed, as it already lights burning mobs. Mobs farther away get fewer flames, and a crowd of burning mobs shares a budget, so undead burning at dawn thin out evenly.
+
+Minecraft's own fire is kept beyond :confval:`entityEffects.entityEffectRange`, with Particles set to Minimal, while a shader pack is in use, and for the player's own
+body in first person. See :confval:`entityEffects.enableBurningEffect`. Mobs tagged ``dsurround:effects/vanilla_fire`` keep Minecraft's fire; see :doc:`packs/tagging`.
+
+Death Mist
+~~~~~~~~~~
+
+*Added 1.21.1-0.4.8*
+
+When a mob's body vanishes at the end of its death, it leaves a cloud of dark mist that drifts out and fades, in place of Minecraft's white puffs. Minecraft's puffs
+are kept with Particles set to Minimal. See :confval:`entityEffects.enableDeathPuffs`.
+
+Damage Pop-offs
+~~~~~~~~~~~~~~~
+
+*Added 1.21.1-0.4.8, from older versions*
+
+When a mob's or player's health changes, a number pops off above it: red for damage, green for healing. A heavy blow, 40% or more of the mob's health, also gets a
+comic book word in gold over the number, such as KAPOW! The killing blow shows too. Nothing pops off the player's own body in first person. See
+:confval:`entityEffects.enableDamagePopoffs` and :confval:`entityEffects.showCritWords`. Mobs tagged ``dsurround:effects/no_health_popoffs`` (armor stands, by
+default) get none.
+
+Footprints
+~~~~~~~~~~
+
+*Added 1.21.1-0.4.8*
+
+Players and mobs leave footprints in soft ground: dirt, grass, sand, gravel, snow, mud, soul sand, and blocks tagged ``dsurround:effects/footprints``. A print is left
+for each foot as it comes down, and both on landing from a jump. Players' prints are square by default (:confval:`entityEffects.footprintStyle`); mobs' fit their feet,
+set by tags: square for humanoids such as zombies and villagers, paws for wolves, cats, foxes and bears, hooves for horses, cows, sheep, pigs and goats, and bird tracks
+for chickens and parrots. Smaller bodies leave smaller prints, closer together; bears' prints are larger and skeletons' smaller
+than their size alone gives (the ``footprints/large`` and ``footprints/small`` tags).
+
+Prints fade after about 10 seconds, or a minute in snow, and wash away faster where rain falls on them in the open. They go when the ground under them changes.
+No prints are left while sneaking, swimming or riding, by invisible mobs, with Particles set to Minimal, or while a shader pack is in use. See
+:confval:`entityEffects.enableFootprints`, and :doc:`packs/tagging` for the tags.
 
 Compass and Clock
 ~~~~~~~~~~~~~~~~~
@@ -220,3 +336,6 @@ Other
   effects around them, without crowding Minecraft's F3 screen. With Simple Voice Chat installed, it also shows whether voices are processed and how many are
   playing.
 * **Commands**: client side commands for reloading configuration, testing scripts, and dumping configuration. See :doc:`commands/commands`.
+* **Guards** (*added 1.21.1-0.4.8*): fixes for problems other mods cause, each of which can be turned off. The first repairs particles drawn as squares when
+  another mod's particle spoils Minecraft's particle drawing, and names that particle in the log; see :confval:`diagnostics.guards.repairParticleBatches` and
+  :doc:`troubleshooting/troubleshooting`.
