@@ -103,8 +103,9 @@ in the diagnostic overlay. See :ref:`mods-that-replace-a-feature` for the mods i
 
 Records a performance profile of the game with Java Flight Recorder, to attach to an issue when something seems slow. With no scene, it records two minutes of the
 game as it is; a scene shows one effect at its heaviest while it records, and the number of seconds (10 to 600) sets the length. The recording is saved zipped in
-``config/dsurround/profiles``, without personal information. See :doc:`../troubleshooting/jfr` for how to use it, the scenes, and what is in a recording.
-(*Added 1.21.1-0.4.7*)
+``config/dsurround/profiles``, without personal information. When it is done, a *[Copy summary]* button in chat copies a short summary of the recording to
+paste where a file can't be attached. See :doc:`../troubleshooting/jfr` for how to use it, the scenes, and what is in a recording. (*Added 1.21.1-0.4.7;
+summary added 1.21.1-0.4.8*)
 
 .. list-table:: Profile Scenes
     :widths: auto

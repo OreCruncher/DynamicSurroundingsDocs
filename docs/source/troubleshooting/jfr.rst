@@ -14,9 +14,10 @@ Recording with /dsprofile
 1. Join a world, go to where the problem shows, and run ``/dsprofile``.
 2. A note at the top of the screen counts down to the start, then shows the time left while it records. Keep playing, and make the problem happen while it
    records. Recording adds little overhead, so the game plays normally.
-3. When it is done, chat says where the recording was saved, with the frame rate and how long Dynamic Surroundings' effects took to draw. Click the file's name
-   to open it.
-4. Attach the ``.zip`` file to the issue, with ``logs/latest.log`` from the same session. See :ref:`jfr-sharing`.
+3. When it is done, chat says where the recording was saved, with the frame rate and the effect that took the largest share of drawing a frame. Click the
+   file's name to open it. (*Costliest effect added 1.21.1-0.4.8*)
+4. Attach the ``.zip`` file to the issue, with ``logs/latest.log`` from the same session. Where a file can't be attached, such as in Discord, click
+   *[Copy summary]* in chat and paste the summary instead. See :ref:`jfr-sharing`.
 
 By default it records two minutes of the game as it is. To record for another length, name a scene and give the number of seconds, from 10 to 600:
 
@@ -68,8 +69,8 @@ Where Recordings Are Saved
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Recordings are saved in the game directory, in ``config/dsurround/profiles``, named for the scene and the time they were made, such as
-``dsurround-general-20261017-114439.zip``. Each ``.zip`` file holds one recording (``.jfr``). Only the 10 newest are kept; older ones are deleted when the game
-starts. See :doc:`logs` for how to open the game directory.
+``dsurround-general-20261017-114439.zip``. Each ``.zip`` file holds one recording (``.jfr``) and its summary (``.txt``, see :ref:`jfr-summary`; *added
+1.21.1-0.4.8*). Only the 10 newest are kept; older ones are deleted when the game starts. See :doc:`logs` for how to open the game directory.
 
 If ``/dsprofile`` says profiling isn't available, the game's Java does not include Flight Recorder. Most do; see :ref:`jfr-other-ways` for another way.
 
@@ -80,6 +81,29 @@ Sharing the Recording
 
 Attach the ``.zip`` file to the issue as it is; GitHub accepts ``.zip`` files but not ``.jfr`` files. Include ``logs/latest.log`` from the same session, the
 scene used, and what happened while it recorded.
+
+.. _jfr-summary:
+
+The Summary
+~~~~~~~~~~~
+
+When a recording is done, the *[Copy summary]* button in chat copies a short summary of it, to paste where a file can't be attached, or to give a first look
+before the recording itself. It fits in one Discord message. It is also saved in the recording's ``.zip`` file, and written to ``logs/latest.log``.
+(*Added 1.21.1-0.4.8*)
+
+The summary is made from the recording, so it holds nothing the recording doesn't (see :ref:`jfr-privacy`). It gives:
+
+* The Dynamic Surroundings version, the mod loader, how many mods are installed, and the Java and operating system versions.
+* The graphics card and its driver, the window's size, the graphics setting, the render distance, VSync and the frame rate limit, and whether a shader pack
+  is in use.
+* The frame rate and how long frames took, including the slowest.
+* How long each of Dynamic Surroundings' effects took to draw, and its share of drawing a frame, the costliest first.
+* How long Dynamic Surroundings' tick handlers took, and which took longest.
+* Java's garbage collection pauses.
+* Any of Dynamic Surroundings' hooks into the game's code that didn't apply, features standing aside for another mod, and the settings changed from their
+  defaults.
+
+When there is more than fits, the cheapest effects and the last of the changed settings are left out and counted.
 
 .. _jfr-privacy:
 
@@ -102,6 +126,7 @@ Privacy
 
     * The processor, memory, graphics card and its driver version, operating system and its version, and Java version.
     * The Dynamic Surroundings version, the mod loader, how many mods are installed, the graphics setting, render distance, and whether a shader pack is in use.
+    * The window's size, VSync and the frame rate limit, how long each frame took, and how long drawing it took. (*Added 1.21.1-0.4.8*)
     * Dynamic Surroundings' settings (any that hold text are left out), which of its hooks into the game's code applied, and which of its features stand
       aside for another mod, naming that mod. (*Added 1.21.1-0.4.8*)
     * How long Dynamic Surroundings' effects took to draw, and how long each of its tick handlers took every tick. (*Tick handlers added 1.21.1-0.4.8*)
