@@ -227,6 +227,9 @@ Steam and Flame Jets
 Water next to a hot block such as lava or magma gives off steam, and lava and fully grown nether wart send up jets of flame that light up the area around
 them. See :confval:`blockEffects.steamColumnEnabled` and :confval:`flameJetOptions.enableFlameJets`.
 
+Skeleton skulls placed in the world burn with little flickering flames in their eyes, and wither skeleton skulls with blue
+soul fire, lighting the floor and wall around them. See :confval:`blockEffects.skullFlamesEnabled`. (*Added 1.21.1-0.4.8*)
+
 Fireflies
 ~~~~~~~~~
 

@@ -381,6 +381,9 @@ blockEffects
         // Enable/disable steam column effect when liquids are adjacent to hot sources, like lava and magma
         // Default: true
         "steamColumnEnabled": true,
+        // Enable/disable little flames burning in the eyes of skeleton skulls placed in the world (blue soul fire for wither skeleton skulls)
+        // Default: true
+        "skullFlamesEnabled": true,
         // Enable/disable bubble columns generated underwater
         // Default: true
         "bubbleColumnEnabled": true,
@@ -403,6 +406,15 @@ blockEffects
     :no-contents-entry:
 
     Enables the steam effect for when water is close to a hot block (ie, something like lava or magma).
+
+.. confval:: blockEffects.skullFlamesEnabled
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Enables little flickering flames in the eyes of skeleton skulls placed in the world, with blue soul fire in wither
+    skeleton skulls. The flames light the floor and wall around the skull (see :confval:`flameJetOptions.enableLight`).
+    (*Added 1.21.1-0.4.8*)
 
 .. confval:: blockEffects.bubbleColumnEnabled
     :type: ``boolean``
@@ -512,7 +524,7 @@ flameJetOptions
     :default: ``true``
     :no-contents-entry:
 
-    Enables the flickering light flame jets and burning mobs cast on the ground and walls around them. Not shown while a shader pack is in use.
+    Enables the flickering light flame jets, burning mobs and skull flames cast on the ground and walls around them. Not shown while a shader pack is in use.
 
 fireflyOptions
 ++++++++++++++

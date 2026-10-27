@@ -115,6 +115,10 @@ Block Tags
         - Blocks that are hot enough to produce steam from nearby water, such as lava and magma blocks.
     *   - ``dsurround:effects/steam_producers``
         - Blocks that give off steam when next to a hot block, such as water and water cauldrons. Steam only forms when the block above is air.
+    *   - ``dsurround:effects/skull_flames``
+        - Skulls whose eyes burn with little flames, such as the skeleton skull. The eyes are placed as on Minecraft's skull model, so only skulls drawn with it fit. (*Added 1.21.1-0.4.8*)
+    *   - ``dsurround:effects/soul_skull_flames``
+        - Skulls whose eyes burn with blue soul fire, such as the wither skeleton skull. (*Added 1.21.1-0.4.8*)
     *   - ``dsurround:effects/rain_absorbing``
         - Blocks that show damp spots where particle rain lands, such as dirt, sand, snow, wool, and hay. (*Added 1.21.1-0.4.7; snow added 1.21.1-0.4.8*)
     *   - ``dsurround:effects/dust_sources``
