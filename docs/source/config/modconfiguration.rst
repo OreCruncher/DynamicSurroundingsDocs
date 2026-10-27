@@ -574,6 +574,9 @@ entityEffects
         // Enable/disable breath effect in cold biomes and underwater
         // Default: true
         "enableBreathEffect": true,
+        // Enable/disable breath from animals (cows, sheep, horses, wolves...) near you, along with the breath effect
+        // Default: true
+        "enableAnimalBreath": true,
         // Enable/disable player toolbar sound effects
         // Default: true
         "enablePlayerToolbarEffect": true,
@@ -627,6 +630,15 @@ entityEffects
     :no-contents-entry:
 
     Enables frost breath particle generation when in a cold biome, and bubbles when underwater.
+
+.. confval:: entityEffects.enableAnimalBreath
+    :type: ``boolean``
+    :default: ``true``
+    :no-contents-entry:
+
+    Animals within 16 blocks breathe too, from their mouths: cows, sheep, goats, horses, wolves, and others (see
+    ``dsurround:effects/animal_breath`` in :doc:`../packs/tagging`). Needs :confval:`entityEffects.enableBreathEffect`.
+    (*Added 1.21.1-0.4.8*)
 
 .. confval:: entityEffects.enablePlayerToolbarEffect
     :type: ``boolean``

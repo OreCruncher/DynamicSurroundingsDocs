@@ -245,6 +245,11 @@ Frost Breath
 
 Players, villagers, and raiders breathe visible puffs in cold biomes, and give off bubbles underwater. See :confval:`entityEffects.enableBreathEffect`.
 
+Animals breathe too (*added 1.21.1-0.4.8*): cows, mooshrooms, sheep, goats, pigs, horses, donkeys, mules, llamas, camels, wolves, foxes, cats, ocelots,
+polar bears, pandas, sniffers, armadillos, hoglins, and ravagers. The breath comes from the mouth, out in front of the body, and follows the head as it turns
+and nods; bigger animals breathe bigger puffs. An animal with its head down or out of the way (a sheep eating grass, a goat about to ram, a rearing horse, a
+sleeping fox) holds its breath until it's done. Only animals within 16 blocks of the player breathe. See :confval:`entityEffects.enableAnimalBreath`.
+
 Burning Mobs
 ~~~~~~~~~~~~
 

@@ -191,6 +191,10 @@ These tags control which entities get an effect.
         - Effect
     *   - ``dsurround:effects/frost_breath``
         - The entity's breath is visible in cold biomes, and bubbles are given off underwater. Includes players, villagers, and raiders.
+    *   - ``dsurround:effects/animal_breath``
+        - As ``frost_breath``, but from a mouth out in front of the body, for four-legged mobs; takes the place of ``frost_breath`` for an entity in both
+          (the ravager is a raider). Includes cows, sheep, goats, horses, wolves, and other animals. Vanilla's animals have their mouths measured from
+          their models; for others, the mouth is guessed from the entity's size.
     *   - ``dsurround:effects/item_swing``
         - A sound is played when the entity swings the item it is holding, such as a sword or axe.
     *   - ``dsurround:effects/bow_pull``
