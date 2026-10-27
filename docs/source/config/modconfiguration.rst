@@ -323,7 +323,8 @@ soundOptions
     :default: ``true``
     :no-contents-entry:
 
-    Enables sound remapping when sounds are played. Enabling tells Dynamic Surroundings to replace various step sounds with replacement versions. (*Added 1.21.1-0.4.2*)
+    Enables sound remapping when sounds are played. Enabling tells Dynamic Surroundings to replace various step sounds with replacement versions, and a bow's
+    shot, by a player or a skeleton, with the bowstring's release. (*Added 1.21.1-0.4.2; bow shots added 1.21.1-0.4.8*)
 
 scaryContent
 ++++++++++++

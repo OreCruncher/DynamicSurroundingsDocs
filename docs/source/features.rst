@@ -76,6 +76,9 @@ Swinging a sword or axe, drawing a bow, and switching items on the hotbar each m
 
 * :confval:`entityEffects.enableSwingEffect`, :confval:`entityEffects.enableBowPull`, and :confval:`entityEffects.enablePlayerToolbarEffect` control these.
 
+Arrows fired from a bow, by players and skeletons, are heard with the bowstring's release in place of Minecraft's sound (*back from older versions in
+1.21.1-0.4.8*); :confval:`soundOptions.remapSounds` turns it off along with the other remapped sounds.
+
 Thunder
 ~~~~~~~
 
