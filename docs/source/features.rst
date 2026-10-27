@@ -211,6 +211,10 @@ Block effects such as waterfalls, steam, and flame jets are found within :confva
 is a sphere, and the nearest blocks are found first, so the effects close by appear first after arriving somewhere new. Past 32 blocks, effects show farther away than
 Minecraft shows particles, at more cost.
 
+Random block effects, such as fireflies, flame jets, bubbles, and the sounds some blocks make, come from blocks picked at random around the player each tick, as
+Minecraft picks blocks for its own particles: more often close by, less often farther away, mostly within 32 blocks. Sounds keep that spread. *Since
+1.21.1-0.4.8*, with the range set past 32 blocks, effects (not sounds) also come from past 32 blocks, thinning out evenly toward the edge of the range.
+
 Waterfalls
 ~~~~~~~~~~
 

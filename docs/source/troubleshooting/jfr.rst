@@ -105,6 +105,8 @@ Privacy
     * Dynamic Surroundings' settings (any that hold text are left out), which of its hooks into the game's code applied, and which of its features stand
       aside for another mod, naming that mod. (*Added 1.21.1-0.4.8*)
     * How long Dynamic Surroundings' effects took to draw, and how long each of its tick handlers took every tick. (*Tick handlers added 1.21.1-0.4.8*)
+    * How often random block effects looked at blocks, started effects, and played sounds at each distance from the player, by distance only.
+      (*Added 1.21.1-0.4.8*)
     * What each part of the game, and each mod, was doing and how long it took. The names of the mods' code show which mods are installed.
     * The folder paths of the game and its mods, with the home folder redacted. A game installed outside the home folder, such as in ``D:\Games``, keeps
       that path.
